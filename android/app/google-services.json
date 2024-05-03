@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "232767667117",
+    "project_id": "dibbs-314610",
+    "storage_bucket": "dibbs-314610.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232767667117:android:ad80a734864f7ec228ff24",
+        "android_client_info": {
+          "package_name": "com.thunder.dibbs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232767667117-bcgmh0snndoshq1sglse6skhmf1rfb5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu5x0lFRnzGfWaeZHG2k2xYdCPwkVWM2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232767667117-bcgmh0snndoshq1sglse6skhmf1rfb5v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "232767667117-rj89j8m73prpkjsbqpja3c0q2kvjf077.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thunder.dibbs"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
