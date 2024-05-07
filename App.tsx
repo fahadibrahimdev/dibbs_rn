@@ -15,6 +15,11 @@ import RootNavigator from './src/navigation/RootNavigator';
 import NotificationController from './src/pushNotification/NotificationController';
 import configureStore from './src/redux/store/configureStore';
 
+import analytics from '@react-native-firebase/analytics';
+
+analytics().setAnalyticsCollectionEnabled(true);
+
+
 const store = configureStore();
 
 // //Test Key
@@ -32,15 +37,15 @@ const store = configureStore();
 export default class App extends Component {
   render() {
     return (
-        <NavigationContainer>
-          <Provider store={store}>
-            <RootNavigator />
+      <NavigationContainer>
+        <Provider store={store}>
+          <RootNavigator />
 
-            <StatusBar backgroundColor="#324192" barStyle="dark-content" />
+          <StatusBar backgroundColor="#324192" barStyle="dark-content" />
 
-            <NotificationController />
-          </Provider>
-        </NavigationContainer>
+          <NotificationController />
+        </Provider>
+      </NavigationContainer>
     );
   }
 }

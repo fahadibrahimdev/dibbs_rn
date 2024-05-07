@@ -34,6 +34,8 @@ target 'dibbs' do
   pod 'react-native-google-maps', :path => rn_maps_path
   
   config = use_native_modules!
+  use_modular_headers!
+
 
   # Flags change depending on the env values.
   flags = get_default_flags()

@@ -29,6 +29,7 @@ import SocialButton from '../../../../helpers/SocialButton';
 import TextInputWithLabel from '../../../../helpers/TextInputWithLabel';
 import {goBack, navigate} from '../../../../helpers/Util';
 import {loginUser, setDeviceToken} from '../../../../redux/actions/authActions';
+import analytics from '@react-native-firebase/analytics';
 
 class LoginScreen extends Component {
   state = {
@@ -57,8 +58,6 @@ class LoginScreen extends Component {
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
   }
-
-  
 
   componentDidMount() {
     //onSuccess
@@ -93,6 +92,17 @@ class LoginScreen extends Component {
       this.showAlertModal('Error', this.props.authenticationError);
     }
   }
+
+  onAnalytics = async () => {
+    try {
+      await analytics().logEvent('MobileAppLoginIOS', {
+        id: 3745092,
+        // item: 'mens grey t-shirt',
+        // description: ['round neck', 'long sleeved'],
+        // size: 'L',
+      });
+    } catch (error) {}
+  };
 
   // <Alert Functions>
   showAlertModal = (
@@ -327,6 +337,21 @@ class LoginScreen extends Component {
             // iconLeft
           >
             <Text style={styles.textStyle}>Sign In</Text>
+          </Button>
+
+          <Button
+            light
+            // onPress={()=>logIn()}
+            onPress={() => {
+              Keyboard.dismiss();
+              this.onAnalytics();
+            }}
+            // onPress={()=>this.props.login({this.state.userEmail})}
+            rounded
+            style={styles.btnStyle}
+            // iconLeft
+          >
+            <Text style={styles.textStyle}>Test Analytics</Text>
           </Button>
 
           <TouchableOpacity
