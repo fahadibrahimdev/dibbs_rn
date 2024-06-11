@@ -634,7 +634,12 @@ class ProductDetailScreen extends Component {
           />
 
           <View style={{flex: 1, marginLeft: w(2)}}>
-            <Text style={{textTransform: 'capitalize', fontSize: RFValue(17),color:colors.appTextColor}}>
+            <Text
+              style={{
+                textTransform: 'capitalize',
+                fontSize: RFValue(17),
+                color: colors.appTextColor,
+              }}>
               {item.name}
             </Text>
 
@@ -1443,7 +1448,7 @@ class ProductDetailScreen extends Component {
                       <FlatList
                         style={{
                           maxHeight: h(23),
-                          
+
                           marginTop: RFValue(5),
                           marginBottom: RFValue(5),
                         }}
@@ -1510,11 +1515,12 @@ class ProductDetailScreen extends Component {
                             <TouchableOpacity
                               onPress={() => {
                                 const scheme = Platform.select({
-                                  ios: 'maps:0,0?q=',
+                                  ios: 'maps:?q=',
                                   android: 'geo:0,0?q=',
                                 });
-                                const latLng = this.state.productDetails
-                                  .store_info.location;
+
+                                const latLng =
+                                  this.state.productDetails.store_info.location;
                                 const label =
                                   !!this.state.productDetails.store_info &&
                                   !!this.state.productDetails.store_info
@@ -1522,12 +1528,18 @@ class ProductDetailScreen extends Component {
                                     ? this.state.productDetails.store_info
                                         .store_name
                                     : 'Resturant name';
+
                                 const url = Platform.select({
-                                  ios: `${scheme}${label}@${latLng}`,
+                                  ios: `${scheme}${encodeURIComponent(
+                                    label,
+                                  )}&ll=${latLng}`,
                                   android: `${scheme}${latLng}(${label})`,
                                 });
 
-                                Linking.openURL(url);
+                                console.log('Fahad 02: ', url);
+                                Linking.openURL(url).catch(err =>
+                                  console.error('An error occurred', err),
+                                );
                               }}
                               activeOpacity={1}
                               style={{
@@ -1570,8 +1582,8 @@ class ProductDetailScreen extends Component {
                           !!this.state.productDetails.store_info.website && (
                             <TouchableOpacity
                               onPress={() => {
-                                const mUrl = this.state.productDetails
-                                  .store_info.website;
+                                const mUrl =
+                                  this.state.productDetails.store_info.website;
                                 if (mUrl.includes('http')) {
                                   // Linking.openURL(mUrl);
 
@@ -1784,17 +1796,11 @@ class ProductDetailScreen extends Component {
 const mapStateToProps = (state, ownProps) => {
   const {appName, appState, isAuthenticated} = state.authReducer;
 
-  const {
-    productSavedSuccessfully,
-    productDeletedSuccessfully,
-    appUrl,
-  } = state.productReducer;
+  const {productSavedSuccessfully, productDeletedSuccessfully, appUrl} =
+    state.productReducer;
 
-  const {
-    isUpdatingCartInfo,
-    cartInfoUpdatedSuccessFully,
-    totalPrice,
-  } = state.cartReducer;
+  const {isUpdatingCartInfo, cartInfoUpdatedSuccessFully, totalPrice} =
+    state.cartReducer;
 
   return {
     appName,

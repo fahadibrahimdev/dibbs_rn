@@ -6,6 +6,14 @@ const DEV = {
   appKey: 'c4ca4238a0b923820dcc509a6f75849b',
 };
 
+const UAT = {
+  DOMAIN: 'https://dibbs.thundertechsol.com.com/',
+  BASE_URL: 'https://dibbs.thundertechsol.com/rest/api',
+  TOKEN: '',
+  appId: '1',
+  appKey: 'c4ca4238a0b923820dcc509a6f75849b',
+};
+
 const PROD = {
   DOMAIN: 'https://new.thedibbsapp.com/',
   BASE_URL: 'https://new.thedibbsapp.com/rest/api',
