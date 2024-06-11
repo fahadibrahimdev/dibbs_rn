@@ -71,6 +71,7 @@ class TextInputWithLabel extends Component {
           style={[
             styles.InputContainer,
             {borderWidth: 0.3, marginTop: h(2), borderRadius: h(4)},
+            
             inputContainerStyles,
           ]}>
           {!applyMask ? (
@@ -84,7 +85,6 @@ class TextInputWithLabel extends Component {
                     fontSize: RFValue(20),
                     marginLeft: h(4),
                     marginRight: h(1),
-                    
                   },
                   inputStyles,
                 ]}
@@ -132,14 +132,15 @@ class TextInputWithLabel extends Component {
 
               {secureTextEntry && (
                 <View
-                  style={{flex: 1, alignItems: 'flex-end', marginRight: h(1)}}>
+                  style={{flex: 1, alignItems: 'flex-end', marginRight: h(1)}}
+                  >
                   <TouchableOpacity
                     style={[
                       {
                         width: h(5),
                         height: h(5),
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        // justifyContent: 'center',
+                        // alignItems: 'center',
                       },
                     ]}
                     disabled={false}
@@ -170,9 +171,9 @@ class TextInputWithLabel extends Component {
               style={[
                 styles.inputStyles,
                 {
-                  height: h(50),
+                  height: h(20),
                   width: '100%',
-                  fontSize: RFValue(12),
+                  fontSize: RFValue(2),
                   marginHorizontal: h(15),
                 },
                 inputStyles,

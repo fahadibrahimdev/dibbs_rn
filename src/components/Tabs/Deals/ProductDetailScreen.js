@@ -634,7 +634,7 @@ class ProductDetailScreen extends Component {
           />
 
           <View style={{flex: 1, marginLeft: w(2)}}>
-            <Text style={{textTransform: 'capitalize', fontSize: RFValue(17)}}>
+            <Text style={{textTransform: 'capitalize', fontSize: RFValue(17),color:colors.appTextColor}}>
               {item.name}
             </Text>
 
@@ -1443,6 +1443,7 @@ class ProductDetailScreen extends Component {
                       <FlatList
                         style={{
                           maxHeight: h(23),
+                          
                           marginTop: RFValue(5),
                           marginBottom: RFValue(5),
                         }}

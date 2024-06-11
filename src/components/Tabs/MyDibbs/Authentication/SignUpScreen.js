@@ -1,3 +1,4 @@
+import { Picker } from '@react-native-picker/picker';
 import { CommonActions } from '@react-navigation/native';
 import { Button } from 'native-base';
 import React, { Component } from 'react';
@@ -9,7 +10,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 import { height as h, width as w } from 'react-native-dimension';
 import { AccessToken, LoginButton } from 'react-native-fbsdk';
@@ -17,18 +18,20 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
+import HeaderCenter from '../../../../CustomComponents/Header/HeaderCenter';
 import { titles } from '../../../../constants/Localization';
 import { ScreenNames } from '../../../../constants/ScreenNames';
-import HeaderCenter from '../../../../CustomComponents/Header/HeaderCenter';
 import AlertComponent from '../../../../helpers/AlertComponent';
-import colors from '../../../../helpers/colors';
-import { LoginTypeEnum } from '../../../../helpers/enum';
 import FullScreenLoader from '../../../../helpers/FullScreenLoader';
 import { backImage, dibbsLogo } from '../../../../helpers/Images';
 import SocialButton from '../../../../helpers/SocialButton';
 import TextInputWithLabel from '../../../../helpers/TextInputWithLabel';
 import { navigate } from '../../../../helpers/Util';
+import colors from '../../../../helpers/colors';
+import { LoginTypeEnum } from '../../../../helpers/enum';
 import { registerUser } from '../../../../redux/actions/authActions';
+import AppDropDown from '../../../../helpers/AppDropDown';
+
 
 class SignUpScreen extends Component {
   state = {
@@ -51,6 +54,8 @@ class SignUpScreen extends Component {
     password: '',
     confirmPassword: '',
     agreementAccepted: false,
+
+    selectedGender: null
   };
 
   constructor(props) {
@@ -61,6 +66,9 @@ class SignUpScreen extends Component {
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
     this.confirmPasswordRef = React.createRef();
+
+    this.genderRef = React.createRef();
+
   }
 
   componentDidMount() { }
@@ -122,6 +130,16 @@ class SignUpScreen extends Component {
       },
     });
   };
+
+  openDropdown = visible => {
+
+    // console.log()
+    this.genderRef.current.focus();
+  };
+
+  closeDropdown = visible => {
+    this.genderRef.current.blur();
+  };
   // </Alert Functions>
 
   validate = () => {
@@ -162,6 +180,8 @@ class SignUpScreen extends Component {
 
     return true;
   };
+
+
 
   render() {
     const { isCreatingUser } = this.props;
@@ -218,6 +238,7 @@ class SignUpScreen extends Component {
                 letterSpacing: 1,
                 alignSelf: 'center',
                 textTransform: 'uppercase',
+                color: colors.appTextColor,
               }}>
               SIGN UP TO SCORE ONE OF A KIND DEALS!
             </Text>
@@ -301,6 +322,37 @@ class SignUpScreen extends Component {
                 returnKeyType={'done'}
               />
 
+              <TouchableOpacity style={{
+
+      // backgroundColor:'green',      
+      width:300,
+      height:90,
+      // fontSize: RFValue(2),
+    
+    
+      
+              }}
+                activeOpacity={0.9}
+                onPress={() => {
+                  this.openDropdown()
+                }}>
+
+
+                <AppDropDown
+                  label={'*'}
+                  
+                  width= '80%'
+                  value={this.state.selectedGender}
+
+                  placeHolder={'Gender'}
+                  
+                  // outerContainerStyles={{ width: '90%' }}
+                  ref={this.genderRef}
+                  returnKeyType={'next'}
+                  editable={false}
+                />
+              </TouchableOpacity>
+
               <Text
                 style={{
                   fontSize: RFValue(12),
@@ -308,6 +360,7 @@ class SignUpScreen extends Component {
                   padding: h(0.5),
                   textAlign: 'center',
                   marginHorizontal: h(5),
+                  color:colors.appTextColor,
                 }}>
                 By clicking on the sign up option below you
               </Text>
@@ -428,8 +481,36 @@ class SignUpScreen extends Component {
                 onLogoutFinished={() => console.log('logout.')}
               />
             )}
+
+
+
+
+
+
+
+
+
+
           </ScrollView>
         </KeyboardAvoidingView>
+
+
+        <Picker
+          ref={this.genderRef}
+          selectedValue={this.state.selectedGender}
+          onValueChange={(itemValue, itemIndex) => {
+
+            console.log("Fahad item value: ", itemValue);
+            this.setState({
+              selectedGender: itemValue,
+            })
+          }
+          }>
+
+          <Picker.Item label="Male" value="Male" />
+          <Picker.Item label="Female" value="Female" />
+          <Picker.Item label="Others" value="Others" />
+        </Picker>
 
         <FullScreenLoader
           title={titles.fullScreenLoaderTitle}
