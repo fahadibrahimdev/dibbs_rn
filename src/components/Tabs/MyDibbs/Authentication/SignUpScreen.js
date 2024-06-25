@@ -30,7 +30,7 @@ import {navigate} from '../../../../helpers/Util';
 import colors from '../../../../helpers/colors';
 import {LoginTypeEnum} from '../../../../helpers/enum';
 import {registerUser} from '../../../../redux/actions/authActions';
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
 class SignUpScreen extends Component {
   state = {
@@ -54,7 +54,7 @@ class SignUpScreen extends Component {
     confirmPassword: '',
     agreementAccepted: false,
 
-    showPicker: (Platform.OS === 'android')? true:false,
+    showPicker: Platform.OS === 'android' ? true : false,
     selectedGender: null,
     pickerItems: [
       {label: '', value: ''},
@@ -147,7 +147,14 @@ class SignUpScreen extends Component {
   // </Alert Functions>
 
   validate = () => {
-    const {firstName, lastName, email, password, confirmPassword} = this.state;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      selectedGender,
+    } = this.state;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     if (firstName === '') {
@@ -159,7 +166,6 @@ class SignUpScreen extends Component {
       this.showAlertModal('Validation Error', 'Please enter your last name!');
       return false;
     }
-;
     if (email === '') {
       this.showAlertModal('Validation Error', 'Please enter your email!');
       return false;
@@ -179,6 +185,11 @@ class SignUpScreen extends Component {
 
     if (confirmPassword !== password) {
       this.showAlertModal('Validation Error', 'Password mismatch!');
+      return false;
+    }
+
+    if (!!!selectedGender) {
+      this.showAlertModal('Validation Error', 'Please select your gender!');
       return false;
     }
 
@@ -340,14 +351,13 @@ class SignUpScreen extends Component {
                 }}
                 activeOpacity={0.5}
                 onPress={() => {
-                  
-
                   if (Platform.OS === 'android') {
                     this.openDropdown();
                   } else {
-                  this.setState({
-                    showPicker: !this.state.showPicker,
-                  });}
+                    this.setState({
+                      showPicker: !this.state.showPicker,
+                    });
+                  }
 
                   // Alert.alert('Hi');
                 }}>
@@ -506,15 +516,15 @@ class SignUpScreen extends Component {
 
         {this.state.showPicker && (
           <Picker
-          style={{
-          display: 'none'
-          }}
+            style={{
+              display: Platform.OS === 'android' ? 'none' : 'flex',
+            }}
             ref={this.genderRef}
             selectedValue={this.state.selectedGender}
             onValueChange={(itemValue, itemIndex) => {
               console.log('Fahad item value: ', itemValue);
               this.setState({
-                showPicker: (Platform.OS === 'android')?(true):(false),
+                showPicker: Platform.OS === 'android' ? true : false,
                 selectedGender: itemValue,
               });
             }}>

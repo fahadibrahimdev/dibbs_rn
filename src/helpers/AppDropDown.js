@@ -43,19 +43,21 @@ class TextInputWithLabel extends Component {
             {borderWidth: 0.3, borderRadius: h(4)},
             inputContainerStyles,
           ]}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{height: h(7), flexDirection: 'row', alignItems: 'center'}}>
             <Text
               style={[
                 styles.inputStyles,
                 {
-                  color: ((!!value)?colors.appTextColor:(placeholderTextColor ? placeholderTextColor : colors.lightGray)),
+                  color: !!value
+                    ? colors.appTextColor
+                    : placeholderTextColor
+                    ? placeholderTextColor
+                    : colors.lightGray,
                   width: '89%',
-                  height: h(7),
                   fontSize: RFValue(20),
                   marginLeft: h(4),
                   marginRight: h(1),
-                  textAlignVertical: 'center',
-
                 },
                 inputStyles,
               ]}
@@ -65,7 +67,9 @@ class TextInputWithLabel extends Component {
               //   placeholderTextColor ? placeholderTextColor : colors.lightGray
               // }
               // pointerEvents={'none'}
-            >{(!!value)?(value):(placeHolder)}</Text>
+            >
+              {!!value ? value : placeHolder}
+            </Text>
           </View>
         </View>
       </View>
