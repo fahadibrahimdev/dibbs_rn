@@ -1,5 +1,5 @@
-import { Button } from 'native-base';
-import React, { Component } from 'react';
+import {Button} from 'native-base';
+import React, {Component} from 'react';
 import {
   FlatList,
   Linking,
@@ -10,23 +10,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
-import { Card } from 'react-native-elements';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {height as h, width as w} from 'react-native-dimension';
+import {Card} from 'react-native-elements';
+import {RFValue} from 'react-native-responsive-fontsize';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { connect } from 'react-redux';
-import { ScreenNames } from '../../../constants/ScreenNames';
+import {connect} from 'react-redux';
+import {ScreenNames} from '../../../constants/ScreenNames';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import { AlertTypesEnum, CartUpdateActionEnum } from '../../../helpers/enum';
+import {AlertTypesEnum, CartUpdateActionEnum} from '../../../helpers/enum';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
-import { backImage } from '../../../helpers/Images';
+import {backImage} from '../../../helpers/Images';
 import {
   navigate,
   navigateWithParams,
   stringToNumber,
 } from '../../../helpers/Util';
-import { addRemoveProductInCart } from '../../../redux/actions/cartActions';
+import {addRemoveProductInCart} from '../../../redux/actions/cartActions';
 
 class ProductAboutScreen extends Component {
   constructor(props) {
@@ -56,10 +56,10 @@ class ProductAboutScreen extends Component {
   componentDidMount() {
     const productDetails = this.props.route.params.productDetails;
 
-    this.setState({ productDetails: !!productDetails ? productDetails : {} });
+    this.setState({productDetails: !!productDetails ? productDetails : {}});
   }
 
-  componentDidUpdate(prevProps) { }
+  componentDidUpdate(prevProps) {}
 
   // <Alert Functions>
   showAlertModal = (
@@ -127,9 +127,9 @@ class ProductAboutScreen extends Component {
           paddingBottom: h(2),
         }}>
         <TouchableOpacity
-          style={{ flexDirection: 'row' }}
+          style={{flexDirection: 'row'}}
           onPress={() => {
-            this.setState({ selectedVariation: index });
+            this.setState({selectedVariation: index});
           }}>
           <Ionicons
             name={
@@ -141,8 +141,8 @@ class ProductAboutScreen extends Component {
             color={colors.black}
           />
 
-          <View style={{ flex: 1, marginLeft: w(2) }}>
-            <Text style={{ textTransform: 'capitalize', fontSize: RFValue(17) }}>
+          <View style={{flex: 1, marginLeft: w(2)}}>
+            <Text style={{textTransform: 'capitalize', fontSize: RFValue(17)}}>
               {item.name}
             </Text>
 
@@ -163,37 +163,37 @@ class ProductAboutScreen extends Component {
 
               {Math.floor((item.discount / item.price) * 100).toFixed(0) !=
                 0 && (
-                  <Text
-                    style={{
-                      color: 'black',
-                      textDecorationLine: 'line-through',
-                      marginLeft: h(2),
-                      fontSize: RFValue(15),
-                    }}>
-                    ${stringToNumber(item.price).toFixed(2)}
-                  </Text>
-                )}
+                <Text
+                  style={{
+                    color: 'black',
+                    textDecorationLine: 'line-through',
+                    marginLeft: h(2),
+                    fontSize: RFValue(15),
+                  }}>
+                  ${stringToNumber(item.price).toFixed(2)}
+                </Text>
+              )}
 
               {Math.floor((item.discount / item.price) * 100).toFixed(0) !=
                 0 && (
-                  <View
+                <View
+                  style={{
+                    width: w(25),
+                    borderRadius: h(50),
+                    marginLeft: h(2),
+                    backgroundColor: colors.appGray,
+                  }}>
+                  <Text
                     style={{
-                      width: w(25),
-                      borderRadius: h(50),
-                      marginLeft: h(2),
-                      backgroundColor: colors.appGray,
+                      textAlign: 'center',
+                      color: colors.appPurple,
+                      fontSize: RFValue(15),
                     }}>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        color: colors.appPurple,
-                        fontSize: RFValue(15),
-                      }}>
-                      {Math.floor((item.discount / item.price) * 100).toFixed(0)}%
-                      off
-                    </Text>
-                  </View>
-                )}
+                    {Math.floor((item.discount / item.price) * 100).toFixed(0)}%
+                    off
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -216,7 +216,7 @@ class ProductAboutScreen extends Component {
           backgroundColor: colors.commonBackground,
           alignItems: 'center',
         }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
           <AlertComponent
             alertProps={this.state.alertProps}
             setModalVisible={this.setAlertModalVisible}
@@ -248,11 +248,11 @@ class ProductAboutScreen extends Component {
             onIconR1Press={() => {
               navigate(this.props.navigation, ScreenNames.CartScreen);
             }}
-          // iconR2={'md-share'}
-          // iconR2Color={colors.appPurple}
-          // onIconR2Press={() => {
-          //   this.onShare('', 'http://thedibbsapp.com/', '');
-          // }}
+            // iconR2={'md-share'}
+            // iconR2Color={colors.appPurple}
+            // onIconR2Press={() => {
+            //   this.onShare('', 'http://thedibbsapp.com/', '');
+            // }}
           />
 
           <View
@@ -306,7 +306,7 @@ class ProductAboutScreen extends Component {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => { }}>
+                onPress={() => {}}>
                 <Text
                   style={{
                     textAlign: 'center',
@@ -364,11 +364,11 @@ class ProductAboutScreen extends Component {
             }}></View>
 
           {!!this.state.productDetails &&
-            !!this.state.productDetails.varData &&
-            this.state.productDetails.varData.length > 0 ? (
-            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          !!this.state.productDetails.varData &&
+          this.state.productDetails.varData.length > 0 ? (
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
               <ScrollView
-                style={{ flex: 1, marginBottom: RFValue(10) }}
+                style={{flex: 1, marginBottom: RFValue(10)}}
                 // style={{maxHeight: h(12)}}
                 showsVerticalScrollIndicator={true}>
                 <View
@@ -437,7 +437,7 @@ class ProductAboutScreen extends Component {
                       }}>
                       Available Deals
                     </Text>
-                    <Text style={{ color: 'black', fontSize: RFValue(17) }}>
+                    <Text style={{color: 'black', fontSize: RFValue(17)}}>
                       Choose between option(s){' '}
                     </Text>
 
@@ -458,7 +458,7 @@ class ProductAboutScreen extends Component {
                       }}
                       data={this.state.productDetails.varData}
                       horizontal={false}
-                      renderItem={({ item, index }) =>
+                      renderItem={({item, index}) =>
                         this.renderCellIntervalModeItem(item, index)
                       }
                       keyExtractor={(item, index) => item}
@@ -656,179 +656,180 @@ class ProductAboutScreen extends Component {
                     !!this.state.productDetails.per_person_purchase ||
                     !!this.state.productDetails.return_policy ||
                     true) && (
-                      <Card
-                        containerStyle={{
-                          width: '90%',
-                          backgroundColor: colors.white,
-                          padding: 10,
-                          marginTop: 15,
-                          elevation: 20,
-                          cardMaxElevation: 20,
-                          borderRadius: 10,
+                    <Card
+                      containerStyle={{
+                        width: '90%',
+                        backgroundColor: colors.white,
+                        padding: 10,
+                        marginTop: 15,
+                        elevation: 20,
+                        cardMaxElevation: 20,
+                        borderRadius: 10,
+                      }}>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: 20,
+                          letterSpacing: 1,
+                          color: colors.appPurple,
+                          textTransform: 'capitalize',
+                          fontSize: RFValue(20),
                         }}>
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            fontSize: 20,
-                            letterSpacing: 1,
-                            color: colors.appPurple,
-                            textTransform: 'capitalize',
-                            fontSize: RFValue(20),
-                          }}>
-                          What You Need To Know
-                        </Text>
+                        What You Need To Know
+                      </Text>
 
-                        {!!this.state.productDetails.purchase_valid ? (
-                          <View>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                marginTop: RFValue(20),
-                              }}>
-                              How long is this deal valid for after purchase?
-                            </Text>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                fontWeight: 'bold',
-                                marginTop: RFValue(3),
-                              }}>
-                              {'Valid For ' +
-                                this.state.productDetails.purchase_valid +
-                                ' Days After Purchase.'}
-                            </Text>
-                          </View>
-                        ) : (
-                          <View>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                marginTop: RFValue(20),
-                              }}>
-                              How long is this deal valid for after purchase?
-                            </Text>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                fontWeight: 'bold',
-                                marginTop: RFValue(3),
-                              }}>
-                              {'Valid For 180 Days After Purchase.'}
-                            </Text>
-                          </View>
-                        )}
+                      {!!this.state.productDetails.purchase_valid ? (
+                        <View>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              marginTop: RFValue(20),
+                            }}>
+                            How long is this deal valid for after purchase?
+                          </Text>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              fontWeight: 'bold',
+                              marginTop: RFValue(3),
+                            }}>
+                            {'Valid For ' +
+                              this.state.productDetails.purchase_valid +
+                              ' Days After Purchase.'}
+                          </Text>
+                        </View>
+                      ) : (
+                        <View>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              marginTop: RFValue(20),
+                            }}>
+                            How long is this deal valid for after purchase?
+                          </Text>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              fontWeight: 'bold',
+                              marginTop: RFValue(3),
+                            }}>
+                            {'Valid For 180 Days After Purchase.'}
+                          </Text>
+                        </View>
+                      )}
 
-                        {(!!this.state.productDetails.appointment || true) && (
-                          <View>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                marginTop: RFValue(20),
-                              }}>
-                              Is a reservation or appointed required?
-                            </Text>
+                      {(!!this.state.productDetails.appointment || true) && (
+                        <View>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              marginTop: RFValue(20),
+                            }}>
+                            Is a reservation or appointed required?
+                          </Text>
 
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                fontWeight: 'bold',
-                                marginTop: RFValue(3),
-                              }}>
-                              {!!this.state.productDetails.appointment &&
-                                this.state.productDetails.appointment === 'Y'
-                                ? 'Yes it is required'
-                                : 'No, it is not required'}
-                              .
-                            </Text>
-                          </View>
-                        )}
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              fontWeight: 'bold',
+                              marginTop: RFValue(3),
+                            }}>
+                            {!!this.state.productDetails.appointment &&
+                            this.state.productDetails.appointment === 'Y'
+                              ? 'Yes it is required'
+                              : 'No, it is not required'}
+                            .
+                          </Text>
+                        </View>
+                      )}
 
-                        {!!this.state.productDetails.per_person_purchase && (
-                          <View>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                marginTop: RFValue(20),
-                              }}>
-                              Is there a limit to how many one person can purchase?
-                            </Text>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                fontWeight: 'bold',
-                                marginTop: RFValue(3),
-                              }}>
-                              {this.state.productDetails.per_person_purchase} per
-                              person.
-                            </Text>
-                          </View>
-                        )}
+                      {!!this.state.productDetails.per_person_purchase && (
+                        <View>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              marginTop: RFValue(20),
+                            }}>
+                            Is there a limit to how many one person can
+                            purchase?
+                          </Text>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              fontWeight: 'bold',
+                              marginTop: RFValue(3),
+                            }}>
+                            {this.state.productDetails.per_person_purchase} per
+                            person.
+                          </Text>
+                        </View>
+                      )}
 
-                        {!!this.state.productDetails.return_policy && (
-                          <View>
-                            <Text
-                              style={{
-                                color: 'black',
-                                fontSize: RFValue(17),
-                                marginTop: RFValue(20),
-                              }}>
-                              What is your return policy?
-                            </Text>
+                      {!!this.state.productDetails.return_policy && (
+                        <View>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: RFValue(17),
+                              marginTop: RFValue(20),
+                            }}>
+                            What is your return policy?
+                          </Text>
 
-                            <Text
-                              style={{
-                                color:
-                                  this.state.productDetails.return_policy.includes(
-                                    'http',
-                                  )
-                                    ? '#0645AD'
-                                    : 'black',
-                                fontSize: RFValue(17),
+                          <Text
+                            style={{
+                              color:
+                                this.state.productDetails.return_policy.includes(
+                                  'http',
+                                )
+                                  ? '#0645AD'
+                                  : 'black',
+                              fontSize: RFValue(17),
 
-                                fontWeight: 'bold',
-                                marginTop: RFValue(3),
-                              }}
-                              onPress={() => {
-                                if (
-                                  this.state.productDetails.return_policy.includes(
-                                    'http',
-                                  )
-                                ) {
-                                  Linking.openURL(
-                                    this.state.productDetails.return_policy,
-                                  );
-                                }
-                              }}>
-                              {this.state.productDetails.return_policy}
-                            </Text>
-                          </View>
-                        )}
+                              fontWeight: 'bold',
+                              marginTop: RFValue(3),
+                            }}
+                            onPress={() => {
+                              if (
+                                this.state.productDetails.return_policy.includes(
+                                  'http',
+                                )
+                              ) {
+                                Linking.openURL(
+                                  this.state.productDetails.return_policy,
+                                );
+                              }
+                            }}>
+                            {this.state.productDetails.return_policy}
+                          </Text>
+                        </View>
+                      )}
 
-                        <Text
-                          style={{
-                            color: 'black',
-                            fontWeight: 'bold',
-                            fontSize: RFValue(15),
-                            marginTop: RFValue(20),
-                          }}>
-                          Once your deal is redeemed it is no longer eligible for a
-                          refund. By purchasing this deal you hold Dibbs free of any
-                          liability and hold the merchant solely responsible for the
-                          advertised goods & services. If the promotional value
-                          expires after the purchase, the amount paid on Dibbs never
-                          expires and will be applied to your account as Dibbs
-                          credit.
-                        </Text>
-                      </Card>
-                    )}
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontWeight: 'bold',
+                          fontSize: RFValue(15),
+                          marginTop: RFValue(20),
+                        }}>
+                        Once your deal is redeemed it is no longer eligible for
+                        a refund. By purchasing this deal you hold Dibbs free of
+                        any liability and hold the merchant solely responsible
+                        for the advertised goods & services. If the promotional
+                        value expires after the purchase, the amount paid on
+                        Dibbs never expires and will be applied to your account
+                        as Dibbs credit.
+                      </Text>
+                    </Card>
+                  )}
                 </View>
               </ScrollView>
 
@@ -837,7 +838,7 @@ class ProductAboutScreen extends Component {
                 onPress={() => {
                   this.props.addRemoveProductInCart(
                     this.state.productDetails.varData[
-                    this.state.selectedVariation
+                      this.state.selectedVariation
                     ],
                     this.state.productDetails,
                     CartUpdateActionEnum.Add,
@@ -881,7 +882,7 @@ class ProductAboutScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{ fontSize: RFValue(22), fontWeight: 'bold' }}>
+              <Text style={{fontSize: RFValue(22), fontWeight: 'bold'}}>
                 No options available now
               </Text>
             </View>
@@ -893,7 +894,7 @@ class ProductAboutScreen extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { appName, appState } = state.authReducer;
+  const {appName, appState} = state.authReducer;
 
   return {
     appName,

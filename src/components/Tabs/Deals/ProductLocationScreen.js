@@ -1,17 +1,24 @@
-import { Button } from 'native-base';
-import React, { Component } from 'react';
-import { Linking, SafeAreaView, Share, Text, TouchableOpacity, View } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
-import { Card } from 'react-native-elements';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import { RFValue } from 'react-native-responsive-fontsize';
-import { connect } from 'react-redux';
-import { ScreenNames } from '../../../constants/ScreenNames';
+import {Button} from 'native-base';
+import React, {Component} from 'react';
+import {
+  Linking,
+  SafeAreaView,
+  Share,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {height as h, width as w} from 'react-native-dimension';
+import {Card} from 'react-native-elements';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import {RFValue} from 'react-native-responsive-fontsize';
+import {connect} from 'react-redux';
+import {ScreenNames} from '../../../constants/ScreenNames';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import { AlertTypesEnum } from '../../../helpers/enum';
+import {AlertTypesEnum} from '../../../helpers/enum';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
-import { backImage } from '../../../helpers/Images';
+import {backImage} from '../../../helpers/Images';
 import {
   navigate,
   navigateWithParams,
@@ -58,6 +65,9 @@ class ProductLocationScreen extends Component {
       lng = stringToNumber(locations[1]);
     }
 
+    console.log('Fahad Lat: ', lat);
+    console.log('Fahad Lng: ', lng);
+
     this.setState({
       productDetails: !!productDetails ? productDetails : {},
       lat: lat,
@@ -65,7 +75,7 @@ class ProductLocationScreen extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) { }
+  componentDidUpdate(prevProps) {}
 
   // <Alert Functions>
   showAlertModal = (
@@ -126,7 +136,7 @@ class ProductLocationScreen extends Component {
   };
 
   render() {
-    const { productDetails } = this.state;
+    const {productDetails} = this.state;
     return (
       <View
         style={{
@@ -134,7 +144,7 @@ class ProductLocationScreen extends Component {
           backgroundColor: colors.commonBackground,
           alignItems: 'center',
         }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
           <AlertComponent
             alertProps={this.state.alertProps}
             setModalVisible={this.setAlertModalVisible}
@@ -166,11 +176,11 @@ class ProductLocationScreen extends Component {
             onIconR1Press={() => {
               navigate(this.props.navigation, ScreenNames.CartScreen);
             }}
-          // iconR2={'md-share'}
-          // iconR2Color={colors.appPurple}
-          // onIconR2Press={() => {
-          //   this.onShare('', 'http://thedibbsapp.com/', '');
-          // }}
+            // iconR2={'md-share'}
+            // iconR2Color={colors.appPurple}
+            // onIconR2Press={() => {
+            //   this.onShare('', 'http://thedibbsapp.com/', '');
+            // }}
           />
 
           <View
@@ -257,7 +267,7 @@ class ProductLocationScreen extends Component {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => { }}>
+                onPress={() => {}}>
                 <Text
                   style={{
                     textAlign: 'center',
@@ -282,42 +292,43 @@ class ProductLocationScreen extends Component {
             }}></View>
 
           <View>
-            {!!productDetails.store_info && !!productDetails.store_info.address && (
-              <Card
-                containerStyle={{
-                  width: '90%',
-                  backgroundColor: colors.white,
-                  padding: 10,
-                  marginTop: 15,
-                  elevation: 20,
-                  cardMaxElevation: 20,
-                  borderRadius: 10,
-                }}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: 20,
-                    letterSpacing: 1,
-                    color: colors.appPurple,
-                    textTransform: 'capitalize',
-                    fontSize: RFValue(20),
+            {!!productDetails.store_info &&
+              !!productDetails.store_info.address && (
+                <Card
+                  containerStyle={{
+                    width: '90%',
+                    backgroundColor: colors.white,
+                    padding: 10,
+                    marginTop: 15,
+                    elevation: 20,
+                    cardMaxElevation: 20,
+                    borderRadius: 10,
                   }}>
-                  Address
-                </Text>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: 20,
+                      letterSpacing: 1,
+                      color: colors.appPurple,
+                      textTransform: 'capitalize',
+                      fontSize: RFValue(20),
+                    }}>
+                    Address
+                  </Text>
 
-                <Text
-                  style={{
-                    color: 'black',
-                    fontSize: RFValue(17),
-                    marginTop: RFValue(10),
-                  }}>
-                  {!!productDetails.store_info.address
-                    ? productDetails.store_info.address
-                    : ' - '}
-                  {/* asdf asdf a sdf as dfa sdf as df asdf gerw r fw er fw erf werf wer f wrg wtr ge rtg ert be rtb e,asdf asdf a sdf as dfa sdf as df asdf gerw r fw er fw erf werf wer f wrg wtr ge rtg ert be rtb e,asdf asdf a sdf as dfa sdf as df asdf gerw r fw er fw erf werf wer f wrg wtr ge rtg ert be rtb e */}
-                </Text>
-              </Card>
-            )}
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: RFValue(17),
+                      marginTop: RFValue(10),
+                    }}>
+                    {!!productDetails.store_info.address
+                      ? productDetails.store_info.address
+                      : ' - '}
+                    {/* asdf asdf a sdf as dfa sdf as df asdf gerw r fw er fw erf werf wer f wrg wtr ge rtg ert be rtb e,asdf asdf a sdf as dfa sdf as df asdf gerw r fw er fw erf werf wer f wrg wtr ge rtg ert be rtb e,asdf asdf a sdf as dfa sdf as df asdf gerw r fw er fw erf werf wer f wrg wtr ge rtg ert be rtb e */}
+                  </Text>
+                </Card>
+              )}
 
             <Card
               containerStyle={{
@@ -331,7 +342,7 @@ class ProductLocationScreen extends Component {
               }}>
               <MapView
                 provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                style={{ width: '100%', height: h(50) }}
+                style={{width: '100%', height: h(50)}}
                 region={{
                   latitude: this.state.lat,
                   longitude: this.state.lng,
@@ -340,16 +351,19 @@ class ProductLocationScreen extends Component {
                 }}>
                 <Marker
                   key={0}
-                  coordinate={{ latitude: this.state.lat, longitude: this.state.lng }}
+                  coordinate={{
+                    latitude: this.state.lat,
+                    longitude: this.state.lng,
+                  }}
                   title={
                     !!productDetails.store_info &&
-                      !!productDetails.store_info.store_name
+                    !!productDetails.store_info.store_name
                       ? productDetails.store_info.store_name
                       : 'Store'
                   }
                   description={
                     !!productDetails.store_info &&
-                      !!productDetails.store_info.address
+                    !!productDetails.store_info.address
                       ? productDetails.store_info.address
                       : '-'
                   }
@@ -361,21 +375,26 @@ class ProductLocationScreen extends Component {
                 small
                 onPress={() => {
                   const scheme = Platform.select({
-                    ios: 'maps:0,0?q=',
+                    ios: 'maps:?q=',
                     android: 'geo:0,0?q=',
                   });
-                  const latLng = productDetails.store_info.location;
+
+                  const latLng = this.state.productDetails.store_info.location;
                   const label =
-                    !!productDetails.store_info &&
-                      !!productDetails.store_info.store_name
-                      ? productDetails.store_info.store_name
+                    !!this.state.productDetails.store_info &&
+                    !!this.state.productDetails.store_info.store_name
+                      ? this.state.productDetails.store_info.store_name
                       : 'Resturant name';
+
                   const url = Platform.select({
-                    ios: `${scheme}${label}@${latLng}`,
+                    ios: `${scheme}${encodeURIComponent(label)}&ll=${latLng}`,
                     android: `${scheme}${latLng}(${label})`,
                   });
 
-                  Linking.openURL(url);
+                  console.log('Fahad 02: ', url);
+                  Linking.openURL(url).catch(err =>
+                    console.error('An error occurred', err),
+                  );
                 }}
                 rounded
                 style={{
@@ -403,7 +422,7 @@ class ProductLocationScreen extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { appName, appState } = state.authReducer;
+  const {appName, appState} = state.authReducer;
 
   return {
     appName,

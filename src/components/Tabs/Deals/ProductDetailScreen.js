@@ -1536,7 +1536,6 @@ class ProductDetailScreen extends Component {
                                   android: `${scheme}${latLng}(${label})`,
                                 });
 
-                                console.log('Fahad 02: ', url);
                                 Linking.openURL(url).catch(err =>
                                   console.error('An error occurred', err),
                                 );
