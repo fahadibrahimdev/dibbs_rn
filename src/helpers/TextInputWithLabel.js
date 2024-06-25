@@ -65,6 +65,9 @@ class TextInputWithLabel extends Component {
           styles.OuterContainer,
           {marginVertical: h(0)},
           outerContainerStyles,
+          {
+            // backgroundColor: 'blue',
+          },
         ]}>
         {/* <Text style={[styles.labelStyles,{fontSize: RFValue(12)},labelStyles]}>{label}</Text> */}
         <View
@@ -84,7 +87,6 @@ class TextInputWithLabel extends Component {
                     fontSize: RFValue(20),
                     marginLeft: h(4),
                     marginRight: h(1),
-                    
                   },
                   inputStyles,
                 ]}

@@ -1,7 +1,7 @@
-import { Picker } from '@react-native-picker/picker';
-import { CommonActions } from '@react-navigation/native';
-import { Button } from 'native-base';
-import React, { Component } from 'react';
+import {Picker} from '@react-native-picker/picker';
+import {CommonActions} from '@react-navigation/native';
+import {Button} from 'native-base';
+import React, {Component} from 'react';
 import {
   Image,
   Keyboard,
@@ -10,28 +10,27 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
-import { AccessToken, LoginButton } from 'react-native-fbsdk';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { connect } from 'react-redux';
+import {height as h, width as w} from 'react-native-dimension';
+import {AccessToken, LoginButton} from 'react-native-fbsdk';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
 import HeaderCenter from '../../../../CustomComponents/Header/HeaderCenter';
-import { titles } from '../../../../constants/Localization';
-import { ScreenNames } from '../../../../constants/ScreenNames';
+import {titles} from '../../../../constants/Localization';
+import {ScreenNames} from '../../../../constants/ScreenNames';
 import AlertComponent from '../../../../helpers/AlertComponent';
+import AppDropDown from '../../../../helpers/AppDropDown';
 import FullScreenLoader from '../../../../helpers/FullScreenLoader';
-import { backImage, dibbsLogo } from '../../../../helpers/Images';
+import {backImage, dibbsLogo} from '../../../../helpers/Images';
 import SocialButton from '../../../../helpers/SocialButton';
 import TextInputWithLabel from '../../../../helpers/TextInputWithLabel';
-import { navigate } from '../../../../helpers/Util';
+import {navigate} from '../../../../helpers/Util';
 import colors from '../../../../helpers/colors';
-import { LoginTypeEnum } from '../../../../helpers/enum';
-import { registerUser } from '../../../../redux/actions/authActions';
-import AppDropDown from '../../../../helpers/AppDropDown';
-
+import {LoginTypeEnum} from '../../../../helpers/enum';
+import {registerUser} from '../../../../redux/actions/authActions';
 
 class SignUpScreen extends Component {
   state = {
@@ -55,7 +54,14 @@ class SignUpScreen extends Component {
     confirmPassword: '',
     agreementAccepted: false,
 
-    selectedGender: null
+    showPicker: false,
+    selectedGender: null,
+    pickerItems: [
+      {label: '', value: ''},
+      {label: 'Male', value: 'Male'},
+      {label: 'Female', value: 'Female'},
+      {label: 'Others', value: 'Others'},
+    ],
   };
 
   constructor(props) {
@@ -68,10 +74,9 @@ class SignUpScreen extends Component {
     this.confirmPasswordRef = React.createRef();
 
     this.genderRef = React.createRef();
-
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   componentDidUpdate(prevProps) {
     if (
@@ -82,7 +87,7 @@ class SignUpScreen extends Component {
       this.props.navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: ScreenNames.RefferalScreen }],
+          routes: [{name: ScreenNames.RefferalScreen}],
         }),
       );
     }
@@ -132,7 +137,6 @@ class SignUpScreen extends Component {
   };
 
   openDropdown = visible => {
-
     // console.log()
     this.genderRef.current.focus();
   };
@@ -143,7 +147,7 @@ class SignUpScreen extends Component {
   // </Alert Functions>
 
   validate = () => {
-    const { firstName, lastName, email, password, confirmPassword } = this.state;
+    const {firstName, lastName, email, password, confirmPassword} = this.state;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     if (firstName === '') {
@@ -181,10 +185,8 @@ class SignUpScreen extends Component {
     return true;
   };
 
-
-
   render() {
-    const { isCreatingUser } = this.props;
+    const {isCreatingUser} = this.props;
 
     return (
       <SafeAreaView
@@ -216,10 +218,10 @@ class SignUpScreen extends Component {
 
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{ flex: 1 }}>
+          style={{flex: 1}}>
           <ScrollView
             // contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-            style={{ marginBottom: RFValue(3) }}
+            style={{marginBottom: RFValue(3)}}
             keyboardShouldPersistTaps="always">
             <Image
               // style={styles.stretch}
@@ -243,7 +245,12 @@ class SignUpScreen extends Component {
               SIGN UP TO SCORE ONE OF A KIND DEALS!
             </Text>
 
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}>
               <TextInputWithLabel
                 label={'FirstName*'}
                 value={this.state.firstName}
@@ -253,7 +260,7 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'First Name'}
-                outerContainerStyles={{ width: '80%' }}
+                outerContainerStyles={{width: '80%'}}
                 ref={this.firstNameRef}
                 returnKeyType={'next'}
                 nextRef={this.lastNameRef}
@@ -268,7 +275,7 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'Last Name'}
-                outerContainerStyles={{ width: '80%' }}
+                outerContainerStyles={{width: '80%'}}
                 ref={this.lastNameRef}
                 returnKeyType={'next'}
                 nextRef={this.emailRef}
@@ -285,7 +292,7 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'Enter your Email'}
-                outerContainerStyles={{ width: '80%' }}
+                outerContainerStyles={{width: '80%'}}
                 ref={this.emailRef}
                 returnKeyType={'next'}
                 nextRef={this.passwordRef}
@@ -300,7 +307,7 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'Password'}
-                outerContainerStyles={{ width: '80%' }}
+                outerContainerStyles={{width: '80%'}}
                 secureTextEntry={true}
                 ref={this.passwordRef}
                 returnKeyType={'next'}
@@ -316,38 +323,35 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'Confirm Password'}
-                outerContainerStyles={{ width: '80%' }}
+                outerContainerStyles={{width: '80%'}}
                 secureTextEntry={true}
                 ref={this.confirmPasswordRef}
                 returnKeyType={'done'}
               />
 
-              <TouchableOpacity style={{
-
-      // backgroundColor:'green',      
-      width:300,
-      height:90,
-      // fontSize: RFValue(2),
-    
-    
-      
-              }}
+              <TouchableOpacity
+                style={{
+                  // backgroundColor: 'green',
+                  width: '80%',
+                  // height: 90,
+                  // fontSize: RFValue(2),
+                  // alignSelf: 'center',
+                }}
                 activeOpacity={0.9}
                 onPress={() => {
-                  this.openDropdown()
+                  this.setState({
+                    showPicker: !this.state.showPicker,
+                  });
+
+                  // this.openDropdown();
+                  // Alert.alert('Hi');
                 }}>
-
-
                 <AppDropDown
                   label={'*'}
-                  
-                  width= '80%'
                   value={this.state.selectedGender}
-
                   placeHolder={'Gender'}
-                  
-                  // outerContainerStyles={{ width: '90%' }}
-                  ref={this.genderRef}
+                  outerContainerStyles={{width: '100%'}}
+                  // ref={this.genderRef}
                   returnKeyType={'next'}
                   editable={false}
                 />
@@ -360,17 +364,18 @@ class SignUpScreen extends Component {
                   padding: h(0.5),
                   textAlign: 'center',
                   marginHorizontal: h(5),
-                  color:colors.appTextColor,
+                  color: colors.appTextColor,
                 }}>
                 By clicking on the sign up option below you
               </Text>
 
-              <View style={{ flexDirection: 'row', padding: h(0.5) }}>
+              <View style={{flexDirection: 'row', padding: h(0.5)}}>
                 <Text
-                style={{
-                  color:colors.appTextColor,
-                }}
-                >&nbsp; agree to our &nbsp;</Text>
+                  style={{
+                    color: colors.appTextColor,
+                  }}>
+                  &nbsp; agree to our &nbsp;
+                </Text>
 
                 <TouchableOpacity
                   onPress={() => {
@@ -396,7 +401,7 @@ class SignUpScreen extends Component {
                   style={{
                     fontSize: RFValue(12),
                     textAlign: 'center',
-                    color:colors.appTextColor,
+                    color: colors.appTextColor,
                   }}>
                   &nbsp; and to the &nbsp;
                 </Text>
@@ -441,7 +446,7 @@ class SignUpScreen extends Component {
               // onPress={()=>this.props.login({this.state.userEmail})}
               rounded
               style={styles.btnStyle}
-            // iconLeft
+              // iconLeft
             >
               {/* <Icon name={this.props.iconName} style={this.props.IconStyle}/> */}
               {/* <Icon name={this.props.iconName} style={{textAlign:"right"}}/> */}
@@ -470,7 +475,7 @@ class SignUpScreen extends Component {
 
             {false && (
               <LoginButton
-                style={{ height: 0, width: 0 }}
+                style={{height: 0, width: 0}}
                 // style={{display: 'none'}}
                 onLoginFinished={(error, result) => {
                   if (error) {
@@ -486,36 +491,29 @@ class SignUpScreen extends Component {
                 onLogoutFinished={() => console.log('logout.')}
               />
             )}
-
-
-
-
-
-
-
-
-
-
           </ScrollView>
         </KeyboardAvoidingView>
 
-
-        <Picker
-          ref={this.genderRef}
-          selectedValue={this.state.selectedGender}
-          onValueChange={(itemValue, itemIndex) => {
-
-            console.log("Fahad item value: ", itemValue);
-            this.setState({
-              selectedGender: itemValue,
-            })
-          }
-          }>
-
-          <Picker.Item label="Male" value="Male" />
-          <Picker.Item label="Female" value="Female" />
-          <Picker.Item label="Others" value="Others" />
-        </Picker>
+        {this.state.showPicker && (
+          <Picker
+            ref={this.genderRef}
+            selectedValue={this.state.selectedGender}
+            onValueChange={(itemValue, itemIndex) => {
+              console.log('Fahad item value: ', itemValue);
+              this.setState({
+                showPicker: false,
+                selectedGender: itemValue,
+              });
+            }}>
+            {this.state.pickerItems.map(item => (
+              <Picker.Item
+                key={item.value}
+                label={item.label}
+                value={item.value}
+              />
+            ))}
+          </Picker>
+        )}
 
         <FullScreenLoader
           title={titles.fullScreenLoaderTitle}
@@ -550,7 +548,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const { appName, isCreatingUser, isAuthenticated, loginType, registerError } =
+  const {appName, isCreatingUser, isAuthenticated, loginType, registerError} =
     state.authReducer;
   return {
     appName,
