@@ -197,7 +197,7 @@ class MyDibbsScreen extends Component {
           renderItem={({item, index}) =>
             this.renderCellIntervalModeItem(item, index)
           }
-          keyExtractor={(item, index) => item}
+          keyExtractor={(item, index) => item + index}
           keyboardShouldPersistTaps="always"
         />
       </View>
@@ -206,6 +206,7 @@ class MyDibbsScreen extends Component {
   renderCellIntervalModeItem = (item, index) => {
     return (
       <View
+      key={"MyDibbsScreen" + index}
         style={{
           justifyContent: 'center',
           marginLeft: h(1),

@@ -265,6 +265,7 @@ class DealsScreen extends Component {
 
     return (
       <TouchableOpacity
+      key={"dealscreen"+index}
         style={{
           width: '90%',
 
@@ -614,7 +615,7 @@ class DealsScreen extends Component {
               style={{marginTop: h(2), marginBottom: h(2)}}
               contentContainerStyle={{paddingBottom: h(3)}}
               renderItem={({item, index}) => this.renderCellItem(item, index)}
-              keyExtractor={(item, index) => item}
+              keyExtractor={(item, index) => "dealFlat"+index}
               keyboardShouldPersistTaps="always"
               refreshControl={
                 <RefreshControl

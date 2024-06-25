@@ -205,6 +205,7 @@ class RefferalScreen extends Component {
                   alignSelf: 'center',
                   textAlign: 'center',
                   textTransform: 'uppercase',
+                  color: colors.appTextColor
                 }}>
                 YOUR ACCOUNT WAS CREATED SUCCESSFULLY
               </Text>
@@ -217,6 +218,7 @@ class RefferalScreen extends Component {
                   textAlign: 'center',
                   // textTransform: 'uppercase',
                   marginTop: h(10),
+                  color: colors.appTextColor
                 }}>
                 Did a friend invite you? Give them credit by using their
                 referral code.

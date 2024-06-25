@@ -528,9 +528,9 @@ class SignUpScreen extends Component {
                 selectedGender: itemValue,
               });
             }}>
-            {this.state.pickerItems.map(item => (
+            {this.state.pickerItems.map((item, index) => (
               <Picker.Item
-                key={item.value}
+                key={item.value + index}
                 label={item.label}
                 value={item.value}
               />
