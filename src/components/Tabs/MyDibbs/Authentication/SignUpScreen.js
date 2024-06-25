@@ -366,7 +366,11 @@ class SignUpScreen extends Component {
               </Text>
 
               <View style={{ flexDirection: 'row', padding: h(0.5) }}>
-                <Text>&nbsp; agree to our &nbsp;</Text>
+                <Text
+                style={{
+                  color:colors.appTextColor,
+                }}
+                >&nbsp; agree to our &nbsp;</Text>
 
                 <TouchableOpacity
                   onPress={() => {
@@ -392,6 +396,7 @@ class SignUpScreen extends Component {
                   style={{
                     fontSize: RFValue(12),
                     textAlign: 'center',
+                    color:colors.appTextColor,
                   }}>
                   &nbsp; and to the &nbsp;
                 </Text>
