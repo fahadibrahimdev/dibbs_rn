@@ -82,6 +82,10 @@ class LoginScreen extends Component {
       this.props.isAuthenticated === true &&
       this.props.loginType === LoginTypeEnum.LOGIN
     ) {
+
+      this.onAnalyticsLogin('MobileAppLoginIOS', {
+
+      })
       goBack(this.props.navigation);
     }
 
@@ -93,16 +97,22 @@ class LoginScreen extends Component {
     }
   }
 
-  onAnalytics = async () => {
+  onAnalyticsLogin = async (title, body) => {
     try {
-      await analytics().logEvent('MobileAppLoginIOS', {
-        id: 3745092,
-        // item: 'mens grey t-shirt',
-        // description: ['round neck', 'long sleeved'],
-        // size: 'L',
-      });
+      await analytics().logEvent('MobileAppLoginIOS', body);
     } catch (error) {}
   };
+
+  // onAnalytics = async () => {
+  //   try {
+  //     await analytics().logEvent('MobileAppLoginIOS', {
+  //       id: 3745092,
+  //       // item: 'mens grey t-shirt',
+  //       // description: ['round neck', 'long sleeved'],
+  //       // size: 'L',
+  //     });
+  //   } catch (error) {}
+  // };
 
   // <Alert Functions>
   showAlertModal = (
@@ -339,7 +349,7 @@ class LoginScreen extends Component {
             <Text style={styles.textStyle}>Sign In</Text>
           </Button>
 
-          <Button
+          {/* <Button
             light
             // onPress={()=>logIn()}
             onPress={() => {
@@ -352,7 +362,7 @@ class LoginScreen extends Component {
             // iconLeft
           >
             <Text style={styles.textStyle}>Test Analytics</Text>
-          </Button>
+          </Button> */}
 
           <TouchableOpacity
             style={{alignSelf: 'center'}}
