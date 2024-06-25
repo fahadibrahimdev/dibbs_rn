@@ -82,10 +82,11 @@ class LoginScreen extends Component {
       this.props.isAuthenticated === true &&
       this.props.loginType === LoginTypeEnum.LOGIN
     ) {
-
-      this.onAnalyticsLogin('MobileAppLoginIOS', {
-
-      })
+      let analyticsTitle =
+        Platform.OS === 'android'
+          ? 'MobileAppLoginAndroid'
+          : 'MobileAppLoginIOS';
+      this.onAnalyticsLogin(analyticsTitle, {});
       goBack(this.props.navigation);
     }
 
@@ -99,7 +100,7 @@ class LoginScreen extends Component {
 
   onAnalyticsLogin = async (title, body) => {
     try {
-      await analytics().logEvent('MobileAppLoginIOS', body);
+      await analytics().logEvent(title, body);
     } catch (error) {}
   };
 

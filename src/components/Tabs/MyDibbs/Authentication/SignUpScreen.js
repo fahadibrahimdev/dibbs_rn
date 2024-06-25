@@ -31,6 +31,7 @@ import colors from '../../../../helpers/colors';
 import {LoginTypeEnum} from '../../../../helpers/enum';
 import {registerUser} from '../../../../redux/actions/authActions';
 import {TouchableOpacity} from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 
 class SignUpScreen extends Component {
   state = {
@@ -84,6 +85,14 @@ class SignUpScreen extends Component {
       this.props.isAuthenticated === true &&
       this.props.loginType === LoginTypeEnum.REGISTER
     ) {
+      let analyticsTitle =
+        Platform.OS === 'android'
+          ? 'MobileRegisterAndroid'
+          : 'MobileRegisterIOS';
+      this.onAnalyticsRegister(analyticsTitle, {
+        gender: selectedGender,
+      });
+
       this.props.navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -145,6 +154,12 @@ class SignUpScreen extends Component {
     this.genderRef.current.blur();
   };
   // </Alert Functions>
+
+  onAnalyticsRegister = async (title, body) => {
+    try {
+      await analytics().logEvent(title, body);
+    } catch (error) {}
+  };
 
   validate = () => {
     const {
