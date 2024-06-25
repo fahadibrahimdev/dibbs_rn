@@ -343,7 +343,10 @@ class SignUpScreen extends Component {
                     showPicker: !this.state.showPicker,
                   });
 
-                  // this.openDropdown();
+                  if (Platform.OS === 'android') {
+                    this.openDropdown();
+                  }
+
                   // Alert.alert('Hi');
                 }}>
                 <AppDropDown
@@ -445,7 +448,12 @@ class SignUpScreen extends Component {
               }}
               // onPress={()=>this.props.login({this.state.userEmail})}
               rounded
-              style={styles.btnStyle}
+              style={[
+                styles.btnStyle,
+                {
+                  marginBottom: 50,
+                },
+              ]}
               // iconLeft
             >
               {/* <Icon name={this.props.iconName} style={this.props.IconStyle}/> */}
