@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import {height as h, width as w} from 'react-native-dimension';
 import {AccessToken, LoginButton} from 'react-native-fbsdk';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
@@ -31,6 +30,7 @@ import {navigate} from '../../../../helpers/Util';
 import colors from '../../../../helpers/colors';
 import {LoginTypeEnum} from '../../../../helpers/enum';
 import {registerUser} from '../../../../redux/actions/authActions';
+import { TouchableOpacity } from 'react-native';
 
 class SignUpScreen extends Component {
   state = {
@@ -54,7 +54,7 @@ class SignUpScreen extends Component {
     confirmPassword: '',
     agreementAccepted: false,
 
-    showPicker: false,
+    showPicker: (Platform.OS === 'android')? true:false,
     selectedGender: null,
     pickerItems: [
       {label: '', value: ''},
@@ -159,7 +159,7 @@ class SignUpScreen extends Component {
       this.showAlertModal('Validation Error', 'Please enter your last name!');
       return false;
     }
-
+;
     if (email === '') {
       this.showAlertModal('Validation Error', 'Please enter your email!');
       return false;
@@ -333,19 +333,21 @@ class SignUpScreen extends Component {
                 style={{
                   // backgroundColor: 'green',
                   width: '80%',
+                  marginTop: h(2),
                   // height: 90,
                   // fontSize: RFValue(2),
                   // alignSelf: 'center',
                 }}
-                activeOpacity={0.9}
+                activeOpacity={0.5}
                 onPress={() => {
-                  this.setState({
-                    showPicker: !this.state.showPicker,
-                  });
+                  
 
                   if (Platform.OS === 'android') {
                     this.openDropdown();
-                  }
+                  } else {
+                  this.setState({
+                    showPicker: !this.state.showPicker,
+                  });}
 
                   // Alert.alert('Hi');
                 }}>
@@ -354,7 +356,7 @@ class SignUpScreen extends Component {
                   value={this.state.selectedGender}
                   placeHolder={'Gender'}
                   outerContainerStyles={{width: '100%'}}
-                  // ref={this.genderRef}
+                  ref={this.genderRef}
                   returnKeyType={'next'}
                   editable={false}
                 />
@@ -504,12 +506,15 @@ class SignUpScreen extends Component {
 
         {this.state.showPicker && (
           <Picker
+          style={{
+          display: 'none'
+          }}
             ref={this.genderRef}
             selectedValue={this.state.selectedGender}
             onValueChange={(itemValue, itemIndex) => {
               console.log('Fahad item value: ', itemValue);
               this.setState({
-                showPicker: false,
+                showPicker: (Platform.OS === 'android')?(true):(false),
                 selectedGender: itemValue,
               });
             }}>

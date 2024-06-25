@@ -3,9 +3,8 @@ import {
     Image,
     Platform, StyleSheet,
     Text,
-    TextInput, View
+    TextInput, TouchableOpacity, View
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import colors from '../helpers/colors';
 import { plusImageBlack } from "../helpers/Images";
 import { RFValue } from 'react-native-responsive-fontsize';

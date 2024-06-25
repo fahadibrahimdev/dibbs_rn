@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {height as h} from 'react-native-dimension';
 import {RFValue} from 'react-native-responsive-fontsize';
 import colors from '../helpers/colors';
@@ -40,29 +40,32 @@ class TextInputWithLabel extends Component {
         <View
           style={[
             styles.InputContainer,
-            {borderWidth: 0.3, marginTop: h(2), borderRadius: h(4)},
+            {borderWidth: 0.3, borderRadius: h(4)},
             inputContainerStyles,
           ]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <TextInput
+            <Text
               style={[
                 styles.inputStyles,
                 {
+                  color: ((!!value)?colors.appTextColor:(placeholderTextColor ? placeholderTextColor : colors.lightGray)),
                   width: '89%',
                   height: h(7),
                   fontSize: RFValue(20),
                   marginLeft: h(4),
                   marginRight: h(1),
+                  textAlignVertical: 'center',
+
                 },
                 inputStyles,
               ]}
-              value={value}
-              placeholder={placeHolder}
-              placeholderTextColor={
-                placeholderTextColor ? placeholderTextColor : colors.lightGray
-              }
-              editable={editable}
-            />
+              // value={value}
+              // placeholder={placeHolder}
+              // placeholderTextColor={
+              //   placeholderTextColor ? placeholderTextColor : colors.lightGray
+              // }
+              // pointerEvents={'none'}
+            >{(!!value)?(value):(placeHolder)}</Text>
           </View>
         </View>
       </View>
