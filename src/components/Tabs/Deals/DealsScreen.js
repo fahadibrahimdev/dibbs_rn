@@ -115,7 +115,10 @@ class DealsScreen extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.searchedDeals.length !== prevProps.searchedDeals.length) {
+    if (
+      this.props.searchedDeals.length !== prevProps.searchedDeals.length ||
+      this.props.searchedDeals.length !== this.state.filteredData.length
+    ) {
       this.startSearch(this.state.searchText);
     }
 
@@ -265,7 +268,7 @@ class DealsScreen extends Component {
 
     return (
       <TouchableOpacity
-      key={"dealscreen"+index}
+        key={'dealscreen' + index}
         style={{
           width: '90%',
 
@@ -615,7 +618,7 @@ class DealsScreen extends Component {
               style={{marginTop: h(2), marginBottom: h(2)}}
               contentContainerStyle={{paddingBottom: h(3)}}
               renderItem={({item, index}) => this.renderCellItem(item, index)}
-              keyExtractor={(item, index) => "dealFlat"+index}
+              keyExtractor={(item, index) => 'dealFlat' + index}
               keyboardShouldPersistTaps="always"
               refreshControl={
                 <RefreshControl

@@ -90,7 +90,7 @@ class SignUpScreen extends Component {
           ? 'MobileRegisterAndroid'
           : 'MobileRegisterIOS';
       this.onAnalyticsRegister(analyticsTitle, {
-        gender: selectedGender,
+        gender: this.state.selectedGender,
       });
 
       this.props.navigation.dispatch(
