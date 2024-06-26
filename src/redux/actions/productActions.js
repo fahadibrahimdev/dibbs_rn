@@ -48,7 +48,7 @@ export function searchDeals(keyword) {
     let body = {
       keywords: keyword,
       start: 0,
-      rows: 20,
+      rows: 100,
     };
 
     let response = await POST(url, body, userToken);
@@ -415,8 +415,8 @@ export function saveProduct(product_id) {
       if (res.response.status === 'Y') {
         if (res.response.message === 'Product successfully saved') {
           let currentProducts = getState().productReducer.searchedDeals;
-          let currentProductsVIACategory = getState().productReducer
-            .searchedDealsVIACategory;
+          let currentProductsVIACategory =
+            getState().productReducer.searchedDealsVIACategory;
 
           let currentProductIndex = currentProducts.findIndex(
             obj => obj.product_id === product_id,
@@ -425,9 +425,10 @@ export function saveProduct(product_id) {
             currentProducts[currentProductIndex].mySavedProduct = 'Y';
           }
 
-          let currentProductVIACategoryIndex = currentProductsVIACategory.findIndex(
-            obj => obj.product_id === product_id,
-          );
+          let currentProductVIACategoryIndex =
+            currentProductsVIACategory.findIndex(
+              obj => obj.product_id === product_id,
+            );
           if (currentProductVIACategoryIndex >= 0) {
             currentProductsVIACategory[
               currentProductVIACategoryIndex
@@ -493,8 +494,8 @@ export function removeProduct(product_id) {
         if (res.response.message === 'Product successfully deleted') {
           let currentProducts = getState().productReducer.searchedDeals;
 
-          let currentProductsVIACategory = getState().productReducer
-            .searchedDealsVIACategory;
+          let currentProductsVIACategory =
+            getState().productReducer.searchedDealsVIACategory;
 
           let currentProductIndex = currentProducts.findIndex(
             obj => obj.product_id === product_id,
@@ -503,9 +504,10 @@ export function removeProduct(product_id) {
             currentProducts[currentProductIndex].mySavedProduct = 'N';
           }
 
-          let currentProductVIACategoryIndex = currentProductsVIACategory.findIndex(
-            obj => obj.product_id === product_id,
-          );
+          let currentProductVIACategoryIndex =
+            currentProductsVIACategory.findIndex(
+              obj => obj.product_id === product_id,
+            );
           if (currentProductVIACategoryIndex >= 0) {
             currentProductsVIACategory[
               currentProductVIACategoryIndex

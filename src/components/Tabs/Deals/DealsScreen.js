@@ -406,28 +406,31 @@ class DealsScreen extends Component {
             </TouchableOpacity> */}
 
             <View>
-              <View
-                style={{
-                  backgroundColor: '#000000AA',
-                  padding: RFValue(5),
-                  borderRadius: RFValue(100),
-                }}>
-                <Text
-                  numberOfLines={1}
+              {(moment(item.end_date).diff(moment(), 'days') === 0 ||
+                moment(item.end_date).diff(moment(), 'days') < 4) && (
+                <View
                   style={{
-                    // textAlign: 'right',
-                    color: 'white',
-                    // backgroundColor: "#889911",
-                    fontSize: RFValue(10),
+                    backgroundColor: '#000000AA',
+                    padding: RFValue(5),
+                    borderRadius: RFValue(100),
                   }}>
-                  {moment(item.end_date).diff(moment(), 'days') === 0
-                    ? 'Last Day To Get This Deal.'
-                    : moment(item.end_date).diff(moment(), 'days') < 4
-                    ? moment(item.end_date).diff(moment(), 'days') +
-                      ' Day(s) Left To Get This Deal.'
-                    : ''}
-                </Text>
-              </View>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      // textAlign: 'right',
+                      color: 'white',
+                      // backgroundColor: "#889911",
+                      fontSize: RFValue(10),
+                    }}>
+                    {moment(item.end_date).diff(moment(), 'days') === 0
+                      ? 'Last Day To Get This Deal.'
+                      : moment(item.end_date).diff(moment(), 'days') < 4
+                      ? moment(item.end_date).diff(moment(), 'days') +
+                        ' Day(s) Left To Get This Deal.'
+                      : ''}
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </View>
