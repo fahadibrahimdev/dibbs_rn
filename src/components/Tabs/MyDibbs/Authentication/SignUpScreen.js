@@ -146,12 +146,18 @@ class SignUpScreen extends Component {
   };
 
   openDropdown = visible => {
-    // console.log()
-    this.genderRef.current.focus();
+    console.log('genderRef: ', this.genderRef);
+
+    if (!!this.genderRef.current?.focus) {
+      this.genderRef.current.focus();
+    }
   };
 
   closeDropdown = visible => {
-    this.genderRef.current.blur();
+    console.log('genderRef: ', this.genderRef);
+    if (!!this.genderRef.current?.blur) {
+      this.genderRef.current.blur();
+    }
   };
   // </Alert Functions>
 
@@ -381,7 +387,7 @@ class SignUpScreen extends Component {
                   value={this.state.selectedGender}
                   placeHolder={'Gender'}
                   outerContainerStyles={{width: '100%'}}
-                  ref={this.genderRef}
+                  // ref={this.genderRef}
                   returnKeyType={'next'}
                   editable={false}
                 />
@@ -531,6 +537,7 @@ class SignUpScreen extends Component {
 
         {this.state.showPicker && (
           <Picker
+            mode="dialog"
             style={{
               display: Platform.OS === 'android' ? 'none' : 'flex',
             }}
@@ -545,7 +552,7 @@ class SignUpScreen extends Component {
             }}>
             {this.state.pickerItems.map((item, index) => (
               <Picker.Item
-                key={item.value + index}
+                key={'picker:' + item.value + index}
                 label={item.label}
                 value={item.value}
               />

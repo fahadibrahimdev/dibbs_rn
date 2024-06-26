@@ -1019,7 +1019,7 @@ class ProductDetailScreen extends Component {
                         return (
                           // It's important to put style here because it's got offset inside
                           <View
-                            key={index}
+                            key={'list1:' + index}
                             style={[
                               style,
                               {
@@ -1075,7 +1075,7 @@ class ProductDetailScreen extends Component {
                           {this.state.imagesArray.map((image, index) => {
                             return (
                               <TouchableHighlight
-                                key={index}
+                                key={'list2:' + index}
                                 underlayColor="#ccc"
                                 onPress={() => {
                                   // move(index)
