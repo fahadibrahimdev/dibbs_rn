@@ -1,98 +1,405 @@
-import React, { PureComponent } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+// import React, { PureComponent } from 'react';
+// import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+// import { CardField, useStripe } from '@stripe/stripe-react-native';
+
+// // import stripe from 'tipsi-stripe';
+// // import Button from '../../../Tipsi-Stripe/components/Button';
+
+// export default class CardPaymentScreen extends PureComponent {
+//   static title = 'Card Form';
+
+//   state = {
+//     loading: false,
+//     paymentMethod: null,
+//   };
+
+//   handleCardPayPress = async () => {
+//     try {
+//       this.setState({ loading: true, paymentMethod: null });
+
+//       // const paymentMethod = await stripe.paymentRequestWithCardForm({
+//       //   theme: {
+//       //     primaryBackgroundColor: 'white',
+//       //     secondaryBackgroundColor: 'white',
+//       //     primaryForegroundColor: 'black',
+//       //     secondaryForegroundColor: 'black',
+//       //     accentColor: 'blue',
+//       //     errorColor: 'red',
+//       //   },
+//       //   // Only iOS support this options
+//       //   smsAutofillDisabled: true,
+//       //   requiredBillingAddressFields: 'full',
+//       //   prefilledInformation: {
+//       //     billingAddress: {
+//       //       name: 'Gunilla Haugeh',
+//       //       line1: 'Canary Place',
+//       //       line2: '3',
+//       //       city: 'Macon',
+//       //       state: 'Georgia',
+//       //       country: 'US',
+//       //       postalCode: '31217',
+//       //       email: 'ghaugeh0@printfriendly.com',
+//       //     },
+//       //   },
+//       // });
+
+//       // console.log('Payment Info => ', paymentMethod);
+//       // this.setState({ loading: false, paymentMethod });
+//     } catch (error) {
+//       this.setState({ loading: false });
+//     }
+//   };
+
+//   render() {
+//     const { loading, paymentMethod } = this.state;
+
+//     return (
+//       <View style={styles.container}>
+//         <SafeAreaView style={{ flex: 1 }}>
+//           <Text style={styles.header}>Card Form Example</Text>
+//           <Text style={styles.instruction}>
+//             Click button to show Card Form dialog.
+//           </Text>
+//           {/* <Button
+//             text="Enter you card and pay"
+//             loading={loading}
+//             onPress={this.handleCardPayPress}
+//           /> */}
+//           <View style={styles.paymentMethod}>
+//             {paymentMethod && (
+//               <Text style={styles.instruction}>
+//                 Payment Method: {paymentMethod.id}
+//               </Text>
+//             )}
+//           </View>
+//         </SafeAreaView>
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   header: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   },
+//   instruction: {
+//     textAlign: 'center',
+//     color: '#333333',
+//     marginBottom: 5,
+//   },
+//   paymentMethod: {
+//     // height: 20,
+//   },
+// });
+
+import {
+  CardField,
+  createPaymentMethod,
+  createToken,
+  useStripe,
+} from '@stripe/stripe-react-native';
+import React, {useState} from 'react';
+import {
+  Button,
+  ScrollView,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
+
+import {width as w} from 'react-native-dimension';
 // import stripe from 'tipsi-stripe';
-// import Button from '../../../Tipsi-Stripe/components/Button';
+import {strings, titles} from '../../../constants/Localization';
+import {ScreenNames} from '../../../constants/ScreenNames';
+import AlertComponent from '../../../helpers/AlertComponent';
+import colors from '../../../helpers/colors';
+import {AlertTypesEnum, PaymentMethodsEnum} from '../../../helpers/enum';
+import FullScreenLoader from '../../../helpers/FullScreenLoader';
+import {backImage} from '../../../helpers/Images';
+import {navigate} from '../../../helpers/Util';
+import {useNavigation} from '@react-navigation/native';
 
-export default class CardPaymentScreen extends PureComponent {
-  static title = 'Card Form';
+const CardPaymentScreen = () => {
+  const navigation = useNavigation();
+  const {confirmPayment} = useStripe();
+  const [paymentError, setPaymentError] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [card, setCard] = useState(null);
+  const [alertProps, setAlertProps] = useState({
+    alertModalVisible: false,
+    alertType: '',
+    alertHeading: '',
+    alertMsg: '',
+    showLeftButton: false,
+    leftBtnText: '',
+    leftBtnDestructive: false,
+    showRightButton: false,
+    rightBtnText: '',
+    rightBtnDestructive: false,
+  });
 
-  state = {
-    loading: false,
-    paymentMethod: null,
-  };
-
-  handleCardPayPress = async () => {
+  const handlePayment = async () => {
     try {
-      this.setState({ loading: true, paymentMethod: null });
-
-      // const paymentMethod = await stripe.paymentRequestWithCardForm({
-      //   theme: {
-      //     primaryBackgroundColor: 'white',
-      //     secondaryBackgroundColor: 'white',
-      //     primaryForegroundColor: 'black',
-      //     secondaryForegroundColor: 'black',
-      //     accentColor: 'blue',
-      //     errorColor: 'red',
-      //   },
-      //   // Only iOS support this options
-      //   smsAutofillDisabled: true,
-      //   requiredBillingAddressFields: 'full',
-      //   prefilledInformation: {
-      //     billingAddress: {
-      //       name: 'Gunilla Haugeh',
-      //       line1: 'Canary Place',
-      //       line2: '3',
-      //       city: 'Macon',
-      //       state: 'Georgia',
-      //       country: 'US',
-      //       postalCode: '31217',
-      //       email: 'ghaugeh0@printfriendly.com',
-      //     },
+      // const { paymentMethod, error } = await createPaymentMethod({
+      //   type: 'Card',
+      //   paymentMethodType: 'Card',
+      //   billingDetails: {
+      //     name: 'John Doe',
+      //     email: 'john.doe@example.com',
       //   },
       // });
 
-      // console.log('Payment Info => ', paymentMethod);
-      // this.setState({ loading: false, paymentMethod });
+      const obj = await createPaymentMethod({
+        // type: 'Card',
+        paymentMethodType: 'Card',
+        card: {
+          brand: 'Visa',
+          complete: true,
+          expiryMonth: 11,
+          expiryYear: 26,
+          last4: '4242',
+          validCVC: 'Valid',
+          validExpiryDate: 'Valid',
+          validNumber: 'Valid',
+        },
+        billingDetails: {
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+        },
+      });
+
+      // const {paymentMethodIntent, error} = await createToken({
+      //   type: 'Card',
+      //   name: "Fahad Ibrahim",
+      //   currency: 'usd',
+      // });
+
+      // const {paymentIntent, error} = await confirmPayment(
+      //   'sk_test_51PMveFDMW1AQXKDfidIQkFvgPpuXo9rBIFOpSToPuV5h9ZFCV7jAtrWb0JDOvfAQUOrOSMJyPVtvnOWZcUAasbZJ00o0HKEBMz',
+      //   {
+      //     type: 'Card',
+      //     paymentMethodType: 'Card',
+      //   },
+      // );
+
+      console.log("Fahad Obj: ", obj);
+      // if (error) {
+      //   console.log('Payment confirmation error:', error.message);
+      //   setPaymentError(`Payment failed: ${error.message}`);
+      //   setPaymentSuccess(false);
+      // } else if (paymentIntent) {
+      //   console.log('Success:', paymentIntent);
+      //   setPaymentSuccess(true);
+      //   setPaymentError(null);
+      // }
     } catch (error) {
-      this.setState({ loading: false });
+      console.log('Error while confirming payment:', error);
+      setPaymentError(`Payment failed: ${error.message}`);
+      setPaymentSuccess(false);
     }
   };
 
-  render() {
-    const { loading, paymentMethod } = this.state;
+  const setAlertModalVisible = visible => {
 
-    return (
-      <View style={styles.container}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Text style={styles.header}>Card Form Example</Text>
-          <Text style={styles.instruction}>
-            Click button to show Card Form dialog.
-          </Text>
-          {/* <Button
-            text="Enter you card and pay"
-            loading={loading}
-            onPress={this.handleCardPayPress}
-          /> */}
-          <View style={styles.paymentMethod}>
-            {paymentMethod && (
-              <Text style={styles.instruction}>
-                Payment Method: {paymentMethod.id}
-              </Text>
-            )}
+    setAlertProps({...alertProps,alertModalVisible: visible, })
+    
+  };
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.commonBackground,
+      }}>
+      <SafeAreaView style={{flex: 1}}>
+        <AlertComponent
+          alertProps={alertProps}
+          setModalVisible={setAlertModalVisible}
+          onLeftBtnClick={() => {
+            setAlertModalVisible(false);
+          }}
+          onRightBtnClick={() => {}}
+          width={w(85)}
+        />
+        <HeaderBackCompoenent
+          cardStyle={true}
+          leftImageSource={backImage}
+          onPressLeftButton={() => {
+            navigation.goBack(null);
+          }}
+          leftType="image"
+          leftImageColor={colors.appPurple}
+          headingTitle={'Enter card details'}
+          titleAlignment={'flex-start'}
+          // iconR2={'md-share'}
+          // iconR2Color={colors.appPurple}
+          // onIconR2Press={() => {
+          //   this.onShare('', 'http://thedibbsapp.com/', '');
+          // }}
+        />
+        <ScrollView
+          contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+          style={{marginBottom: RFValue(10)}}
+          keyboardShouldPersistTaps="always">
+          <View style={{flex: 1}}>
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <View
+                style={{
+                  marginTop: 50,
+                  width: '80%',
+                }}>
+                <Text
+                  style={{
+                    color: 'black',
+                  }}>
+                  Card Number
+                </Text>
+                <CardField
+                  postalCodeEnabled={false}
+                  placeholder={{
+                    number: '4242 4242 4242 4242',
+                  }}
+                  cardStyle={{
+                    backgroundColor: '#000000',
+                    // textColor: '#000000',
+                  }}
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    marginVertical: 20,
+                  }}
+                  onCardChange={cardDetails => {
+                    console.log('card details', cardDetails);
+                    setCard(cardDetails);
+                  }}
+                />
+              </View>
+              <Button title="Pay $50" onPress={handlePayment} />
+              {paymentError && (
+                <Text style={{color: 'red', marginTop: 10}}>
+                  {paymentError}
+                </Text>
+              )}
+              {paymentSuccess && (
+                <Text style={{color: 'green', marginTop: 10}}>
+                  Payment successful!
+                </Text>
+              )}
+            </View>
           </View>
-        </SafeAreaView>
-      </View>
-    );
-  }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instruction: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  paymentMethod: {
-    // height: 20,
-  },
-});
+          <FullScreenLoader
+            title={titles.fullScreenLoaderTitle}
+            loading={false}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    </View>
+  );
+};
+
+export default CardPaymentScreen;
+
+// export default class CardPaymentScreen extends PureComponent {
+//   static title = 'Card Form';
+
+//   state = {
+//     loading: false,
+//     paymentMethod: null,
+//   };
+
+//   handleCardPayPress = async () => {
+//     try {
+//       this.setState({ loading: true, paymentMethod: null });
+
+//       // const paymentMethod = await stripe.paymentRequestWithCardForm({
+//       //   theme: {
+//       //     primaryBackgroundColor: 'white',
+//       //     secondaryBackgroundColor: 'white',
+//       //     primaryForegroundColor: 'black',
+//       //     secondaryForegroundColor: 'black',
+//       //     accentColor: 'blue',
+//       //     errorColor: 'red',
+//       //   },
+//       //   // Only iOS support this options
+//       //   smsAutofillDisabled: true,
+//       //   requiredBillingAddressFields: 'full',
+//       //   prefilledInformation: {
+//       //     billingAddress: {
+//       //       name: 'Gunilla Haugeh',
+//       //       line1: 'Canary Place',
+//       //       line2: '3',
+//       //       city: 'Macon',
+//       //       state: 'Georgia',
+//       //       country: 'US',
+//       //       postalCode: '31217',
+//       //       email: 'ghaugeh0@printfriendly.com',
+//       //     },
+//       //   },
+//       // });
+
+//       // console.log('Payment Info => ', paymentMethod);
+//       // this.setState({ loading: false, paymentMethod });
+//     } catch (error) {
+//       this.setState({ loading: false });
+//     }
+//   };
+
+//   render() {
+//     const { loading, paymentMethod } = this.state;
+
+//     return (
+//       <View style={styles.container}>
+//         <SafeAreaView style={{ flex: 1 }}>
+//           <Text style={styles.header}>Card Form Example</Text>
+//           <Text style={styles.instruction}>
+//             Click button to show Card Form dialog.
+//           </Text>
+//           {/* <Button
+//             text="Enter you card and pay"
+//             loading={loading}
+//             onPress={this.handleCardPayPress}
+//           /> */}
+//           <View style={styles.paymentMethod}>
+//             {paymentMethod && (
+//               <Text style={styles.instruction}>
+//                 Payment Method: {paymentMethod.id}
+//               </Text>
+//             )}
+//           </View>
+//         </SafeAreaView>
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   header: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   },
+//   instruction: {
+//     textAlign: 'center',
+//     color: '#333333',
+//     marginBottom: 5,
+//   },
+//   paymentMethod: {
+//     // height: 20,
+//   },
+// });

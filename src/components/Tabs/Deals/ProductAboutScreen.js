@@ -142,7 +142,7 @@ class ProductAboutScreen extends Component {
           />
 
           <View style={{flex: 1, marginLeft: w(2)}}>
-            <Text style={{textTransform: 'capitalize', fontSize: RFValue(17)}}>
+            <Text style={{color: 'black',textTransform: 'capitalize', fontSize: RFValue(17)}}>
               {item.name}
             </Text>
 

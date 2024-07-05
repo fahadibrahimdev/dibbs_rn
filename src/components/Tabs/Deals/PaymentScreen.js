@@ -470,12 +470,12 @@ class PaymentScreen extends Component {
                   }}>
                   <TouchableOpacity
                     onPress={() => {
-                      // navigate(
-                      //   this.props.navigation,
-                      //   ScreenNames.CardPaymentScreen,
-                      // );
+                      navigate(
+                        this.props.navigation,
+                        ScreenNames.CardPaymentScreen,
+                      );
 
-                      this.handleCardPayPress();
+                      // this.handleCardPayPress();
                     }}
                     style={{
                       height: RFValue(100),

@@ -185,6 +185,7 @@ class CustomerSupportScreen extends Component {
                 marginLeft: w(5),
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
+                color: colors.appTextColor
               }}>
               Get in touch with our support team
             </Text>

@@ -16,6 +16,8 @@ import NotificationController from './src/pushNotification/NotificationControlle
 import configureStore from './src/redux/store/configureStore';
 
 import analytics from '@react-native-firebase/analytics';
+import { StripeProvider } from '@stripe/stripe-react-native';
+
 
 analytics().setAnalyticsCollectionEnabled(true);
 
@@ -38,6 +40,11 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
+         <StripeProvider
+      publishableKey="pk_test_51PMveFDMW1AQXKDfWTB3j2majlOJqcFC7dNODBuaIoXc7JCp3oiMPid1Qf8Gk1O5ckvbXzwXDWOjoChJ3Grnd4R700usbiU2Hc"
+      // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+      // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
+    >
         <Provider store={store}>
           <RootNavigator />
 
@@ -45,6 +52,7 @@ export default class App extends Component {
 
           <NotificationController />
         </Provider>
+        </StripeProvider>
       </NavigationContainer>
     );
   }
