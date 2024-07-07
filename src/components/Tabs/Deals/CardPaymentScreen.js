@@ -555,8 +555,8 @@ const CardPaymentScreen = ({route}) => {
                     number: '4242 4242 4242 4242',
                   }}
                   cardStyle={{
-                    backgroundColor: '#FFF',
-                    // textColor: '#000000',
+                    backgroundColor: currentMode === 'dark' ? '#000' : '#FFF',
+                    textColor: currentMode === 'dark' ? '#FFF' : '#000',
                   }}
                   style={{
                     width: '100%',
