@@ -1,8 +1,8 @@
-import { API } from '../../constants/APIs';
-import { strings } from '../../constants/Localization';
-import { SET_APP_STATE } from '../../constants/ReducerEnums';
-import { AsyncKeysEnum, LoginTypeEnum, UserTypeEnum } from '../../helpers/enum';
-import { POST } from '../../helpers/helperFunctions';
+import {API} from '../../constants/APIs';
+import {strings} from '../../constants/Localization';
+import {SET_APP_STATE} from '../../constants/ReducerEnums';
+import {AsyncKeysEnum, LoginTypeEnum, UserTypeEnum} from '../../helpers/enum';
+import {POST} from '../../helpers/helperFunctions';
 import {
   AsyncGetViaKey,
   AsyncRemoveViaKey,
@@ -131,7 +131,7 @@ export const loginUserError = err => ({
   payload: err,
 });
 
-export function registerUser(first_name, last_name, email, password) {
+export function registerUser(first_name, last_name, email, password, gender) {
   return async (dispatch, getState) => {
     let url = `${API.REGISTER_API}`;
     const deviceToken = getState().authReducer.deviceToken;

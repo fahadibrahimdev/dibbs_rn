@@ -1,5 +1,5 @@
-import { CommonActions } from '@react-navigation/native';
-import React, { Component } from 'react';
+import {CommonActions} from '@react-navigation/native';
+import React, {Component} from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -9,19 +9,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { width as w } from 'react-native-dimension';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { connect } from 'react-redux';
+import {width as w} from 'react-native-dimension';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {connect} from 'react-redux';
 // import stripe from 'tipsi-stripe';
-import { strings, titles } from '../../../constants/Localization';
-import { ScreenNames } from '../../../constants/ScreenNames';
+import {strings, titles} from '../../../constants/Localization';
+import {ScreenNames} from '../../../constants/ScreenNames';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import { AlertTypesEnum, PaymentMethodsEnum } from '../../../helpers/enum';
+import {AlertTypesEnum, PaymentMethodsEnum} from '../../../helpers/enum';
 import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
-import { backImage } from '../../../helpers/Images';
-import { navigate } from '../../../helpers/Util';
+import {backImage} from '../../../helpers/Images';
+import {navigate, navigateWithParams} from '../../../helpers/Util';
 import {
   addRemoveProductInCart,
   clearCartInfo,
@@ -74,12 +74,12 @@ class PaymentScreen extends Component {
 
     var orderTotalUpFrontAmountInString = !!appliedCoupon
       ? (
-        this.props.totalUpFront.toFixed(2) -
-        (
-          this.props.totalUpFront *
-          (parseFloat(appliedCoupon.discount) / 100)
+          this.props.totalUpFront.toFixed(2) -
+          (
+            this.props.totalUpFront *
+            (parseFloat(appliedCoupon.discount) / 100)
+          ).toFixed(2)
         ).toFixed(2)
-      ).toFixed(2)
       : this.props.totalUpFront.toFixed(2);
 
     var orderTotalUpFrontAmount = parseFloat(orderTotalUpFrontAmountInString);
@@ -92,112 +92,104 @@ class PaymentScreen extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.orderConfirmedSuccessfully !==
-      prevProps.orderConfirmedSuccessfully &&
-      this.props.orderConfirmedSuccessfully === true &&
-      this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe
-    ) {
-      Alert.alert(
-        'Success',
-        'Order Placed Successfully!',
-
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              this.props.searchDeals('');
-              this.props.clearCartInfo();
-
-              this.props.navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [{ name: ScreenNames.BottomNavigator }],
-                }),
-              );
-              // navigate(this.props.navigation, ScreenNames.DealsNavigator);
-            },
-          },
-        ],
-        { cancelable: false },
-      );
-    }
-
-    if (
-      this.props.orderPlacedSuccessfully !==
-      prevProps.orderPlacedSuccessfully &&
-      this.props.orderPlacedSuccessfully === true &&
-      (this.state.orderPaymentMethod === PaymentMethodsEnum.DibbsCredit ||
-        this.state.orderPaymentMethod === PaymentMethodsEnum.LowDibbsCredit ||
-        (this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe &&
-          this.state.orderTotalUpFrontAmount === 0))
-    ) {
-      Alert.alert(
-        'Success',
-        'Order Placed Successfully!',
-
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              this.props.searchDeals('');
-              this.props.clearCartInfo();
-              navigate(this.props.navigation, ScreenNames.DealsScreen);
-            },
-          },
-        ],
-        { cancelable: false },
-      );
-    }
-
-    if (
-      this.props.orderPlaceError !== prevProps.orderPlaceError &&
-      !!this.props.orderPlaceError
-    ) {
-      Alert.alert(
-        'Error',
-        this.props.orderPlaceError,
-
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              // this.props.searchDeals('');
-              // this.props.clearCartInfo();
-              // navigate(this.props.navigation, ScreenNames.DealsScreen);
-            },
-          },
-        ],
-        { cancelable: false },
-      );
-    }
-
-    if (
-      this.props.orderConfirmError !== prevProps.orderConfirmError &&
-      !!this.props.orderConfirmError
-    ) {
-      Alert.alert(
-        'Error',
-        this.props.orderConfirmError,
-
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              // this.props.searchDeals('');
-              // this.props.clearCartInfo();
-              // navigate(this.props.navigation, ScreenNames.DealsScreen);
-            },
-          },
-        ],
-        { cancelable: false },
-      );
-    }
+    // if (
+    //   this.props.orderConfirmedSuccessfully !==
+    //   prevProps.orderConfirmedSuccessfully &&
+    //   this.props.orderConfirmedSuccessfully === true &&
+    //   this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe
+    // ) {
+    //   Alert.alert(
+    //     'Success',
+    //     'Order Placed Successfully!',
+    //     [
+    //       {
+    //         text: 'OK',
+    //         onPress: () => {
+    //           this.props.searchDeals('');
+    //           this.props.clearCartInfo();
+    //           this.props.navigation.dispatch(
+    //             CommonActions.reset({
+    //               index: 0,
+    //               routes: [{ name: ScreenNames.BottomNavigator }],
+    //             }),
+    //           );
+    //           // navigate(this.props.navigation, ScreenNames.DealsNavigator);
+    //         },
+    //       },
+    //     ],
+    //     { cancelable: false },
+    //   );
+    // }
+    // if (
+    //   this.props.orderPlacedSuccessfully !==
+    //   prevProps.orderPlacedSuccessfully &&
+    //   this.props.orderPlacedSuccessfully === true &&
+    //   (this.state.orderPaymentMethod === PaymentMethodsEnum.DibbsCredit ||
+    //     this.state.orderPaymentMethod === PaymentMethodsEnum.LowDibbsCredit ||
+    //     (this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe &&
+    //       this.state.orderTotalUpFrontAmount === 0))
+    // ) {
+    //   Alert.alert(
+    //     'Success',
+    //     'Order Placed Successfully!',
+    //     [
+    //       {
+    //         text: 'OK',
+    //         onPress: () => {
+    //           this.props.searchDeals('');
+    //           this.props.clearCartInfo();
+    //           navigate(this.props.navigation, ScreenNames.DealsScreen);
+    //         },
+    //       },
+    //     ],
+    //     { cancelable: false },
+    //   );
+    // }
+    // if (
+    //   this.props.orderPlaceError !== prevProps.orderPlaceError &&
+    //   !!this.props.orderPlaceError
+    // ) {
+    //   Alert.alert(
+    //     'Error',
+    //     this.props.orderPlaceError,
+    //     [
+    //       {
+    //         text: 'OK',
+    //         onPress: () => {
+    //           // this.props.searchDeals('');
+    //           // this.props.clearCartInfo();
+    //           // navigate(this.props.navigation, ScreenNames.DealsScreen);
+    //         },
+    //       },
+    //     ],
+    //     { cancelable: false },
+    //   );
+    // }
+    // if (
+    //   this.props.orderConfirmError !== prevProps.orderConfirmError &&
+    //   !!this.props.orderConfirmError
+    // ) {
+    //   Alert.alert(
+    //     'Error',
+    //     this.props.orderConfirmError,
+    //     [
+    //       {
+    //         text: 'OK',
+    //         onPress: () => {
+    //           // this.props.searchDeals('');
+    //           // this.props.clearCartInfo();
+    //           // navigate(this.props.navigation, ScreenNames.DealsScreen);
+    //         },
+    //       },
+    //     ],
+    //     { cancelable: false },
+    //   );
+    // }
   }
 
   handleCardPayPress = async (lowDibbsCreditMode = false) => {
     try {
-      this.setState({ loading: true, paymentMethod: null });
+      this.setState({loading: true, paymentMethod: null});
 
       // const paymentMethod = await stripe.paymentRequestWithCardForm({
       //   theme: {
@@ -243,7 +235,7 @@ class PaymentScreen extends Component {
       );
     } catch (error) {
       console.log('Fahad Stripe error msg -> ', error.message);
-      this.setState({ loading: false });
+      this.setState({loading: false});
     }
   };
 
@@ -312,7 +304,7 @@ class PaymentScreen extends Component {
           flex: 1,
           backgroundColor: colors.commonBackground,
         }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
           <AlertComponent
             alertProps={this.state.alertProps}
             setModalVisible={this.setAlertModalVisible}
@@ -320,7 +312,9 @@ class PaymentScreen extends Component {
               this.setAlertModalVisible(false);
             }}
             onRightBtnClick={() => {
-              if (this.state.alertProps.alertType === AlertTypesEnum.GuestUser) {
+              if (
+                this.state.alertProps.alertType === AlertTypesEnum.GuestUser
+              ) {
               } else if (
                 this.state.alertProps.alertType === AlertTypesEnum.DibbsCredit
               ) {
@@ -331,10 +325,10 @@ class PaymentScreen extends Component {
               ) {
                 var currentPayment = !!this.state.appliedCoupon
                   ? this.props.totalUpFront.toFixed(2) -
-                  (
-                    this.props.totalUpFront *
-                    (parseFloat(this.state.appliedCoupon.discount) / 100)
-                  ).toFixed(2)
+                    (
+                      this.props.totalUpFront *
+                      (parseFloat(this.state.appliedCoupon.discount) / 100)
+                    ).toFixed(2)
                   : this.props.totalUpFront.toFixed(2);
 
                 if (
@@ -381,17 +375,17 @@ class PaymentScreen extends Component {
             leftImageColor={colors.appPurple}
             headingTitle={strings.payment}
             titleAlignment={'flex-start'}
-          // iconR2={'md-share'}
-          // iconR2Color={colors.appPurple}
-          // onIconR2Press={() => {
-          //   this.onShare('', 'http://thedibbsapp.com/', '');
-          // }}
+            // iconR2={'md-share'}
+            // iconR2Color={colors.appPurple}
+            // onIconR2Press={() => {
+            //   this.onShare('', 'http://thedibbsapp.com/', '');
+            // }}
           />
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-            style={{ marginBottom: RFValue(10) }}
+            contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+            style={{marginBottom: RFValue(10)}}
             keyboardShouldPersistTaps="always">
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -417,12 +411,13 @@ class PaymentScreen extends Component {
                     ${' '}
                     {!!this.state.appliedCoupon
                       ? (
-                        this.props.totalUpFront.toFixed(2) -
-                        (
-                          this.props.totalUpFront *
-                          (parseFloat(this.state.appliedCoupon.discount) / 100)
+                          this.props.totalUpFront.toFixed(2) -
+                          (
+                            this.props.totalUpFront *
+                            (parseFloat(this.state.appliedCoupon.discount) /
+                              100)
+                          ).toFixed(2)
                         ).toFixed(2)
-                      ).toFixed(2)
                       : this.props.totalUpFront.toFixed(2)}
                   </Text>
                 </View>
@@ -452,7 +447,7 @@ class PaymentScreen extends Component {
                 </View>
               </View>
 
-              <View style={{ margin: RFValue(10) }}>
+              <View style={{margin: RFValue(10)}}>
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -470,9 +465,16 @@ class PaymentScreen extends Component {
                   }}>
                   <TouchableOpacity
                     onPress={() => {
-                      navigate(
+                      navigateWithParams(
                         this.props.navigation,
                         ScreenNames.CardPaymentScreen,
+                        {
+                          coupon: this.state.coupon,
+                          paymentMethod: PaymentMethodsEnum.Stripe,
+                          lowDibbsCreditMode: false,
+                          orderTotalUpFrontAmount:
+                            this.state.orderTotalUpFrontAmount,
+                        },
                       );
 
                       // this.handleCardPayPress();
@@ -568,17 +570,18 @@ class PaymentScreen extends Component {
 
             <FullScreenLoader
               title={titles.fullScreenLoaderTitle}
-              loading={this.props.isPlacingOrder || this.props.isConfirmingOrder}
+              loading={
+                this.props.isPlacingOrder || this.props.isConfirmingOrder
+              }
             />
           </ScrollView>
-
         </SafeAreaView>
       </View>
     );
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  const { appName, isAuthenticated } = state.authReducer;
+  const {appName, isAuthenticated} = state.authReducer;
   const {
     isFetchingMySavedProducts,
     mySavedProducts,

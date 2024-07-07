@@ -1,3 +1,4 @@
+import {CALL_STATE} from '../../helpers/enum';
 import {
   CLEAR_CART_INFO,
   CONFIRM_ORDER_ERROR,
@@ -6,6 +7,10 @@ import {
   CREATE_ORDER_ERROR,
   CREATE_ORDER_PENDING,
   CREATE_ORDER_SUCCESS,
+  DO_STRIPE_PAYMENT_ERROR,
+  DO_STRIPE_PAYMENT_IDLE,
+  DO_STRIPE_PAYMENT_PENDING,
+  DO_STRIPE_PAYMENT_SUCCESS,
   MY_ORDERS_ERROR,
   MY_ORDERS_PENDING,
   MY_ORDERS_SUCCESS,
@@ -13,7 +18,7 @@ import {
   REDEEEM_ORDERS_PENDING,
   REDEEEM_ORDERS_SUCCESS,
   UPDATE_CART_INFO_PENDING,
-  UPDATE_CART_INFO_SUCCESS
+  UPDATE_CART_INFO_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -41,6 +46,12 @@ const initialState = {
   isSubmittingRedeemOrder: false,
   isOrderRedeemed: false,
   redeemOrdersError: '',
+
+  stripePayment: {
+    state: CALL_STATE.IDLE,
+    payload: null,
+    error: '',
+  },
 };
 
 export default function cartReducer(state = initialState, action) {
@@ -178,6 +189,54 @@ export default function cartReducer(state = initialState, action) {
 
         isSubmittingRedeemOrder: false,
         redeemOrdersError: action.payload,
+      };
+    }
+
+    case DO_STRIPE_PAYMENT_IDLE: {
+      let oldStripePayment = state.stripePayment;
+      return {
+        ...state,
+        stripePayment: {
+          state: CALL_STATE.IDLE,
+          payload: oldStripePayment.payload,
+          error: oldStripePayment.error,
+        },
+      };
+    }
+
+    case DO_STRIPE_PAYMENT_PENDING: {
+      let oldStripePayment = state.stripePayment;
+      return {
+        ...state,
+        stripePayment: {
+          state: CALL_STATE.FETCHING,
+          payload: null,
+          error: '',
+        },
+      };
+    }
+
+    case DO_STRIPE_PAYMENT_SUCCESS: {
+      let oldStripePayment = state.stripePayment;
+      return {
+        ...state,
+        stripePayment: {
+          state: CALL_STATE.SUCCESS,
+          payload: action.payload.payload,
+          error: '',
+        },
+      };
+    }
+
+    case DO_STRIPE_PAYMENT_ERROR: {
+      let oldStripePayment = state.stripePayment;
+      return {
+        ...state,
+        stripePayment: {
+          state: CALL_STATE.ERROR,
+          payload: oldStripePayment.payload,
+          error: action.payload.error,
+        },
       };
     }
 

@@ -476,6 +476,7 @@ class SignUpScreen extends Component {
                     this.state.lastName,
                     this.state.email,
                     this.state.password,
+                    this.state.selectedGender,
                   );
                 }
               }}
@@ -606,8 +607,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    registerUser: (first_name, last_name, email, password) =>
-      dispatch(registerUser(first_name, last_name, email, password)),
+    registerUser: (first_name, last_name, email, password, gender) =>
+      dispatch(registerUser(first_name, last_name, email, password, gender)),
   };
 };
 

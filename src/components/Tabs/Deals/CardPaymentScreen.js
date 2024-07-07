@@ -105,36 +105,76 @@ import {
   createToken,
   useStripe,
 } from '@stripe/stripe-react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {Button} from 'native-base';
 import {
-  Button,
   ScrollView,
   Text,
   View,
   SafeAreaView,
   TouchableOpacity,
+  Appearance,
+  StyleSheet,
+  Alert,
 } from 'react-native';
+import {height as h, width as w} from 'react-native-dimension';
 import {RFValue} from 'react-native-responsive-fontsize';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
 
-import {width as w} from 'react-native-dimension';
 // import stripe from 'tipsi-stripe';
 import {strings, titles} from '../../../constants/Localization';
 import {ScreenNames} from '../../../constants/ScreenNames';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import {AlertTypesEnum, PaymentMethodsEnum} from '../../../helpers/enum';
+import {
+  AlertTypesEnum,
+  CALL_STATE,
+  PaymentMethodsEnum,
+} from '../../../helpers/enum';
 import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import {backImage} from '../../../helpers/Images';
 import {navigate} from '../../../helpers/Util';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  clearCartInfo,
+  createOrder,
+  doStripePayment,
+  doStripePaymentIdle,
+} from '../../../redux/actions/cartActions';
+import {searchDeals} from '../../../redux/actions/productActions';
 
-const CardPaymentScreen = () => {
+const CardPaymentScreen = ({route}) => {
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+
+  const RedStripePayment = useSelector(
+    state => state.cartReducer.stripePayment,
+  );
+
+  const RedOrderPlacedSuccessfully = useSelector(
+    state => state.cartReducer.orderPlacedSuccessfully,
+  );
+  const RedOrderPlaceError = useSelector(
+    state => state.cartReducer.orderPlaceError,
+  );
+
+  const RedOrderConfirmedSuccessfully = useSelector(
+    state => state.cartReducer.orderConfirmedSuccessfully,
+  );
+  const RedOrderConfirmError = useSelector(
+    state => state.cartReducer.orderConfirmError,
+  );
+
   const {confirmPayment} = useStripe();
   const [paymentError, setPaymentError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  const [myComponentProps, setMyComponentProps] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [card, setCard] = useState(null);
+  const [myStripePaymentMethod, setMyStripePaymentMethod] = useState(null);
   const [alertProps, setAlertProps] = useState({
     alertModalVisible: false,
     alertType: '',
@@ -148,6 +188,213 @@ const CardPaymentScreen = () => {
     rightBtnDestructive: false,
   });
 
+  const [currentMode, setCurrentMode] = useState('');
+
+  useEffect(() => {
+    var mCoupon = !!route.params?.coupon ? route.params.coupon : '';
+    var mPaymentMethod = !!route.params?.paymentMethod
+      ? route.params.paymentMethod
+      : '';
+    var mLowDibbsCreditMode = !!route.params?.lowDibbsCreditMode
+      ? route.params.lowDibbsCreditMode
+      : '';
+
+    var mOrderTotalUpFrontAmount = !!route.params?.orderTotalUpFrontAmount
+      ? route.params.orderTotalUpFrontAmount
+      : '';
+
+    setMyComponentProps({
+      coupon: mCoupon,
+      paymentMethod: mPaymentMethod,
+      lowDibbsCreditMode: mLowDibbsCreditMode,
+      orderTotalUpFrontAmount: mOrderTotalUpFrontAmount,
+    });
+
+    const subscription = Appearance.addChangeListener(({colorScheme}) => {
+      console.log('Appearance mode changed to', colorScheme);
+      // You can update your state or trigger actions based on colorScheme
+      setCurrentMode(colorScheme);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      RedStripePayment.state !== CALL_STATE.IDLE &&
+      RedStripePayment.state !== CALL_STATE.FETCHING
+    ) {
+      dispatch(doStripePaymentIdle());
+      if (RedStripePayment.state === CALL_STATE.SUCCESS) {
+        // Alert.alert('Success');
+
+        dispatch(
+          createOrder(
+            myComponentProps.coupon,
+            myComponentProps.lowDibbsCreditMode
+              ? PaymentMethodsEnum.LowDibbsCredit
+              : PaymentMethodsEnum.Stripe,
+            myStripePaymentMethod,
+          ),
+        );
+
+        // this.props.createOrder(
+        //   this.state.coupon,
+        //   lowDibbsCreditMode
+        //     ? PaymentMethodsEnum.LowDibbsCredit
+        //     : PaymentMethodsEnum.Stripe,
+        //   this.state.paymentMethod,
+        // );
+      } else if (RedStripePayment.state === CALL_STATE.ERROR) {
+        setIsLoading(false);
+        Alert.alert('Error');
+      }
+    }
+  }, [RedStripePayment.state]);
+
+  useEffect(() => {
+    console.log(
+      'fahad useeffect RedOrderConfirmedSuccessfully: ',
+      RedOrderConfirmedSuccessfully,
+    );
+    console.log(
+      'fahad useeffect myComponentProps?.paymentMethod: ',
+      myComponentProps?.paymentMethod,
+    );
+    if (
+      RedOrderConfirmedSuccessfully === true &&
+      myComponentProps?.paymentMethod === PaymentMethodsEnum.Stripe
+    ) {
+      setIsLoading(false);
+      Alert.alert(
+        'Success',
+        'Order Placed Successfully!',
+
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              dispatch(searchDeals(''));
+              dispatch(clearCartInfo());
+
+              navigation.reset({
+                index: 0,
+                routes: [
+                  {
+                    name: ScreenNames.BottomNavigator,
+                    params: {},
+                  },
+                ],
+              });
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  }, [RedOrderConfirmedSuccessfully]);
+
+  useEffect(() => {
+    if (!!RedOrderConfirmError) {
+      setIsLoading(false);
+      Alert.alert(
+        'Error',
+        RedOrderConfirmError,
+
+        [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  }, [RedOrderConfirmError]);
+
+  useEffect(() => {
+    if (
+      RedOrderPlacedSuccessfully === true &&
+      myComponentProps?.paymentMethod === PaymentMethodsEnum.Stripe &&
+      false
+    ) {
+      setIsLoading(false);
+      Alert.alert(
+        'Success',
+        'Order Placed Successfully!',
+
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              dispatch(searchDeals(''));
+              dispatch(clearCartInfo());
+              // navigation.navigate(ScreenNames.DealsScreen);
+
+              navigation.reset({
+                index: 0,
+                routes: [
+                  {
+                    name: ScreenNames.BottomNavigator,
+                    params: {},
+                  },
+                ],
+              });
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  }, [RedOrderPlacedSuccessfully]);
+
+  useEffect(() => {
+    if (!!RedOrderPlaceError) {
+      setIsLoading(false);
+      Alert.alert(
+        'Error',
+        RedOrderPlaceError,
+
+        [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  }, [RedOrderPlaceError]);
+
+  // useEffect(() => {
+  //   if (
+  //     this.props.orderConfirmedSuccessfully !==
+  //       prevProps.orderConfirmedSuccessfully &&
+  //     this.props.orderConfirmedSuccessfully === true &&
+  //     this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe
+  //   ) {
+  //   }
+
+  //   if (
+  //     this.props.orderPlacedSuccessfully !==
+  //       prevProps.orderPlacedSuccessfully &&
+  //     this.props.orderPlacedSuccessfully === true &&
+  //     (this.state.orderPaymentMethod === PaymentMethodsEnum.DibbsCredit ||
+  //       this.state.orderPaymentMethod === PaymentMethodsEnum.LowDibbsCredit ||
+  //       (this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe &&
+  //         this.state.orderTotalUpFrontAmount === 0))
+  //   ) {
+  //   }
+
+  //   if (
+  //     this.props.orderConfirmError !== prevProps.orderConfirmError &&
+  //     !!this.props.orderConfirmError
+  //   ) {
+  //   }
+  // });
+
   const handlePayment = async () => {
     try {
       // const { paymentMethod, error } = await createPaymentMethod({
@@ -159,23 +406,35 @@ const CardPaymentScreen = () => {
       //   },
       // });
 
+      if (
+        !!!card ||
+        !!card?.complete === false ||
+        card?.validCVC !== 'Valid' ||
+        card?.validExpiryDate !== 'Valid' ||
+        card?.validNumber !== 'Valid'
+      ) {
+        showAlertModal('Validation Error', 'Please enter correct card info!');
+
+        return;
+      }
+      setIsLoading(true);
       const obj = await createPaymentMethod({
         // type: 'Card',
         paymentMethodType: 'Card',
-        card: {
-          brand: 'Visa',
-          complete: true,
-          expiryMonth: 11,
-          expiryYear: 26,
-          last4: '4242',
-          validCVC: 'Valid',
-          validExpiryDate: 'Valid',
-          validNumber: 'Valid',
-        },
-        billingDetails: {
-          name: 'John Doe',
-          email: 'john.doe@example.com',
-        },
+        // card: {
+        //   brand: 'Visa',
+        //   complete: true,
+        //   expiryMonth: 11,
+        //   expiryYear: 26,
+        //   last4: '4242',
+        //   validCVC: 'Valid',
+        //   validExpiryDate: 'Valid',
+        //   validNumber: 'Valid',
+        // },
+        // billingDetails: {
+        //   name: 'John Doe',
+        //   email: 'john.doe@example.com',
+        // },
       });
 
       // const {paymentMethodIntent, error} = await createToken({
@@ -192,7 +451,7 @@ const CardPaymentScreen = () => {
       //   },
       // );
 
-      console.log("Fahad Obj: ", obj);
+      setMyStripePaymentMethod(obj.paymentMethod);
       // if (error) {
       //   console.log('Payment confirmation error:', error.message);
       //   setPaymentError(`Payment failed: ${error.message}`);
@@ -202,6 +461,7 @@ const CardPaymentScreen = () => {
       //   setPaymentSuccess(true);
       //   setPaymentError(null);
       // }
+      dispatch(doStripePayment(5000, 'usd', obj.paymentMethod?.id));
     } catch (error) {
       console.log('Error while confirming payment:', error);
       setPaymentError(`Payment failed: ${error.message}`);
@@ -209,10 +469,33 @@ const CardPaymentScreen = () => {
     }
   };
 
-  const setAlertModalVisible = visible => {
+  const showAlertModal = (
+    alertHeading,
+    alertMsg,
+    alertType = '',
+    showLeftButton = false,
+    leftBtnText = '',
+    leftBtnDestructive = false,
+    showRightButton = true,
+    rightBtnText = 'OK',
+    rightBtnDestructive = false,
+  ) => {
+    setAlertProps({
+      alertModalVisible: true,
+      alertHeading: alertHeading,
+      alertMsg: alertMsg,
+      alertType: alertType,
+      showLeftButton: showLeftButton,
+      leftBtnText: leftBtnText,
+      leftBtnDestructive: leftBtnDestructive,
+      showRightButton: showRightButton,
+      rightBtnText: rightBtnText,
+      rightBtnDestructive: rightBtnDestructive,
+    });
+  };
 
-    setAlertProps({...alertProps,alertModalVisible: visible, })
-    
+  const setAlertModalVisible = visible => {
+    setAlertProps({...alertProps, alertModalVisible: visible});
   };
 
   return (
@@ -228,7 +511,9 @@ const CardPaymentScreen = () => {
           onLeftBtnClick={() => {
             setAlertModalVisible(false);
           }}
-          onRightBtnClick={() => {}}
+          onRightBtnClick={() => {
+            setAlertModalVisible(false);
+          }}
           width={w(85)}
         />
         <HeaderBackCompoenent
@@ -239,7 +524,7 @@ const CardPaymentScreen = () => {
           }}
           leftType="image"
           leftImageColor={colors.appPurple}
-          headingTitle={'Enter card details'}
+          headingTitle={'Enter Card Details'}
           titleAlignment={'flex-start'}
           // iconR2={'md-share'}
           // iconR2Color={colors.appPurple}
@@ -270,7 +555,7 @@ const CardPaymentScreen = () => {
                     number: '4242 4242 4242 4242',
                   }}
                   cardStyle={{
-                    backgroundColor: '#000000',
+                    backgroundColor: '#FFF',
                     // textColor: '#000000',
                   }}
                   style={{
@@ -279,12 +564,36 @@ const CardPaymentScreen = () => {
                     marginVertical: 20,
                   }}
                   onCardChange={cardDetails => {
-                    console.log('card details', cardDetails);
+                    // console.log('card details', cardDetails);
                     setCard(cardDetails);
                   }}
                 />
               </View>
-              <Button title="Pay $50" onPress={handlePayment} />
+
+              <Button
+                light
+                // onPress={()=>logIn()}
+                onPress={() => {
+                  handlePayment();
+                }}
+                rounded
+                style={styles.btnStyle}
+                // iconLeft
+              >
+                <Text style={styles.textStyle}>
+                  Pay ${myComponentProps?.orderTotalUpFrontAmount}
+                </Text>
+              </Button>
+              {/* <Button
+                title="Pay $50"
+                onPress={() => {
+                  showAlertModal(
+                    'Validation Error',
+                    'Please enter your email!',
+                  );
+                  // handlePayment();
+                }}
+              /> */}
               {paymentError && (
                 <Text style={{color: 'red', marginTop: 10}}>
                   {paymentError}
@@ -300,7 +609,7 @@ const CardPaymentScreen = () => {
 
           <FullScreenLoader
             title={titles.fullScreenLoaderTitle}
-            loading={false}
+            loading={isLoading}
           />
         </ScrollView>
       </SafeAreaView>
@@ -383,23 +692,20 @@ export default CardPaymentScreen;
 //   }
 // }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   header: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-//   instruction: {
-//     textAlign: 'center',
-//     color: '#333333',
-//     marginBottom: 5,
-//   },
-//   paymentMethod: {
-//     // height: 20,
-//   },
-// });
+const styles = StyleSheet.create({
+  btnStyle: {
+    justifyContent: 'center',
+    marginTop: h(5),
+    backgroundColor: 'rgb(74, 29, 121)',
+    height: h(6.5),
+    width: '50%',
+    alignSelf: 'center',
+  },
+  textStyle: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: RFValue(15),
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});

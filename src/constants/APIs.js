@@ -25,6 +25,16 @@ const PROD = {
 const PROD_2 = {
   DOMAIN: 'https://store.thedibbsapp.com/',
   BASE_URL: 'https://store.thedibbsapp.com/rest/api',
+  STRIPE_VERCEL_URL: 'https://stripe-api-nx.vercel.app/api',
+  TOKEN: '',
+  appId: '1',
+  appKey: 'c4ca4238a0b923820dcc509a6f75849b',
+};
+
+const UAT_Thunder = {
+  DOMAIN: 'https://dibbs.thundertechsol.com/',
+  BASE_URL: 'https://dibbs.thundertechsol.com/rest/api',
+  STRIPE_VERCEL_URL: 'https://stripe-api-nx.vercel.app/api',
   TOKEN: '',
   appId: '1',
   appKey: 'c4ca4238a0b923820dcc509a6f75849b',
@@ -78,4 +88,6 @@ export const API = {
   SUBMIT_REFERRAL_CODE_API: `${ENV.BASE_URL}/user/addReferral`,
 
   LOGOUT_API: `${ENV.BASE_URL}/user/logout`,
+
+  STRIPE_PAYMENT_API: `${ENV.STRIPE_VERCEL_URL}/stripe`,
 };
