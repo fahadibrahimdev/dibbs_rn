@@ -11,6 +11,10 @@ import {
   CREATE_ORDER_ERROR,
   CREATE_ORDER_PENDING,
   CREATE_ORDER_SUCCESS,
+  DO_STRIPE_PAYMENT_ERROR,
+  DO_STRIPE_PAYMENT_IDLE,
+  DO_STRIPE_PAYMENT_PENDING,
+  DO_STRIPE_PAYMENT_SUCCESS,
   MY_ORDERS_ERROR,
   MY_ORDERS_PENDING,
   MY_ORDERS_SUCCESS,
@@ -491,5 +495,97 @@ export const redeemOrderSuccess = () => ({
 
 export const redeemOrderError = err => ({
   type: REDEEEM_ORDERS_ERROR,
+  payload: err,
+});
+
+export function doStripePayment(amount, currency, paymentMethodId) {
+  return async (dispatch, getState) => {
+    let url = `${API.STRIPE_PAYMENT_API}`;
+    dispatch(doStripePaymentPending());
+
+    const reducerState = getState().cartReducer;
+    const productReducer = getState().productReducer;
+
+    var allCoupons = productReducer.allCoupons;
+    var appliedCoupon = null;
+    var coupon = reducerState.coupon;
+    var couponAmount = 0;
+    var isCouponApplied = false;
+
+    allCoupons.map(obj => {
+      console.log('Fahad map obj: ', obj);
+      if (obj.code === coupon) {
+        appliedCoupon = obj;
+      }
+    });
+
+    if (!!appliedCoupon) {
+      couponAmount = appliedCoupon.discount;
+      isCouponApplied = true;
+    }
+
+    var totalUpFront = isCouponApplied
+      ? reducerState.totalUpFront.toFixed(2) -
+        reducerState.totalUpFront * (parseFloat(couponAmount) / 100).toFixed(2)
+      : reducerState.totalUpFront;
+
+    let shifted = totalUpFront * 100;
+
+    // Truncate the decimal part
+    let totalUpFrontInInteger = Math.trunc(shifted);
+
+    console.log('Fahad total amount paid: ', totalUpFront);
+    let body = {
+      amount: totalUpFrontInInteger,
+      currency: currency,
+      paymentMethodId: paymentMethodId,
+    };
+
+    // const userToken = getState().authReducer.userInfo.token;
+
+    console.log('Fahad api vercel body: ', body);
+
+    let response = await POST(url, body, '');
+
+    if (response.status >= 200 && response.status < 300) {
+      let res = await response.json();
+
+      if (res.status === true) {
+        dispatch(
+          doStripePaymentSuccess({
+            payload: res.data,
+          }),
+        );
+      } else {
+        dispatch(doStripePaymentError({error: res.response.message}));
+      }
+    } else if (response.status === 422) {
+      let res = await response.json();
+      dispatch(doStripePaymentError({error: res.response.message}));
+    } else {
+      dispatch(
+        doStripePaymentError({
+          error: !!response.message ? response.message : strings.networkError,
+        }),
+      );
+    }
+  };
+}
+
+export const doStripePaymentIdle = () => ({
+  type: DO_STRIPE_PAYMENT_IDLE,
+});
+
+export const doStripePaymentPending = () => ({
+  type: DO_STRIPE_PAYMENT_PENDING,
+});
+
+export const doStripePaymentSuccess = payload => ({
+  type: DO_STRIPE_PAYMENT_SUCCESS,
+  payload: payload,
+});
+
+export const doStripePaymentError = err => ({
+  type: DO_STRIPE_PAYMENT_ERROR,
   payload: err,
 });

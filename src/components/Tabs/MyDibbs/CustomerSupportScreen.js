@@ -185,6 +185,7 @@ class CustomerSupportScreen extends Component {
                 marginLeft: w(5),
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
+                color: colors.appTextColor,
               }}>
               Get in touch with our support team
             </Text>
@@ -192,12 +193,19 @@ class CustomerSupportScreen extends Component {
               style={{
                 flex: 1,
                 marginTop: h(2),
-                marginLeft: w(5),
+                padding: 20,
+                // marginLeft: w(5),
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
               }}>
               <View style={{width: '100%'}}>
-                <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    borderWidth: 1,
+                    paddingLeft: 20,
+                    borderRadius: 50,
+                  }}>
                   <Ionicons
                     style={{marginLeft: h(0), marginTop: RFValue(3)}}
                     name={'md-mail'}
@@ -238,16 +246,22 @@ class CustomerSupportScreen extends Component {
                   />
                 </View>
 
-                <View
+                {/* <View
                   style={{
                     width: '95%',
                     height: h(0.05),
                     backgroundColor: colors.black,
-                  }}></View>
+                  }}></View> */}
               </View>
 
               <View style={{width: '100%', marginTop: h(2)}}>
-                <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    paddingLeft: 20,
+                    borderRadius: 20,
+                    borderWidth: 1,
+                  }}>
                   <Ionicons
                     style={{marginLeft: h(0), marginTop: RFValue(3)}}
                     name={'md-text'}
@@ -281,12 +295,12 @@ class CustomerSupportScreen extends Component {
                     keyboardType={'default'}
                   />
                 </View>
-                <View
+                {/* <View
                   style={{
-                    width: '95%',
+                    width: '100%',
                     height: h(0.05),
                     backgroundColor: colors.black,
-                  }}></View>
+                  }}></View> */}
               </View>
 
               <Button
@@ -314,7 +328,7 @@ class CustomerSupportScreen extends Component {
                 style={{
                   justifyContent: 'center',
                   marginTop: h(5),
-                  backgroundColor: colors.lightGray,
+                  backgroundColor: 'rgb(74, 29, 121)',
                   height: h(6.5),
                   width: '50%',
                   alignSelf: 'center',
@@ -324,7 +338,7 @@ class CustomerSupportScreen extends Component {
                     width: '100%',
                     textAlign: 'center',
                     fontSize: RFValue(15),
-                    color: 'black',
+                    color: 'white',
                     fontWeight: 'bold',
                   }}>
                   Send Message

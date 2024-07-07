@@ -54,6 +54,7 @@ export default class IncrementDecrementButton extends Component {
             paddingBottom: RFValue(2),
             fontSize: RFValue(19),
             backgroundColor: colors.white,
+            color: colors.appTextColor
           }}>
           {this.props.currentValue}
         </Text>

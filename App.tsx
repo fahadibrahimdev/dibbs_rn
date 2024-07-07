@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import { NavigationContainer } from '@react-navigation/native';
 import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
@@ -16,6 +8,9 @@ import NotificationController from './src/pushNotification/NotificationControlle
 import configureStore from './src/redux/store/configureStore';
 
 import analytics from '@react-native-firebase/analytics';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { Stripe_TEST } from './src/helpers/enum';
+
 
 analytics().setAnalyticsCollectionEnabled(true);
 
@@ -38,13 +33,19 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Provider store={store}>
-          <RootNavigator />
+        <StripeProvider
+          publishableKey={Stripe_TEST.KEY}
+        // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+        // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
+        >
+          <Provider store={store}>
+            <RootNavigator />
 
-          <StatusBar backgroundColor="#324192" barStyle="dark-content" />
+            <StatusBar backgroundColor="#324192" barStyle="dark-content" />
 
-          <NotificationController />
-        </Provider>
+            <NotificationController />
+          </Provider>
+        </StripeProvider>
       </NavigationContainer>
     );
   }
