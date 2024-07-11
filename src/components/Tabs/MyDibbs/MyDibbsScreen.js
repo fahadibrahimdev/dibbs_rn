@@ -12,6 +12,7 @@ import {AlertTypesEnum} from '../../../helpers/enum';
 import HeaderCompoenent from '../../../helpers/HeaderCompoenent';
 import {navigate, navigateWithParams} from '../../../helpers/Util';
 import {logout} from '../../../redux/actions/authActions';
+import DeviceInfo from 'react-native-device-info';
 
 class MyDibbsScreen extends Component {
   constructor(props) {
@@ -206,7 +207,7 @@ class MyDibbsScreen extends Component {
   renderCellIntervalModeItem = (item, index) => {
     return (
       <View
-      key={"MyDibbsScreen" + index}
+        key={'MyDibbsScreen' + index}
         style={{
           justifyContent: 'center',
           marginLeft: h(1),
@@ -411,6 +412,29 @@ class MyDibbsScreen extends Component {
             </Text>
           </View>
           {this.renderIntervalModeFlatList()}
+          <View
+            style={{
+              // flex: 1,
+              // justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 15,
+                fontWeight: 'bold',
+              }}>
+              Version:{' '}
+              {
+                DeviceInfo.getVersion()
+                // +
+                //   ' (' +
+                //   DeviceInfo.getBuildNumber() +
+                //   ')'
+              }
+            </Text>
+          </View>
         </ScrollView>
       </View>
     );
