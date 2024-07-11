@@ -58,10 +58,10 @@ class SignUpScreen extends Component {
     showPicker: Platform.OS === 'android' ? true : false,
     selectedGender: null,
     pickerItems: [
-      {label: '', value: ''},
+      {label: 'Please make a selection', value: '--'},
       {label: 'Male', value: 'Male'},
       {label: 'Female', value: 'Female'},
-      {label: 'Others', value: 'Others'},
+      {label: 'Prefer not to say', value: 'Others'},
     ],
   };
 
@@ -209,7 +209,7 @@ class SignUpScreen extends Component {
       return false;
     }
 
-    if (!!!selectedGender) {
+    if (!!!selectedGender || selectedGender === '--') {
       this.showAlertModal('Validation Error', 'Please select your gender!');
       return false;
     }
@@ -316,7 +316,7 @@ class SignUpScreen extends Component {
               <TextInputWithLabel
                 label={'Email*'}
                 keyboardType={'email-address'}
-                autoCapitalize={'none'}
+                autoCapitalize="none"
                 value={this.state.email}
                 onChange={text => {
                   this.setState({
@@ -339,6 +339,7 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'Password'}
+                autoCapitalize="none"
                 outerContainerStyles={{width: '80%'}}
                 secureTextEntry={true}
                 ref={this.passwordRef}
@@ -355,6 +356,7 @@ class SignUpScreen extends Component {
                   });
                 }}
                 placeHolder={'Confirm Password'}
+                autoCapitalize="none"
                 outerContainerStyles={{width: '80%'}}
                 secureTextEntry={true}
                 ref={this.confirmPasswordRef}

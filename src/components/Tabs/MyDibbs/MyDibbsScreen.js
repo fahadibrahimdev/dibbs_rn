@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {height as h, width as w} from 'react-native-dimension';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,6 +19,7 @@ import {AlertTypesEnum} from '../../../helpers/enum';
 import HeaderCompoenent from '../../../helpers/HeaderCompoenent';
 import {navigate, navigateWithParams} from '../../../helpers/Util';
 import {logout} from '../../../redux/actions/authActions';
+import DeviceInfo from 'react-native-device-info';
 
 class MyDibbsScreen extends Component {
   constructor(props) {
@@ -206,7 +214,7 @@ class MyDibbsScreen extends Component {
   renderCellIntervalModeItem = (item, index) => {
     return (
       <View
-      key={"MyDibbsScreen" + index}
+        key={'MyDibbsScreen' + index}
         style={{
           justifyContent: 'center',
           marginLeft: h(1),
@@ -255,6 +263,13 @@ class MyDibbsScreen extends Component {
   render() {
     const {isAuthenticated, userInfo} = this.props;
 
+    let appVersion = '';
+    if (Platform.OS === 'ios') {
+      appVersion =
+        DeviceInfo.getVersion() + ' (' + DeviceInfo.getBuildNumber() + ')';
+    } else {
+      appVersion = DeviceInfo.getVersion();
+    }
     return (
       <View
         style={{
@@ -411,6 +426,22 @@ class MyDibbsScreen extends Component {
             </Text>
           </View>
           {this.renderIntervalModeFlatList()}
+          <View
+            style={{
+              // flex: 1,
+              // justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 15,
+                fontWeight: 'bold',
+              }}>
+              Version:{` ${appVersion}`}
+            </Text>
+          </View>
         </ScrollView>
       </View>
     );
