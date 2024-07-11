@@ -51,9 +51,9 @@ export const CALL_STATE = {
 };
 
 export const Stripe_LIVE = {
-  KEY: ''
-}
+  KEY: 'pk_live_51PMveFDMW1AQXKDfoeo56qrtnIXOrGMR36ypdZ9JtKbxdCTO8RVjgE3HvePX6GUwoiUyZHlwvLaQOzILnLtAgCBF006wQ28Ar2',
+};
 
 export const Stripe_TEST = {
-  KEY: 'pk_test_51PMveFDMW1AQXKDfWTB3j2majlOJqcFC7dNODBuaIoXc7JCp3oiMPid1Qf8Gk1O5ckvbXzwXDWOjoChJ3Grnd4R700usbiU2Hc'
-}
+  KEY: 'pk_test_51PMveFDMW1AQXKDfWTB3j2majlOJqcFC7dNODBuaIoXc7JCp3oiMPid1Qf8Gk1O5ckvbXzwXDWOjoChJ3Grnd4R700usbiU2Hc',
+};
