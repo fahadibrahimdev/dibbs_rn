@@ -400,26 +400,39 @@ class PaymentScreen extends Component {
                     alignItems: 'center',
                   }}>
                   <Text>Amount To Pay Now</Text>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: RFValue(22),
-                      marginTop: RFValue(10),
-                      color: colors.black,
-                      textDecorationLine: 'underline',
-                    }}>
-                    ${' '}
-                    {!!this.state.appliedCoupon
-                      ? (
-                          this.props.totalUpFront.toFixed(2) -
-                          (
-                            this.props.totalUpFront *
-                            (parseFloat(this.state.appliedCoupon.discount) /
-                              100)
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: RFValue(22),
+                        marginTop: RFValue(10),
+                        color: colors.black,
+                        // textDecorationLine: 'underline',
+                      }}>
+                      ${' '}
+                      {!!this.state.appliedCoupon
+                        ? (
+                            this.props.totalUpFront.toFixed(2) -
+                            (
+                              this.props.totalUpFront *
+                              (parseFloat(this.state.appliedCoupon.discount) /
+                                100)
+                            ).toFixed(2)
                           ).toFixed(2)
-                        ).toFixed(2)
-                      : this.props.totalUpFront.toFixed(2)}
-                  </Text>
+                        : this.props.totalUpFront.toFixed(2)}
+                    </Text>
+
+                    <View
+                      style={{
+                        // position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        height: 1,
+                        backgroundColor: 'black',
+                      }}
+                    />
+                  </View>
                 </View>
 
                 <View
@@ -434,16 +447,29 @@ class PaymentScreen extends Component {
                     alignItems: 'center',
                   }}>
                   <Text>Amount Remaining</Text>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: RFValue(22),
-                      marginTop: RFValue(10),
-                      color: colors.black,
-                      textDecorationLine: 'underline',
-                    }}>
-                    $ {this.props.totalRemaining.toFixed(2)}
-                  </Text>
+
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: RFValue(22),
+                        marginTop: RFValue(10),
+                        color: colors.black,
+                        // textDecorationLine: 'underline',
+                      }}>
+                      $ {this.props.totalRemaining.toFixed(2)}
+                    </Text>
+                    <View
+                      style={{
+                        // position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        height: 1,
+                        backgroundColor: 'black',
+                      }}
+                    />
+                  </View>
                 </View>
               </View>
 
@@ -474,6 +500,7 @@ class PaymentScreen extends Component {
                           lowDibbsCreditMode: false,
                           orderTotalUpFrontAmount:
                             this.state.orderTotalUpFrontAmount,
+                          totalRemaining: this.props.totalRemaining,
                         },
                       );
 

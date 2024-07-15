@@ -143,6 +143,7 @@ import {
   doStripePaymentIdle,
 } from '../../../redux/actions/cartActions';
 import {searchDeals} from '../../../redux/actions/productActions';
+import TextInputWithLabel from '../../../helpers/TextInputWithLabel';
 
 const CardPaymentScreen = ({route}) => {
   const navigation = useNavigation();
@@ -189,6 +190,7 @@ const CardPaymentScreen = ({route}) => {
   });
 
   const [currentMode, setCurrentMode] = useState('');
+  const [cardHolderName, setCardHolderName] = useState('');
 
   useEffect(() => {
     var mCoupon = !!route.params?.coupon ? route.params.coupon : '';
@@ -203,11 +205,16 @@ const CardPaymentScreen = ({route}) => {
       ? route.params.orderTotalUpFrontAmount
       : '';
 
+    var mTotalRemaining = !!route.params?.totalRemaining
+      ? route.params.totalRemaining
+      : '';
+
     setMyComponentProps({
       coupon: mCoupon,
       paymentMethod: mPaymentMethod,
       lowDibbsCreditMode: mLowDibbsCreditMode,
       orderTotalUpFrontAmount: mOrderTotalUpFrontAmount,
+      totalRemaining: mTotalRemaining,
     });
 
     const subscription = Appearance.addChangeListener(({colorScheme}) => {
@@ -406,6 +413,10 @@ const CardPaymentScreen = ({route}) => {
       //   },
       // });
 
+      if (!!!cardHolderName) {
+        showAlertModal('Validation Error', 'Please enter card holder name!');
+        return;
+      }
       if (
         !!!card ||
         !!card?.complete === false ||
@@ -417,6 +428,7 @@ const CardPaymentScreen = ({route}) => {
 
         return;
       }
+
       setIsLoading(true);
       const obj = await createPaymentMethod({
         // type: 'Card',
@@ -537,6 +549,93 @@ const CardPaymentScreen = ({route}) => {
           style={{marginBottom: RFValue(10)}}
           keyboardShouldPersistTaps="always">
           <View style={{flex: 1}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'center',
+                marginTop: RFValue(10),
+              }}>
+              <View
+                style={{
+                  flex: 0.45,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text>Amount To Pay Now</Text>
+
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: RFValue(22),
+                      marginTop: RFValue(10),
+                      color: colors.black,
+                      // textDecorationLine: 'underline',
+                    }}>
+                    ${' '}
+                    {!!myComponentProps?.coupon
+                      ? (
+                          myComponentProps?.orderTotalUpFrontAmount.toFixed(2) -
+                          (
+                            myComponentProps?.orderTotalUpFrontAmount *
+                            (parseFloat(myComponentProps.coupon.discount) / 100)
+                          ).toFixed(2)
+                        ).toFixed(2)
+                      : myComponentProps?.orderTotalUpFrontAmount.toFixed(2)}
+                  </Text>
+                  <View
+                    style={{
+                      // position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: 1,
+                      backgroundColor: 'black',
+                    }}
+                  />
+                </View>
+              </View>
+
+              <View
+                style={{
+                  backgroundColor: colors.black,
+                  width: RFValue(2),
+                }}></View>
+              <View
+                style={{
+                  flex: 0.45,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text>Amount Remaining</Text>
+
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: RFValue(22),
+                      marginTop: RFValue(10),
+                      color: colors.black,
+                      // textDecorationLine: 'underline',
+                    }}>
+                    $ {myComponentProps?.totalRemaining.toFixed(2)}
+                  </Text>
+
+                  <View
+                    style={{
+                      // position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: 1,
+                      backgroundColor: 'black',
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+
             <View style={{flex: 1, alignItems: 'center'}}>
               <View
                 style={{
@@ -547,28 +646,53 @@ const CardPaymentScreen = ({route}) => {
                   style={{
                     color: 'black',
                   }}>
-                  Card Number
+                  Card Holder Name
+                </Text>
+                <TextInputWithLabel
+                  label={''}
+                  value={cardHolderName}
+                  onChange={text => {
+                    setCardHolderName(text);
+                  }}
+                  inputContainerStyles={{
+                    borderRadius: 10,
+                  }}
+                  placeHolder={'i.e Alex Martin'}
+                  outerContainerStyles={{width: '100%', marginBottom: 20}}
+                  inputStyles={{
+                    height: h(5),
+                    fontSize: RFValue(16),
+                    marginLeft: 10,
+                  }}
+                  keyboardType="default"
+                  autoCapitalize="words"
+                  // ref={this.lastNameRef}
+                  // returnKeyType={'next'}
+                  // nextRef={this.emailRef}
+                />
+                <Text
+                  style={{
+                    color: 'black',
+                  }}>
+                  Card Details
                 </Text>
                 <CardField
-                  postalCodeEnabled={false}
-                  placeholder={{
+                  postalCodeEnabled={true}
+                  // placeholders={{ number: '4242 4242 4242 4242' }}
+
+                  placeholders={{
                     number: '4242 4242 4242 4242',
                   }}
                   cardStyle={{
-                    backgroundColor:
-                      currentMode === 'dark' ? '#000000' : '#FFFFFF',
-                    textColor: currentMode === 'dark' ? '#FFFFFF' : '#000000',
+                    backgroundColor: '#F8F2FE',
+                    textColor: '#000000',
                     placeholderColor:
                       currentMode === 'dark' ? '#888888' : '#AAAAAA',
                     borderWidth: 1,
                     borderColor: currentMode === 'dark' ? '#444444' : '#DDDDDD',
-                    borderRadius: 8,
+                    borderRadius: 10,
                     fontSize: 16,
                   }}
-                  // cardStyle={{
-                  //   backgroundColor: '#FFF',
-                  //   textColor: '#000000',
-                  // }}
                   style={{
                     width: '100%',
                     height: 50,

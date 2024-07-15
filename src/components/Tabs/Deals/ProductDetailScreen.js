@@ -1241,13 +1241,12 @@ class ProductDetailScreen extends Component {
                               ? this.state.productDetails.description
                               : ' - ') +
                             '\n' +
-                            (Platform.OS === 'android'
-                              ? this.props.appUrl
-                              : '');
+                            (this.props.appUrl + '\n\nhttps://thedibbsapp.com');
+
                           this.onShare(
                             this.state.productDetails.product_name,
                             data,
-                            Platform.OS === 'android' ? '' : this.props.appUrl,
+                            this.props.appUrl,
                           );
                         }}>
                         <Ionicons

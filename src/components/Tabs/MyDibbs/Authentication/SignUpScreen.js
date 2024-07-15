@@ -58,10 +58,10 @@ class SignUpScreen extends Component {
     showPicker: Platform.OS === 'android' ? true : false,
     selectedGender: null,
     pickerItems: [
-      {label: 'Please Select', value: '--'},
+      {label: 'Please make a selection', value: '--'},
       {label: 'Male', value: 'Male'},
       {label: 'Female', value: 'Female'},
-      {label: 'Others', value: 'Others'},
+      {label: 'Prefer not to say', value: 'Others'},
     ],
   };
 

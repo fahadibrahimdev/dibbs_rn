@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {height as h, width as w} from 'react-native-dimension';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -256,6 +263,13 @@ class MyDibbsScreen extends Component {
   render() {
     const {isAuthenticated, userInfo} = this.props;
 
+    let appVersion = '';
+    if (Platform.OS === 'ios') {
+      appVersion =
+        DeviceInfo.getVersion() + ' (' + DeviceInfo.getBuildNumber() + ')';
+    } else {
+      appVersion = DeviceInfo.getVersion();
+    }
     return (
       <View
         style={{
@@ -425,14 +439,7 @@ class MyDibbsScreen extends Component {
                 fontSize: 15,
                 fontWeight: 'bold',
               }}>
-              Version:{' '}
-              {
-                DeviceInfo.getVersion()
-                // +
-                //   ' (' +
-                //   DeviceInfo.getBuildNumber() +
-                //   ')'
-              }
+              Version:{` ${appVersion}`}
             </Text>
           </View>
         </ScrollView>
