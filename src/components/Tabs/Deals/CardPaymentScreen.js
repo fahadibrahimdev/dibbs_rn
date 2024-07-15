@@ -678,26 +678,21 @@ const CardPaymentScreen = ({route}) => {
                 </Text>
                 <CardField
                   postalCodeEnabled={true}
-                  placeholder={{
+                  // placeholders={{ number: '4242 4242 4242 4242' }}
+
+                  placeholders={{
                     number: '4242 4242 4242 4242',
                   }}
                   cardStyle={{
-                    // backgroundColor:
-                    //   currentMode === 'dark' ? '#000000' : '#FFFFFF',
-                    // textColor: currentMode === 'dark' ? '#FFFFFF' : '#000000',
-                    backgroundColor: '#f8f2fe',
-                    textColor: '#000',
+                    backgroundColor: '#F8F2FE',
+                    textColor: '#000000',
                     placeholderColor:
                       currentMode === 'dark' ? '#888888' : '#AAAAAA',
                     borderWidth: 1,
                     borderColor: currentMode === 'dark' ? '#444444' : '#DDDDDD',
-                    borderRadius: 8,
+                    borderRadius: 10,
                     fontSize: 16,
                   }}
-                  // cardStyle={{
-                  //   backgroundColor: '#FFF',
-                  //   textColor: '#000000',
-                  // }}
                   style={{
                     width: '100%',
                     height: 50,
