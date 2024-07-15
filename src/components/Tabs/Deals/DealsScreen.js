@@ -116,8 +116,8 @@ class DealsScreen extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      this.props.searchedDeals.length !== prevProps.searchedDeals.length ||
-      this.props.searchedDeals.length !== this.state.filteredData.length
+      this.props.searchedDeals.length !== prevProps.searchedDeals.length
+      // || this.props.searchedDeals.length !== this.state.filteredData.length
     ) {
       this.startSearch(this.state.searchText);
     }
@@ -161,13 +161,13 @@ class DealsScreen extends Component {
       this.showAlertModal('Error', this.props.productDeleteError);
     }
 
-    // This code might be extra (only use fully while debugging)
-    if (
-      this.props.searchedDeals.length === prevProps.searchedDeals.length &&
-      this.props.allDealsFetched !== prevProps.allDealsFetched
-    ) {
-      this.startSearch(this.state.searchText);
-    }
+    // // This code might be extra (only use fully while debugging)
+    // if (
+    //   this.props.searchedDeals.length === prevProps.searchedDeals.length &&
+    //   this.props.allDealsFetched !== prevProps.allDealsFetched
+    // ) {
+    //   this.startSearch(this.state.searchText);
+    // }
   }
 
   // <Alert Functions>
@@ -239,12 +239,13 @@ class DealsScreen extends Component {
           obj.product_name.toLowerCase().indexOf(searchText.toLowerCase()) >= 0,
       );
 
-      this.setState({
-        filteredData: newFilteredData.map(itemObj => {
-          itemObj.isImageLoaded = false;
+      const adjustedNewFilteredData = newFilteredData.map(itemObj => {
+        itemObj.isImageLoaded = false;
 
-          return itemObj;
-        }),
+        return itemObj;
+      });
+      this.setState({
+        filteredData: adjustedNewFilteredData,
       });
     }
   }

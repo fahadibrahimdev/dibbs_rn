@@ -246,18 +246,17 @@ class ShareAppScreen extends Component {
                       'Download the Dibbs app from the Play Store: ' +
                       this.props.appUrl;
 
-                      //App Store URL
-                      //https://apps.apple.com/us/app/dibbs-local-deals-near-you/id1636967857
+                    //App Store URL
+                    //https://apps.apple.com/us/app/dibbs-local-deals-near-you/id1636967857
 
                     const data =
                       title +
                       '\n\n' +
                       'Use this referral code while sign-up: ' +
                       this.props.referralCode +
-                      '\n';
+                      '\n\nhttps://thedibbsapp.com';
 
-                    const url =
-                      Platform.OS === 'android' ? '' : this.props.appUrl;
+                    const url = this.props.appUrl;
                     this.onShare(title, data, url);
                   }}
                   // onPress={()=>this.props.login({this.state.userEmail})}

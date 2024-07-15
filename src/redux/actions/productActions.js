@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import {API} from '../../constants/APIs';
 import {strings} from '../../constants/Localization';
 import {GET, POST} from '../../helpers/helperFunctions';
@@ -57,6 +58,9 @@ export function searchDeals(keyword) {
       let res = await response.json();
 
       if (res.response.status === 'Y') {
+        let appURLiOSBetaTesting = 'https://testflight.apple.com/join/q0ETxSuk';
+        let appURLandroid =
+          'https://play.google.com/store/apps/details?id=com.thunder.dibbs';
         dispatch(
           searchDealsSuccess({
             allCoupons: res.response.data.coupens,
@@ -64,9 +68,12 @@ export function searchDeals(keyword) {
             couponCode: res.response.data.coupen_code,
             referralCode: res.response.data.referral_code,
             dibbsCredits: res.response.data.dibbs_credits,
-            appUrl: !!res.response.data.app_url
-              ? res.response.data.app_url
-              : 'https://play.google.com/store/apps/details?id=com.thunder.dibbs',
+            // appUrl: !!res.response.data.app_url
+            //   ? res.response.data.app_url
+            //   : 'https://play.google.com/store/apps/details?id=com.thunder.dibbs',
+
+            appUrl:
+              Platform.OS === 'android' ? appURLandroid : appURLiOSBetaTesting,
             allDealsFetched: res.response.data.count < 20 ? true : false,
             searchedDeals: !!res.response.data.products
               ? res.response.data.products
