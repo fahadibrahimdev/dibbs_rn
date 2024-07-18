@@ -24,6 +24,7 @@ export const ScreenNames = {
   SavedScreen: 'SavedScreen',
   MyDibbsScreen: 'MyDibbsScreen',
   NotificationSettingsScreen: 'NotificationSettingsScreen',
+  IntroScreen: 'IntroScreen',
   CustomerSupportScreen: 'CustomerSupportScreen',
   AboutScreen: 'AboutScreen',
   ShareAppScreen: 'ShareAppScreen',

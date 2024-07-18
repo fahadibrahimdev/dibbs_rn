@@ -1,7 +1,5 @@
-import LottieView from 'lottie-react-native';
 import React, {Component} from 'react';
 import {Image, View} from 'react-native';
-import {height as h, width as w} from 'react-native-dimension';
 import {connect} from 'react-redux';
 import {ScreenNames} from '../../constants/ScreenNames';
 import {AsyncKeysEnum} from '../../helpers/enum';
@@ -12,25 +10,39 @@ import {
   setDeviceToken,
   setReferralCode,
 } from '../../redux/actions/authActions';
-import Style from './splashLoadingStyles';
 
 class SplashLoading extends Component {
   componentDidMount() {
     AsyncGetViaKey(AsyncKeysEnum.AUTH_INFO).then(obj => {
-      if (!!obj) {
-        if (!!obj && obj.isAuthenticated) {
-          this.props.setAppAuthState(obj);
-          this.props.setReferralCode(obj);
+      console.log('Fahad 0');
+      if (!!obj && obj.isAuthenticated) {
+        console.log('Fahad 00');
 
-          setTimeout(() => {
-            // this.props.navigation.replace(ScreenNames.HomeScreen);
-            this.props.navigation.replace(ScreenNames.BottomNavigator);
-          }, 1000 * 1);
-        }
-      } else {
+        console.log('Fahad 000');
+        this.props.setAppAuthState(obj);
+        this.props.setReferralCode(obj);
+
         setTimeout(() => {
+          console.log('Fahad 0000');
           // this.props.navigation.replace(ScreenNames.HomeScreen);
           this.props.navigation.replace(ScreenNames.BottomNavigator);
+        }, 1000 * 1);
+      } else {
+        console.log('Fahad 1');
+        setTimeout(() => {
+          // this.props.navigation.replace(ScreenNames.HomeScreen);
+
+          console.log('Fahad 2');
+          AsyncGetViaKey(AsyncKeysEnum.INTRO_SCREEN).then(obj => {
+            console.log('Fahad 3', obj);
+            if (!!obj && !!obj.alreadyLoaded) {
+              this.props.navigation.replace(ScreenNames.BottomNavigator);
+            } else {
+              this.props.navigation.replace(ScreenNames.IntroScreen, {
+                fullScreenModeProp: true,
+              });
+            }
+          });
         }, 1000 * 1);
       }
     });

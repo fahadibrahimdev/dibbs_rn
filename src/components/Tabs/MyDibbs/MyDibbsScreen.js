@@ -48,6 +48,7 @@ class MyDibbsScreen extends Component {
           icon: 'notifications',
         },
         {name: 'Customer Support', code: 'Support', icon: 'person'},
+        {name: 'Intro', code: 'Intro', icon: 'help-circle'},
         {name: 'About DIBBS', code: 'About', icon: 'information-circle'},
         {name: 'Feature A Deal On DIBBS', code: 'Features', icon: 'cube'},
         {name: 'Frequently asked questions', code: 'FAQs', icon: 'chatbubbles'},
@@ -59,6 +60,7 @@ class MyDibbsScreen extends Component {
           icon: 'notifications',
         },
         {name: 'Customer Support', code: 'Support', icon: 'person'},
+        {name: 'Intro', code: 'Intro', icon: 'help-circle'},
         {name: 'About DIBBS', code: 'About', icon: 'information-circle'},
         {name: 'Share App', code: 'ShareApp', icon: 'md-share'},
         {name: 'Feature A Deal On DIBBS', code: 'Features', icon: 'cube'},
@@ -151,6 +153,10 @@ class MyDibbsScreen extends Component {
       navigate(this.props.navigation, ScreenNames.FAQsScreen);
     } else if (item.code === 'Notifications') {
       navigate(this.props.navigation, ScreenNames.NotificationSettingsScreen);
+    } else if (item.code === 'Intro') {
+      navigateWithParams(this.props.navigation, ScreenNames.IntroScreen, {
+        fullScreenModeProp: false,
+      });
     } else if (item.code === 'Support') {
       if (this.props.isAuthenticated) {
         navigate(this.props.navigation, ScreenNames.CustomerSupportScreen);
