@@ -20,6 +20,7 @@ import SignUpScreen from '../components/Tabs/MyDibbs/Authentication/SignUpScreen
 import CustomerSupportScreen from '../components/Tabs/MyDibbs/CustomerSupportScreen';
 import FAQsScreen from '../components/Tabs/MyDibbs/FAQsScreen';
 import FeaturesScreen from '../components/Tabs/MyDibbs/FeaturesScreen';
+import IntroScreen from '../components/Tabs/MyDibbs/IntroScreen';
 import MyDibbsScreen from '../components/Tabs/MyDibbs/MyDibbsScreen';
 import NotificationSettingsScreen from '../components/Tabs/MyDibbs/NotificationSettingsScreen';
 import PrivacyPolicyScreen from '../components/Tabs/MyDibbs/PrivacyPolicyScreen';
@@ -62,6 +63,7 @@ export const Screens = {
   MyDibbsScreen: MyDibbsScreen,
 
   NotificationSettingsScreen: NotificationSettingsScreen,
+  IntroScreen: IntroScreen,
   FeaturesScreen: FeaturesScreen,
   AboutScreen: AboutScreen,
   ShareAppScreen: ShareAppScreen,

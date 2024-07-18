@@ -13,6 +13,7 @@ export const LoginTypeEnum = {
 
 export const AsyncKeysEnum = {
   AUTH_INFO: 'AUTH_INFO',
+  INTRO_SCREEN: 'INTRO_SCREEN',
   DEVICE_TOKEN: 'DEVICE_TOKEN',
   RECENT_SEAARCH: 'RECENT_SEAARCH',
 };

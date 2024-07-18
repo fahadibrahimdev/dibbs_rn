@@ -144,6 +144,7 @@ import {
 } from '../../../redux/actions/cartActions';
 import {searchDeals} from '../../../redux/actions/productActions';
 import TextInputWithLabel from '../../../helpers/TextInputWithLabel';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CardPaymentScreen = ({route}) => {
   const navigation = useNavigation();
@@ -562,7 +563,12 @@ const CardPaymentScreen = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text>Amount To Pay Now</Text>
+                <Text
+                  style={{
+                    color: 'black',
+                  }}>
+                  Amount To Pay Now
+                </Text>
 
                 <View>
                   <Text
@@ -608,7 +614,12 @@ const CardPaymentScreen = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text>Amount Remaining</Text>
+                <Text
+                  style={{
+                    color: 'black',
+                  }}>
+                  Amount Remaining
+                </Text>
 
                 <View>
                   <Text
@@ -646,7 +657,7 @@ const CardPaymentScreen = ({route}) => {
                   style={{
                     color: 'black',
                   }}>
-                  Card Holder Name
+                  Card Holder Name*
                 </Text>
                 <TextInputWithLabel
                   label={''}
@@ -674,10 +685,10 @@ const CardPaymentScreen = ({route}) => {
                   style={{
                     color: 'black',
                   }}>
-                  Card Details
+                  Card Details*
                 </Text>
                 <CardField
-                  postalCodeEnabled={true}
+                  postalCodeEnabled={false}
                   // placeholders={{ number: '4242 4242 4242 4242' }}
 
                   placeholders={{
@@ -703,6 +714,35 @@ const CardPaymentScreen = ({route}) => {
                     setCard(cardDetails);
                   }}
                 />
+
+                <Text
+                  style={{
+                    color: 'black',
+                  }}>
+                  Postal Code
+                </Text>
+                <TextInputWithLabel
+                  label={''}
+                  value={cardHolderName}
+                  onChange={text => {
+                    setCardHolderName(text);
+                  }}
+                  inputContainerStyles={{
+                    borderRadius: 10,
+                  }}
+                  placeHolder={'i.e 123456'}
+                  outerContainerStyles={{width: '100%', marginBottom: 20}}
+                  inputStyles={{
+                    height: h(5),
+                    fontSize: RFValue(16),
+                    marginLeft: 10,
+                  }}
+                  keyboardType="default"
+                  autoCapitalize="words"
+                  // ref={this.lastNameRef}
+                  // returnKeyType={'next'}
+                  // nextRef={this.emailRef}
+                />
               </View>
 
               <Button
@@ -712,11 +752,11 @@ const CardPaymentScreen = ({route}) => {
                   handlePayment();
                 }}
                 rounded
-                style={styles.btnStyle}
+                style={[styles.btnStyle]}
                 // iconLeft
               >
-                <Text style={styles.textStyle}>
-                  Pay ${myComponentProps?.orderTotalUpFrontAmount}
+                <Text style={[styles.textStyle, {fontSize: 16}]}>
+                  Pay ${myComponentProps?.orderTotalUpFrontAmount.toFixed(2)}
                 </Text>
               </Button>
               {/* <Button
@@ -739,6 +779,38 @@ const CardPaymentScreen = ({route}) => {
                   Payment successful!
                 </Text>
               )}
+              <View
+                style={{
+                  // backgroundColor: 'blue',
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  paddingVertical: 10,
+                }}>
+                <View
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+
+                    // backgroundColor: 'red',
+                  }}>
+                  <Ionicons
+                    name={'information-circle-outline'}
+                    size={h(3)}
+                    color={'#666666'}
+                  />
+
+                  <Text
+                    style={{
+                      color: '#666666',
+                      fontSize: 14,
+                      marginLeft: 10,
+                      // textAlign: 'center',
+                    }}>
+                    Secure payment processing by Stripe. Your payment details
+                    are encrypted and safe.
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
 

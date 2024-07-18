@@ -1,7 +1,5 @@
-import {CommonActions} from '@react-navigation/native';
 import React, {Component} from 'react';
 import {
-  Alert,
   SafeAreaView,
   ScrollView,
   Share,
@@ -21,7 +19,7 @@ import {AlertTypesEnum, PaymentMethodsEnum} from '../../../helpers/enum';
 import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
 import {backImage} from '../../../helpers/Images';
-import {navigate, navigateWithParams} from '../../../helpers/Util';
+import {navigateWithParams} from '../../../helpers/Util';
 import {
   addRemoveProductInCart,
   clearCartInfo,
@@ -399,7 +397,12 @@ class PaymentScreen extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text>Amount To Pay Now</Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                    }}>
+                    Amount To Pay Now
+                  </Text>
                   <View>
                     <Text
                       style={{
@@ -446,7 +449,12 @@ class PaymentScreen extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text>Amount Remaining</Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                    }}>
+                    Amount Remaining
+                  </Text>
 
                   <View>
                     <Text
