@@ -115,13 +115,12 @@ class IntroScreen extends Component {
               </View>
             );
           }}
+          onPositionChanged={position => {
+            this.setState({
+              currentPosition: position,
+            });
+          }}
           customButtons={(position, move) => {
-            if (this.state.currentPosition !== position) {
-              this.setState({
-                currentPosition: position,
-              });
-            }
-
             return (
               <View
                 style={{
@@ -181,20 +180,24 @@ class IntroScreen extends Component {
                     })}
                   </View>
 
-                  {position === this.state.imagesArray.length - 1 && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                    }}>
                     <View
                       style={{
-                        position: 'absolute',
+                        marginTop: this.state.fullScreenMode
+                          ? RFValue(35) * -1
+                          : RFValue(5) * -1,
                       }}>
-                      <View
-                        style={{
-                          marginTop: this.state.fullScreenMode
-                            ? RFValue(35) * -1
-                            : RFValue(5) * -1,
-                        }}>
-                        <Button
-                          light
-                          onPress={() => {
+                      <Button
+                        light
+                        onPress={() => {
+                          if (position < this.state.imagesArray.length - 1) {
+                            this.setState({
+                              currentPosition: this.state.currentPosition + 1,
+                            });
+                          } else {
                             if (this.state.fullScreenMode === false) {
                               this.props.navigation.goBack(null);
                             } else {
@@ -205,33 +208,36 @@ class IntroScreen extends Component {
                                 }),
                               );
                             }
-                          }}
-                          rounded
+                          }
+                        }}
+                        rounded
+                        style={{
+                          justifyContent: 'center',
+                          backgroundColor: colors.lightGray,
+                          height: h(6.5),
+                          width: '70%',
+                          alignSelf: 'center',
+                        }}>
+                        <Text
                           style={{
-                            justifyContent: 'center',
-                            backgroundColor: colors.lightGray,
-                            height: h(6.5),
-                            width: '70%',
-                            alignSelf: 'center',
+                            width: '100%',
+                            textAlign: 'center',
+                            fontSize: RFValue(15),
+                            color: 'black',
+                            fontWeight: 'bold',
                           }}>
-                          <Text
-                            style={{
-                              width: '100%',
-                              textAlign: 'center',
-                              fontSize: RFValue(15),
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Next
-                          </Text>
-                        </Button>
-                      </View>
+                          {position < this.state.imagesArray.length - 1
+                            ? 'Next'
+                            : 'Done'}
+                        </Text>
+                      </Button>
                     </View>
-                  )}
+                  </View>
                 </View>
               </View>
             );
           }}
+          position={this.state.currentPosition}
         />
 
         {/* {this.state.currentPosition === this.state.imagesArray.length - 1 && (

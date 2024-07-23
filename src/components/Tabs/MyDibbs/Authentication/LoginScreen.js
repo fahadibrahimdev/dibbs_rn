@@ -86,7 +86,11 @@ class LoginScreen extends Component {
         Platform.OS === 'android'
           ? 'MobileAppLoginAndroid'
           : 'MobileAppLoginIOS';
-      this.onAnalyticsLogin(analyticsTitle, {});
+          
+      this.onAnalyticsLogin(analyticsTitle, {
+        gender: 'male',
+
+      });
       goBack(this.props.navigation);
     }
 
