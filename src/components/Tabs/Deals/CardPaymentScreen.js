@@ -567,7 +567,7 @@ const CardPaymentScreen = ({route}) => {
                   style={{
                     color: 'black',
                   }}>
-                  Amount To Pay Now
+                  Amount Due Now
                 </Text>
 
                 <View>
@@ -618,7 +618,7 @@ const CardPaymentScreen = ({route}) => {
                   style={{
                     color: 'black',
                   }}>
-                  Amount Remaining
+                  Due Upon Redemption
                 </Text>
 
                 <View>

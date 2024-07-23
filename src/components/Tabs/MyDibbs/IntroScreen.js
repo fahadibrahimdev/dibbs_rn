@@ -39,9 +39,14 @@ class IntroScreen extends Component {
     this.setState({
       fullScreenMode: fullScreenModeProp,
       imagesArray: [
-        'https://store.thedibbsapp.com/uploads/60/1719305615_42428031250540.jpeg',
-        'https://store.thedibbsapp.com/uploads/35/1719305439_93260141744724.jpeg',
-        'https://store.thedibbsapp.com/uploads/35/1719305439_79307774747724.jpeg',
+        require('./../../../assets/images/startup_screen/1.png'),
+        require('./../../../assets/images/startup_screen/2.png'),
+        require('./../../../assets/images/startup_screen/3.png'),
+        require('./../../../assets/images/startup_screen/4.png'),
+        require('./../../../assets/images/startup_screen/5.png'),
+        require('./../../../assets/images/startup_screen/6.png'),
+        require('./../../../assets/images/startup_screen/7.png'),
+        require('./../../../assets/images/startup_screen/8.png'),
       ],
     });
 
@@ -84,9 +89,10 @@ class IntroScreen extends Component {
                   },
                 ]}>
                 <Image
-                  source={{
-                    uri: item,
-                  }}
+                  // source={{
+                  //   uri: item,
+                  // }}
+                  source={item}
                   indicator={ProgressBar}
                   style={{
                     width: '100%',
