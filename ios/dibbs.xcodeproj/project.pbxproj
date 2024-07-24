@@ -512,7 +512,7 @@
 				CODE_SIGN_ENTITLEMENTS = dibbs/dibbs.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = R65W9935RT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = dibbs/Info.plist;
@@ -546,7 +546,7 @@
 				CODE_SIGN_ENTITLEMENTS = dibbs/dibbs.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = R65W9935RT;
 				INFOPLIST_FILE = dibbs/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";

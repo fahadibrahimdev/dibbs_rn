@@ -88,11 +88,14 @@ class LoginScreen extends Component {
           : 'MobileAppLoginIOS';
 
       let analyticsTitleGender = 'Male';
-      if (this.props?.userInfo?.gender === 'male') {
+      if (this.props?.userInfo?.gender === 'Male') {
         analyticsTitleGender = 'Male';
-      } else if (this.props?.userInfo?.gender === 'male') {
+      } else if (this.props?.userInfo?.gender === 'Female') {
         analyticsTitleGender = 'Female';
-      } else if (this.props?.userInfo?.gender === 'unknown') {
+      } else if (
+        this.props?.userInfo?.gender === 'Others' ||
+        this.props?.userInfo?.gender === 'unknown'
+      ) {
         analyticsTitleGender = 'Others';
       } else {
         analyticsTitleGender = 'Male';
