@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, TouchableHighlight, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Text,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 import {height as h} from 'react-native-dimension';
 import FastImage from 'react-native-fast-image';
 import ImageSlider from 'react-native-image-slider';
@@ -20,11 +26,14 @@ import {AsyncStoreViaKey} from '../../../helpers/LocalStorage/AsyncStorage';
 
 const Image = createImageProgress(FastImage);
 
+const HEIGHT = Dimensions.get('screen').height;
+const WIDTH = Dimensions.get('screen').width;
+
 class IntroScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.imageSliderRef = React.createRef();
+    this.flatListRef = React.createRef();
 
     this.state = {
       fullScreenMode: false,
@@ -32,6 +41,9 @@ class IntroScreen extends Component {
       currentPosition: 0,
       orderFromButtons: '',
     };
+
+    this.handleViewableItemsChanged =
+      this.handleViewableItemsChanged.bind(this);
   }
 
   componentDidMount() {
@@ -42,14 +54,45 @@ class IntroScreen extends Component {
     this.setState({
       fullScreenMode: fullScreenModeProp,
       imagesArray: [
-        require('./../../../assets/images/startup_screen/1.png'),
-        require('./../../../assets/images/startup_screen/2.png'),
-        require('./../../../assets/images/startup_screen/3.png'),
-        require('./../../../assets/images/startup_screen/4.png'),
-        require('./../../../assets/images/startup_screen/5.png'),
-        require('./../../../assets/images/startup_screen/6.png'),
-        require('./../../../assets/images/startup_screen/7.png'),
-        require('./../../../assets/images/startup_screen/8.png'),
+        {
+          img: require('./../../../assets/images/startup_screen/1.png'),
+          color: 'red',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/2.png'),
+          color: 'blue',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/3.png'),
+          color: 'green',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/4.png'),
+          color: 'orange',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/5.png'),
+          color: 'orange',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/6.png'),
+          color: 'orange',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/7.png'),
+          color: 'orange',
+        },
+        {
+          img: require('./../../../assets/images/startup_screen/8.png'),
+          color: 'orange',
+        },
+        // require('./../../../assets/images/startup_screen/2.png'),
+        // require('./../../../assets/images/startup_screen/3.png'),
+        // require('./../../../assets/images/startup_screen/4.png'),
+        // require('./../../../assets/images/startup_screen/5.png'),
+        // require('./../../../assets/images/startup_screen/6.png'),
+        // require('./../../../assets/images/startup_screen/7.png'),
+        // require('./../../../assets/images/startup_screen/8.png'),
       ],
     });
 
@@ -62,25 +105,37 @@ class IntroScreen extends Component {
 
   componentDidUpdate(prevProps) {}
 
+  handleViewableItemsChanged = ({viewableItems}) => {
+    const firstVisibleItemIndex = viewableItems[0]?.index;
+    this.setState({currentPosition: firstVisibleItemIndex});
+  };
+
   goToNextSlide = () => {
     console.log('Next Slide: ', this.state.currentPosition);
-    if (this.imageSliderRef.current) {
-      // this.imageSliderRef.current.scrollToIndex(this.state.currentPosition + 1);
-      this.setState({
-        orderFromButtons: 'next',
-        currentPosition: this.state.currentPosition + 1,
-      });
+    if (this.flatListRef.current) {
+      // this.flatListRef.current.scrollToIndex(this.state.currentPosition + 1);
+      // this.setState({
+      //   orderFromButtons: 'next',
+      //   currentPosition: this.state.currentPosition + 1,
+      // });
+
+      const index = this.state.currentPosition + 1;
+      console.log('Fahad next value I: ', index);
+      this.flatListRef.current.scrollToIndex({index});
     }
   };
 
   goToPreviousSlide = () => {
     console.log('Previous Slide: ', this.state.currentPosition);
-    if (this.imageSliderRef.current) {
-      // this.imageSliderRef.current.scrollToIndex(this.state.currentPosition - 1);
-      this.setState({
-        orderFromButtons: 'previous',
-        currentPosition: this.state.currentPosition - 1,
-      });
+    if (this.flatListRef.current) {
+      // this.flatListRef.current.scrollToIndex(this.state.currentPosition - 1);
+      // this.setState({
+      //   orderFromButtons: 'previous',
+      //   currentPosition: this.state.currentPosition - 1,
+      // });
+      const index = this.state.currentPosition - 1;
+      console.log('Fahad next value D: ', index);
+      this.flatListRef.current.scrollToIndex({index});
     }
   };
 
@@ -89,239 +144,187 @@ class IntroScreen extends Component {
       <View
         style={{
           flex: 1,
+          justifyContent: 'flex-end',
         }}>
-        <ImageSlider
-          ref={this.imageSliderRef}
-          style={{
-            // borderBottomLeftRadius: h(7),
-            // borderBottomRightRadius: h(7),
-            backgroundColor: '#11558800',
-          }}
-          // loopBothSides
-          // autoPlayWithInterval={3000}
-          images={this.state.imagesArray}
-          customSlide={({index, item, style, width}) => {
-            return (
-              // It's important to put style here because it's got offset inside
-              <View
-                key={'list1:' + index}
-                style={[
-                  style,
-                  {
-                    flex: 1,
-                    resizeMode: 'cover',
-                    // borderBottomLeftRadius: h(7),
-                    // borderBottomRightRadius: h(7),
-                    backgroundColor: '#115588',
-                  },
-                ]}>
-                <Image
-                  // source={{
-                  //   uri: item,
-                  // }}
-                  source={item}
-                  indicator={ProgressBar}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    // borderBottomLeftRadius: h(7),
-                    // borderBottomRightRadius: h(7),
-                    backgroundColor: '#115588',
-                  }}
-                  imageStyle={{
-                    width: '100%',
-                    height: '100%',
-                    // borderTopLeftRadius: h(2),
-                    // borderTopRightRadius: h(2),
-                    resizeMode: 'cover',
-                    // borderBottomLeftRadius: h(7),
-                    // borderBottomRightRadius: h(7),
-                    backgroundColor: '#115588',
-                  }}
-                />
-              </View>
-            );
-          }}
-          onPositionChanged={position => {
-            // console.log(
-            //   'onPositionChanged Slide: ',
-            //   this.state.currentPosition,
-            // );
-
-            // console.log('onPositionChanged Slide position: ', position);
-
-            // console.log(
-            //   'onPositionChanged Slide this.state.orderFromButtons: ',
-            //   this.state.orderFromButtons,
-            // );
-
-            if (this.state.orderFromButtons === '') {
-              this.setState({
-                currentPosition: position,
-              });
-            } else if (this.state.currentPosition === position) {
-              this.setState({
-                orderFromButtons: '',
-              });
-            }
-          }}
-          customButtons={(position, move) => {
+        <FlatList
+          ref={this.flatListRef}
+          data={this.state.imagesArray}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          pagingEnabled={true}
+          renderItem={({item, index}) => {
             return (
               <View
                 style={{
-                  // marginBottom: (RFValue(100) * (-1))
-                  // position: 'absolute',
-                  width: '100%',
-                  // height: '100%',
-                  // flexDirection: 'row',
-
-                  // backgroundColor: '#995544',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  // alignSelf: 'flex-end',
-                  // alignSelf: 'baseline'
-                  paddingBottom: RFValue(10),
-                }}
-                // pointerEvents={'none'}
-              >
+                  width: WIDTH,
+                  // height: HEIGHT,
+                  backgroundColor: item.color,
+                }}>
                 <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    // backgroundColor: 'red',
-                  }}>
-                  <View
+                  key={'list1:' + index}
+                  style={[
+                    {
+                      flex: 1,
+                      resizeMode: 'cover',
+                      // borderBottomLeftRadius: h(7),
+                      // borderBottomRightRadius: h(7),
+                      backgroundColor: '#115588',
+                    },
+                  ]}>
+                  <Image
+                    // source={{
+                    //   uri: item,
+                    // }}
+                    source={item.img}
+                    indicator={ProgressBar}
                     style={{
-                      flexDirection: 'row',
-                    }}>
-                    {this.state.imagesArray.map((image, index) => {
-                      return (
-                        <TouchableHighlight
-                          key={'list2:' + index}
-                          underlayColor="#ccc"
-                          onPress={() => {
-                            // move(index)
-                          }}
-                          style={
-                            {
-                              // backgroundColor: '#221982',
-                            }
-                          }>
-                          <View
-                            style={{
-                              width: RFValue(6),
-                              height: RFValue(6),
-                              borderRadius: RFValue(50),
-                              margin: RFValue(5),
-                              backgroundColor:
-                                position === index
-                                  ? colors.appPurple
-                                  : '#55555555',
-                            }}></View>
-                          {/* <Text style={position === index && {}}>
-                    {index + 1}
-                  </Text> */}
-                        </TouchableHighlight>
-                      );
-                    })}
-                  </View>
-
-                  <View
-                    style={{
-                      width: '95%',
-                      position: 'absolute',
-                      // backgroundColor: 'red',
-                    }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: this.state.fullScreenMode
-                          ? RFValue(35) * -1
-                          : RFValue(5) * -1,
-                      }}>
-                      <Button
-                        light
-                        onPress={() => {
-                          if (this.state.currentPosition > 0) {
-                            this.goToPreviousSlide();
-                          }
-                        }}
-                        rounded
-                        disabled={this.state.currentPosition < 1}
-                        style={{
-                          justifyContent: 'center',
-                          backgroundColor: colors.lightGray,
-                          // height: h(6.5),
-                          width: '25%',
-                          alignSelf: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            width: '100%',
-                            textAlign: 'center',
-                            fontSize: RFValue(10),
-                            color:
-                              this.state.currentPosition < 1 ? 'gray' : 'black',
-                            fontWeight: 'bold',
-                          }}>
-                          {'Previous'}
-                        </Text>
-                      </Button>
-
-                      <Button
-                        light
-                        onPress={() => {
-                          if (
-                            this.state.currentPosition <
-                            this.state.imagesArray.length - 1
-                          ) {
-                            this.goToNextSlide();
-                          } else {
-                            if (this.state.fullScreenMode === false) {
-                              this.props.navigation.goBack(null);
-                            } else {
-                              this.props.navigation.dispatch(
-                                CommonActions.reset({
-                                  index: 0,
-                                  routes: [{name: ScreenNames.BottomNavigator}],
-                                }),
-                              );
-                            }
-                          }
-                        }}
-                        rounded
-                        style={{
-                          justifyContent: 'center',
-                          backgroundColor: colors.lightGray,
-                          // height: h(6.5),
-                          width: '25%',
-                          alignSelf: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            width: '100%',
-                            textAlign: 'center',
-                            fontSize: RFValue(12),
-                            color: 'black',
-                            fontWeight: 'bold',
-                          }}>
-                          {this.state.currentPosition <
-                          this.state.imagesArray.length - 1
-                            ? 'Next'
-                            : 'Done'}
-                        </Text>
-                      </Button>
-                    </View>
-                  </View>
+                      width: '100%',
+                      height: '100%',
+                      // borderBottomLeftRadius: h(7),
+                      // borderBottomRightRadius: h(7),
+                      backgroundColor: '#115588',
+                    }}
+                    imageStyle={{
+                      width: '100%',
+                      height: '100%',
+                      // borderTopLeftRadius: h(2),
+                      // borderTopRightRadius: h(2),
+                      // resizeMode: 'contain',
+                      // borderBottomLeftRadius: h(7),
+                      // borderBottomRightRadius: h(7),
+                      backgroundColor: '#115588',
+                    }}
+                    resizeMode="stretch"
+                    // resizeMode="contain"
+                  />
                 </View>
               </View>
             );
           }}
-          position={this.state.currentPosition}
+          onViewableItemsChanged={this.handleViewableItemsChanged}
         />
+        <View
+          style={{
+            position: 'absolute',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            // alignSelf: 'flex-end',
+            // backgroundColor: 'red',
+            width: '100%',
+            // height: 50,
+          }}>
+          <Button
+            light
+            onPress={() => {
+              if (this.state.currentPosition > 0) {
+                this.goToPreviousSlide();
+              }
+            }}
+            rounded
+            disabled={this.state.currentPosition < 1}
+            style={{
+              justifyContent: 'center',
+              backgroundColor: colors.lightGray,
+              // height: h(6.5),
+              width: '25%',
+              alignSelf: 'center',
+            }}>
+            <Text
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                fontSize: RFValue(10),
+                color: this.state.currentPosition < 1 ? 'gray' : 'black',
+                fontWeight: 'bold',
+              }}>
+              {'Previous'}
+            </Text>
+          </Button>
 
+          <View
+            style={{
+              flexDirection: 'row',
+              borderRadius: 20,
+              paddingHorizontal: 10,
+              backgroundColor: '#ffffff99',
+            }}>
+            {this.state.imagesArray.map((image, index) => {
+              return (
+                <TouchableHighlight
+                  key={'list2:' + index}
+                  underlayColor="#ccc"
+                  onPress={() => {
+                    // move(index)
+                  }}
+                  style={
+                    {
+                      // backgroundColor: '#221982',
+                    }
+                  }>
+                  <View
+                    style={{
+                      width: RFValue(6),
+                      height: RFValue(6),
+                      borderRadius: RFValue(50),
+                      margin: RFValue(5),
+                      backgroundColor:
+                        this.state.currentPosition === index
+                          ? colors.appPurple
+                          : '#55555555',
+                    }}></View>
+                  {/* <Text style={position === index && {}}>
+          {index + 1}
+        </Text> */}
+                </TouchableHighlight>
+              );
+            })}
+          </View>
+          <Button
+            light
+            onPress={() => {
+              if (
+                this.state.currentPosition <
+                this.state.imagesArray.length - 1
+              ) {
+                this.goToNextSlide();
+              } else {
+                if (this.state.fullScreenMode === false) {
+                  this.props.navigation.goBack(null);
+                } else {
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [{name: ScreenNames.BottomNavigator}],
+                    }),
+                  );
+                }
+              }
+            }}
+            rounded
+            style={{
+              justifyContent: 'center',
+              backgroundColor: colors.lightGray,
+              // height: h(6.5),
+              width: '25%',
+              alignSelf: 'center',
+            }}>
+            <Text
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                fontSize: RFValue(12),
+                color: 'black',
+                fontWeight: 'bold',
+              }}>
+              {this.state.currentPosition < this.state.imagesArray.length - 1
+                ? 'Next'
+                : 'Done'}
+            </Text>
+          </Button>
+        </View>
         {/* {this.state.currentPosition === this.state.imagesArray.length - 1 && (
           <View
             style={{
