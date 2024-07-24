@@ -1,16 +1,16 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { Component, Fragment } from 'react';
-import { Text } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, {Component, Fragment} from 'react';
+import {Text} from 'react-native';
+import {height as h, width as w} from 'react-native-dimension';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { connect } from 'react-redux';
-import { TabScreenNames } from '../constants/ScreenNames';
+import {connect} from 'react-redux';
+import {TabScreenNames} from '../constants/ScreenNames';
 import colors from '../helpers/colors';
-import { getMySavedProducts } from '../redux/actions/productActions';
-import { Screens } from './Screens';
+import {getMySavedProducts} from '../redux/actions/productActions';
+import {Screens} from './Screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,9 +19,9 @@ class BottomNavigator extends Component {
     return (
       <Fragment>
         <SafeAreaView
-          style={{ flex: 1, backgroundColor: colors.commonBackground }}>
+          style={{flex: 1, backgroundColor: colors.commonBackground}}>
           <Tab.Navigator
-            screenOptions={({ route }) => ({
+            screenOptions={({route}) => ({
               headerShown: false,
               tabBarVisible: true,
 
@@ -44,7 +44,7 @@ class BottomNavigator extends Component {
               component={Screens.DealsNavigator}
               options={{
                 tabBarLabel: TabScreenNames.Deals,
-                tabBarIcon: ({ focused, color, size }) => (
+                tabBarIcon: ({focused, color, size}) => (
                   <Icon
                     name="handshake-o"
                     size={h(3)}
@@ -62,7 +62,7 @@ class BottomNavigator extends Component {
               component={Screens.SearchScreen}
               options={{
                 tabBarLabel: TabScreenNames.Search,
-                tabBarIcon: ({ focused, color, size }) => (
+                tabBarIcon: ({focused, color, size}) => (
                   <Ionicons
                     name={focused ? 'md-search' : 'md-search'}
                     size={h(3)}
@@ -80,7 +80,7 @@ class BottomNavigator extends Component {
               component={Screens.CategoriesScreen}
               options={{
                 tabBarLabel: TabScreenNames.Categories,
-                tabBarIcon: ({ focused, color, size }) => (
+                tabBarIcon: ({focused, color, size}) => (
                   <Ionicons
                     name={focused ? 'md-apps' : 'md-apps'}
                     size={h(3)}
@@ -98,7 +98,7 @@ class BottomNavigator extends Component {
               component={Screens.SavedScreen}
               options={{
                 tabBarLabel: TabScreenNames.Saved,
-                tabBarIcon: ({ focused, color, size }) => (
+                tabBarIcon: ({focused, color, size}) => (
                   <Ionicons
                     name={focused ? 'md-heart' : 'md-heart'}
                     size={h(3)}
@@ -123,7 +123,7 @@ class BottomNavigator extends Component {
               component={Screens.MyDibbsScreen}
               options={{
                 tabBarLabel: TabScreenNames.MyDibbs,
-                tabBarIcon: ({ focused, color, size }) => (
+                tabBarIcon: ({focused, color, size}) => (
                   <Text
                     style={{
                       fontSize: RFValue(22),
