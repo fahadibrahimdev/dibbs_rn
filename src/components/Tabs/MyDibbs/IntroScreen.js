@@ -24,10 +24,13 @@ class IntroScreen extends Component {
   constructor(props) {
     super(props);
 
+    this.imageSliderRef = React.createRef();
+
     this.state = {
       fullScreenMode: false,
       imagesArray: [],
       currentPosition: 0,
+      orderFromButtons: '',
     };
   }
 
@@ -39,9 +42,14 @@ class IntroScreen extends Component {
     this.setState({
       fullScreenMode: fullScreenModeProp,
       imagesArray: [
-        'https://store.thedibbsapp.com/uploads/60/1719305615_42428031250540.jpeg',
-        'https://store.thedibbsapp.com/uploads/35/1719305439_93260141744724.jpeg',
-        'https://store.thedibbsapp.com/uploads/35/1719305439_79307774747724.jpeg',
+        require('./../../../assets/images/startup_screen/1.png'),
+        require('./../../../assets/images/startup_screen/2.png'),
+        require('./../../../assets/images/startup_screen/3.png'),
+        require('./../../../assets/images/startup_screen/4.png'),
+        require('./../../../assets/images/startup_screen/5.png'),
+        require('./../../../assets/images/startup_screen/6.png'),
+        require('./../../../assets/images/startup_screen/7.png'),
+        require('./../../../assets/images/startup_screen/8.png'),
       ],
     });
 
@@ -52,14 +60,38 @@ class IntroScreen extends Component {
     AsyncStoreViaKey(AsyncKeysEnum.INTRO_SCREEN, asyncObject);
   }
 
+  componentDidUpdate(prevProps) {}
+
+  goToNextSlide = () => {
+    console.log('Next Slide: ', this.state.currentPosition);
+    if (this.imageSliderRef.current) {
+      // this.imageSliderRef.current.scrollToIndex(this.state.currentPosition + 1);
+      this.setState({
+        orderFromButtons: 'next',
+        currentPosition: this.state.currentPosition + 1,
+      });
+    }
+  };
+
+  goToPreviousSlide = () => {
+    console.log('Previous Slide: ', this.state.currentPosition);
+    if (this.imageSliderRef.current) {
+      // this.imageSliderRef.current.scrollToIndex(this.state.currentPosition - 1);
+      this.setState({
+        orderFromButtons: 'previous',
+        currentPosition: this.state.currentPosition - 1,
+      });
+    }
+  };
+
   imageSliderFunction = () => {
     return (
       <View
         style={{
           flex: 1,
-          // backgroundColor: 'red',
         }}>
         <ImageSlider
+          ref={this.imageSliderRef}
           style={{
             // borderBottomLeftRadius: h(7),
             // borderBottomRightRadius: h(7),
@@ -84,9 +116,10 @@ class IntroScreen extends Component {
                   },
                 ]}>
                 <Image
-                  source={{
-                    uri: item,
-                  }}
+                  // source={{
+                  //   uri: item,
+                  // }}
+                  source={item}
                   indicator={ProgressBar}
                   style={{
                     width: '100%',
@@ -109,13 +142,30 @@ class IntroScreen extends Component {
               </View>
             );
           }}
-          customButtons={(position, move) => {
-            if (this.state.currentPosition !== position) {
+          onPositionChanged={position => {
+            // console.log(
+            //   'onPositionChanged Slide: ',
+            //   this.state.currentPosition,
+            // );
+
+            // console.log('onPositionChanged Slide position: ', position);
+
+            // console.log(
+            //   'onPositionChanged Slide this.state.orderFromButtons: ',
+            //   this.state.orderFromButtons,
+            // );
+
+            if (this.state.orderFromButtons === '') {
               this.setState({
                 currentPosition: position,
               });
+            } else if (this.state.currentPosition === position) {
+              this.setState({
+                orderFromButtons: '',
+              });
             }
-
+          }}
+          customButtons={(position, move) => {
             return (
               <View
                 style={{
@@ -165,7 +215,9 @@ class IntroScreen extends Component {
                               borderRadius: RFValue(50),
                               margin: RFValue(5),
                               backgroundColor:
-                                position === index ? '#FFFFFF' : '#555555',
+                                position === index
+                                  ? colors.appPurple
+                                  : '#55555555',
                             }}></View>
                           {/* <Text style={position === index && {}}>
                     {index + 1}
@@ -175,20 +227,58 @@ class IntroScreen extends Component {
                     })}
                   </View>
 
-                  {position === this.state.imagesArray.length - 1 && (
+                  <View
+                    style={{
+                      width: '95%',
+                      position: 'absolute',
+                      // backgroundColor: 'red',
+                    }}>
                     <View
                       style={{
-                        position: 'absolute',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: this.state.fullScreenMode
+                          ? RFValue(35) * -1
+                          : RFValue(5) * -1,
                       }}>
-                      <View
+                      <Button
+                        light
+                        onPress={() => {
+                          if (this.state.currentPosition > 0) {
+                            this.goToPreviousSlide();
+                          }
+                        }}
+                        rounded
+                        disabled={this.state.currentPosition < 1}
                         style={{
-                          marginTop: this.state.fullScreenMode
-                            ? RFValue(35) * -1
-                            : RFValue(5) * -1,
+                          justifyContent: 'center',
+                          backgroundColor: colors.lightGray,
+                          // height: h(6.5),
+                          width: '25%',
+                          alignSelf: 'center',
                         }}>
-                        <Button
-                          light
-                          onPress={() => {
+                        <Text
+                          style={{
+                            width: '100%',
+                            textAlign: 'center',
+                            fontSize: RFValue(10),
+                            color:
+                              this.state.currentPosition < 1 ? 'gray' : 'black',
+                            fontWeight: 'bold',
+                          }}>
+                          {'Previous'}
+                        </Text>
+                      </Button>
+
+                      <Button
+                        light
+                        onPress={() => {
+                          if (
+                            this.state.currentPosition <
+                            this.state.imagesArray.length - 1
+                          ) {
+                            this.goToNextSlide();
+                          } else {
                             if (this.state.fullScreenMode === false) {
                               this.props.navigation.goBack(null);
                             } else {
@@ -199,33 +289,37 @@ class IntroScreen extends Component {
                                 }),
                               );
                             }
-                          }}
-                          rounded
+                          }
+                        }}
+                        rounded
+                        style={{
+                          justifyContent: 'center',
+                          backgroundColor: colors.lightGray,
+                          // height: h(6.5),
+                          width: '25%',
+                          alignSelf: 'center',
+                        }}>
+                        <Text
                           style={{
-                            justifyContent: 'center',
-                            backgroundColor: colors.lightGray,
-                            height: h(6.5),
-                            width: '70%',
-                            alignSelf: 'center',
+                            width: '100%',
+                            textAlign: 'center',
+                            fontSize: RFValue(12),
+                            color: 'black',
+                            fontWeight: 'bold',
                           }}>
-                          <Text
-                            style={{
-                              width: '100%',
-                              textAlign: 'center',
-                              fontSize: RFValue(15),
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Next
-                          </Text>
-                        </Button>
-                      </View>
+                          {this.state.currentPosition <
+                          this.state.imagesArray.length - 1
+                            ? 'Next'
+                            : 'Done'}
+                        </Text>
+                      </Button>
                     </View>
-                  )}
+                  </View>
                 </View>
               </View>
             );
           }}
+          position={this.state.currentPosition}
         />
 
         {/* {this.state.currentPosition === this.state.imagesArray.length - 1 && (

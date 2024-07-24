@@ -86,7 +86,29 @@ class LoginScreen extends Component {
         Platform.OS === 'android'
           ? 'MobileAppLoginAndroid'
           : 'MobileAppLoginIOS';
-      this.onAnalyticsLogin(analyticsTitle, {});
+
+      let analyticsTitleGender = 'Male';
+      if (this.props?.userInfo?.gender === 'Male') {
+        analyticsTitleGender = 'Male';
+      } else if (this.props?.userInfo?.gender === 'Female') {
+        analyticsTitleGender = 'Female';
+      } else if (
+        this.props?.userInfo?.gender === 'Others' ||
+        this.props?.userInfo?.gender === 'unknown'
+      ) {
+        analyticsTitleGender = 'Others';
+      } else {
+        analyticsTitleGender = 'Male';
+      }
+
+      console.log(
+        'Fahad analyticsTitle + analyticsTitleGender: ',
+        analyticsTitle + analyticsTitleGender,
+      );
+      console.log('Fahad this.props.userInfo: ', this.props.userInfo);
+      this.onAnalyticsLogin(analyticsTitle + analyticsTitleGender, {
+        gender: 'male',
+      });
       goBack(this.props.navigation);
     }
 
@@ -227,7 +249,7 @@ class LoginScreen extends Component {
               letterSpacing: 1,
               alignSelf: 'center',
               textTransform: 'uppercase',
-              color: colors.appTextColor
+              color: colors.appTextColor,
             }}>
             SIGN IN TO SCORE ONE OF A KIND DEALS!
           </Text>
@@ -305,7 +327,7 @@ class LoginScreen extends Component {
                   padding: h(1),
                   textAlign: 'center',
                   marginHorizontal: h(5),
-                  color: colors.appTextColor
+                  color: colors.appTextColor,
                 }}>
                 By clicking on option below I agree in the &nbsp;
                 <Text
@@ -399,7 +421,7 @@ class LoginScreen extends Component {
                 padding: h(0.5),
                 textAlign: 'center',
                 marginHorizontal: h(5),
-                color: colors.appTextColor
+                color: colors.appTextColor,
               }}>
               By signing in you agree to our &nbsp;
             </Text>
@@ -429,7 +451,7 @@ class LoginScreen extends Component {
                 style={{
                   fontSize: RFValue(12),
                   textAlign: 'center',
-                  color: colors.appTextColor
+                  color: colors.appTextColor,
                 }}>
                 &nbsp; and to our &nbsp;
               </Text>
@@ -534,6 +556,7 @@ const mapStateToProps = (state, ownProps) => {
     isVerifying,
     isAuthenticated,
     loginType,
+    userInfo,
     authenticationError,
   } = state.authReducer;
   return {
@@ -541,6 +564,7 @@ const mapStateToProps = (state, ownProps) => {
     isVerifying,
     isAuthenticated,
     loginType,
+    userInfo,
     authenticationError,
   };
 };

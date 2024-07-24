@@ -401,7 +401,7 @@ class PaymentScreen extends Component {
                     style={{
                       color: 'black',
                     }}>
-                    Amount To Pay Now
+                    Amount Due Now
                   </Text>
                   <View>
                     <Text
@@ -453,7 +453,7 @@ class PaymentScreen extends Component {
                     style={{
                       color: 'black',
                     }}>
-                    Amount Remaining
+                    Due Upon Redemption
                   </Text>
 
                   <View>
