@@ -1,5 +1,5 @@
-import { Button } from 'native-base';
-import React, { Component } from 'react';
+import {Button} from 'native-base';
+import React, {Component} from 'react';
 import {
   Alert,
   FlatList,
@@ -13,28 +13,28 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
+import {height as h, width as w} from 'react-native-dimension';
 import FastImage from 'react-native-fast-image';
-import { createImageProgress } from 'react-native-image-progress';
+import {createImageProgress} from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Circle';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { connect } from 'react-redux';
-import { APP_CONSTANTS } from '../../../constants/APIs';
-import { strings, titles } from '../../../constants/Localization';
-import { ScreenNames, TabScreenNames } from '../../../constants/ScreenNames';
+import {connect} from 'react-redux';
+import {APP_CONSTANTS} from '../../../constants/APIs';
+import {strings, titles} from '../../../constants/Localization';
+import {ScreenNames, TabScreenNames} from '../../../constants/ScreenNames';
 import IncrementDecrementButton from '../../../CustomComponents/IncrementDecrementButton';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import { AlertTypesEnum, CartUpdateActionEnum } from '../../../helpers/enum';
+import {AlertTypesEnum, CartUpdateActionEnum} from '../../../helpers/enum';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
-import { backImage, dibbsLogo } from '../../../helpers/Images';
+import {backImage, dibbsLogo} from '../../../helpers/Images';
 import {
   navigate,
   navigateWithParams,
   stringToNumber,
 } from '../../../helpers/Util';
-import { addRemoveProductInCart } from '../../../redux/actions/cartActions';
+import {addRemoveProductInCart} from '../../../redux/actions/cartActions';
 import {
   getMySavedProducts,
   removeProduct,
@@ -88,7 +88,7 @@ class CartScreen extends Component {
 
     if (
       this.props.productDeletedSuccessfully !==
-      prevProps.productDeletedSuccessfully &&
+        prevProps.productDeletedSuccessfully &&
       this.props.productDeletedSuccessfully === true
     ) {
       this.onRefresh();
@@ -160,7 +160,7 @@ class CartScreen extends Component {
           navigateWithParams(
             this.props.navigation,
             ScreenNames.ProductDetailScreen,
-            { productDetails: item.productDetails },
+            {productDetails: item.productDetails},
           );
 
           // this.props.navigation.goBack(null);
@@ -180,8 +180,8 @@ class CartScreen extends Component {
             backgroundColor: colors.white,
           }}
           activeOpacity={0.8}
-          onPress={() => { }}>
-          <View style={{ width: '100%', height: '100%', flexDirection: 'row' }}>
+          onPress={() => {}}>
+          <View style={{width: '100%', height: '100%', flexDirection: 'row'}}>
             <View
               style={{
                 flex: 0.3,
@@ -191,7 +191,7 @@ class CartScreen extends Component {
                 padding: 0.5,
               }}>
               {!!item.productDetails.images &&
-                item.productDetails.images.length > 0 ? (
+              item.productDetails.images.length > 0 ? (
                 <Image
                   source={{
                     uri: item.productDetails.images[0].image_full,
@@ -229,7 +229,7 @@ class CartScreen extends Component {
                 paddingRight: h(0),
                 // backgroundColor: "#106545"
               }}>
-              <View style={{ flex: 1 }}>
+              <View style={{flex: 1}}>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -244,7 +244,7 @@ class CartScreen extends Component {
 
                 <Text
                   numberOfLines={1}
-                  style={{ color: 'black', fontSize: RFValue(16) }}>
+                  style={{color: 'black', fontSize: RFValue(16)}}>
                   {!!item.name ? item.name : ' - '}
                 </Text>
 
@@ -253,7 +253,7 @@ class CartScreen extends Component {
                     flex: 1,
                     marginTop: h(1),
                   }}>
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{flexDirection: 'row'}}>
                     <Text
                       style={{
                         color: colors.appPurple,
@@ -266,16 +266,16 @@ class CartScreen extends Component {
                     {Math.floor((item.discount / item.price) * 100).toFixed(
                       0,
                     ) != 0 && (
-                        <Text
-                          style={{
-                            color: 'black',
-                            textDecorationLine: 'line-through',
-                            marginLeft: h(1),
-                            fontSize: RFValue(15),
-                          }}>
-                          ${stringToNumber(item.price).toFixed(2)}
-                        </Text>
-                      )}
+                      <Text
+                        style={{
+                          color: 'black',
+                          textDecorationLine: 'line-through',
+                          marginLeft: h(1),
+                          fontSize: RFValue(15),
+                        }}>
+                        ${stringToNumber(item.price).toFixed(2)}
+                      </Text>
+                    )}
                   </View>
 
                   <View
@@ -287,29 +287,29 @@ class CartScreen extends Component {
                     {Math.floor((item.discount / item.price) * 100).toFixed(
                       0,
                     ) != 0 && (
-                        <View
-                          style={{
-                            width: w(22),
+                      <View
+                        style={{
+                          width: w(22),
 
-                            borderRadius: h(50),
-                            backgroundColor: colors.appGray,
-                            marginLeft: RFValue(5),
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                          borderRadius: h(50),
+                          backgroundColor: colors.appGray,
+                          marginLeft: RFValue(5),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            color: colors.appPurple,
+                            fontSize: RFValue(15),
                           }}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              color: colors.appPurple,
-                              fontSize: RFValue(15),
-                            }}>
-                            {Math.floor(
-                              (item.discount / item.price) * 100,
-                            ).toFixed(0)}
-                            % off
-                          </Text>
-                        </View>
-                      )}
+                          {Math.floor(
+                            (item.discount / item.price) * 100,
+                          ).toFixed(0)}
+                          % off
+                        </Text>
+                      </View>
+                    )}
                   </View>
 
                   <View
@@ -352,7 +352,7 @@ class CartScreen extends Component {
 
   renderEmptyCartUI() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         {!this.props.isFetchingMySavedProducts &&
           this.state.filteredData.length === 0 && (
             <View
@@ -400,7 +400,12 @@ class CartScreen extends Component {
                       borderColor: 'transparent',
                       marginTop: h(3),
                     }}>
-                    <Text style={{ fontSize: RFValue(22), fontWeight: 'bold' }}>
+                    <Text
+                      style={{
+                        fontSize: RFValue(22),
+                        fontWeight: 'bold',
+                        color: 'black',
+                      }}>
                       Empty Shopping Cart
                     </Text>
                   </View>
@@ -410,7 +415,7 @@ class CartScreen extends Component {
                       alignItems: 'center',
                       borderColor: 'transparent',
                     }}>
-                    <Text style={{ fontSize: RFValue(12), color: 'black' }}>
+                    <Text style={{fontSize: RFValue(12), color: 'black'}}>
                       Please add some items to your cart
                     </Text>
                   </View>
@@ -491,19 +496,19 @@ class CartScreen extends Component {
         <FlatList
           data={this.props.productsList}
           horizontal={false}
-          style={{ marginTop: h(2), marginBottom: h(2) }}
-          renderItem={({ item, index }) => this.renderCellItem(item, index)}
+          style={{marginTop: h(2), marginBottom: h(2)}}
+          renderItem={({item, index}) => this.renderCellItem(item, index)}
           keyExtractor={(item, index) => item}
           keyboardShouldPersistTaps="always"
-        // refreshControl={
-        //   <RefreshControl
-        //     tintColor={colors.appPurple}
-        //     title={'Refreshing...'}
-        //     titleColor={colors.appPurple}
-        //     refreshing={this.props.isFetchingMySavedProducts}
-        //     onRefresh={this.onRefresh}
-        //   />
-        // }
+          // refreshControl={
+          //   <RefreshControl
+          //     tintColor={colors.appPurple}
+          //     title={'Refreshing...'}
+          //     titleColor={colors.appPurple}
+          //     refreshing={this.props.isFetchingMySavedProducts}
+          //     onRefresh={this.onRefresh}
+          //   />
+          // }
         />
 
         <View
@@ -512,7 +517,7 @@ class CartScreen extends Component {
             paddingBottom: h(2),
             backgroundColor: colors.appGray,
           }}>
-          <Text style={{ marginLeft: h(3) }}>Order Summary</Text>
+          <Text style={{marginLeft: h(3)}}>Order Summary</Text>
         </View>
 
         <View
@@ -736,10 +741,10 @@ class CartScreen extends Component {
                       [
                         {
                           text: 'OK',
-                          onPress: () => { },
+                          onPress: () => {},
                         },
                       ],
-                      { cancelable: false },
+                      {cancelable: false},
                     );
                   }}>
                   <Ionicons
@@ -828,10 +833,10 @@ class CartScreen extends Component {
                       [
                         {
                           text: 'OK',
-                          onPress: () => { },
+                          onPress: () => {},
                         },
                       ],
-                      { cancelable: false },
+                      {cancelable: false},
                     );
                   }}>
                   <Ionicons
@@ -866,7 +871,7 @@ class CartScreen extends Component {
               navigateWithParams(
                 this.props.navigation,
                 ScreenNames.PaymentScreen,
-                { coupon: this.state.coupon },
+                {coupon: this.state.coupon},
               );
             } else {
               this.showAlertModal(
@@ -912,7 +917,7 @@ class CartScreen extends Component {
           </Text>
         </Button>
 
-        <View style={{ height: RFValue(10) }}></View>
+        <View style={{height: RFValue(10)}}></View>
       </View>
     );
   }
@@ -924,7 +929,7 @@ class CartScreen extends Component {
           flex: 1,
           backgroundColor: colors.commonBackground,
         }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
           <AlertComponent
             alertProps={this.state.alertProps}
             setModalVisible={this.setAlertModalVisible}
@@ -932,7 +937,9 @@ class CartScreen extends Component {
               this.setAlertModalVisible(false);
             }}
             onRightBtnClick={() => {
-              if (this.state.alertProps.alertType === AlertTypesEnum.GuestUser) {
+              if (
+                this.state.alertProps.alertType === AlertTypesEnum.GuestUser
+              ) {
                 navigate(this.props.navigation, TabScreenNames.MyDibbs);
               }
 
@@ -950,22 +957,22 @@ class CartScreen extends Component {
             leftImageColor={colors.appPurple}
             headingTitle={strings.cart}
             titleAlignment={'flex-start'}
-          // iconR1={'md-cart'}
-          // iconR1Color={colors.black}
-          // onIconR1Press={() => {
-          //   alert('TODO!');
-          // }}
-          // iconR2={'md-share'}
-          // iconR2Color={colors.appPurple}
-          // onIconR2Press={() => {
-          //   this.onShare('', 'http://thedibbsapp.com/', '');
-          // }}
+            // iconR1={'md-cart'}
+            // iconR1Color={colors.black}
+            // onIconR1Press={() => {
+            //   alert('TODO!');
+            // }}
+            // iconR2={'md-share'}
+            // iconR2Color={colors.appPurple}
+            // onIconR2Press={() => {
+            //   this.onShare('', 'http://thedibbsapp.com/', '');
+            // }}
           />
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-            style={{ marginBottom: RFValue(10) }}
+            contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+            style={{marginBottom: RFValue(10)}}
             keyboardShouldPersistTaps="always">
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               {this.props.productsList.length > 0
                 ? this.renderCartInfo()
                 : this.renderEmptyCartUI()}
@@ -977,7 +984,7 @@ class CartScreen extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  const { appName, isAuthenticated } = state.authReducer;
+  const {appName, isAuthenticated} = state.authReducer;
   const {
     isFetchingMySavedProducts,
     mySavedProducts,
