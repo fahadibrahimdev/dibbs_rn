@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   Share,
@@ -19,7 +20,7 @@ import {AlertTypesEnum, PaymentMethodsEnum} from '../../../helpers/enum';
 import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
 import {backImage} from '../../../helpers/Images';
-import {navigateWithParams} from '../../../helpers/Util';
+import {navigate, navigateWithParams} from '../../../helpers/Util';
 import {
   addRemoveProductInCart,
   clearCartInfo,
@@ -118,51 +119,51 @@ class PaymentScreen extends Component {
     //     { cancelable: false },
     //   );
     // }
-    // if (
-    //   this.props.orderPlacedSuccessfully !==
-    //   prevProps.orderPlacedSuccessfully &&
-    //   this.props.orderPlacedSuccessfully === true &&
-    //   (this.state.orderPaymentMethod === PaymentMethodsEnum.DibbsCredit ||
-    //     this.state.orderPaymentMethod === PaymentMethodsEnum.LowDibbsCredit ||
-    //     (this.state.orderPaymentMethod === PaymentMethodsEnum.Stripe &&
-    //       this.state.orderTotalUpFrontAmount === 0))
-    // ) {
-    //   Alert.alert(
-    //     'Success',
-    //     'Order Placed Successfully!',
-    //     [
-    //       {
-    //         text: 'OK',
-    //         onPress: () => {
-    //           this.props.searchDeals('');
-    //           this.props.clearCartInfo();
-    //           navigate(this.props.navigation, ScreenNames.DealsScreen);
-    //         },
-    //       },
-    //     ],
-    //     { cancelable: false },
-    //   );
-    // }
-    // if (
-    //   this.props.orderPlaceError !== prevProps.orderPlaceError &&
-    //   !!this.props.orderPlaceError
-    // ) {
-    //   Alert.alert(
-    //     'Error',
-    //     this.props.orderPlaceError,
-    //     [
-    //       {
-    //         text: 'OK',
-    //         onPress: () => {
-    //           // this.props.searchDeals('');
-    //           // this.props.clearCartInfo();
-    //           // navigate(this.props.navigation, ScreenNames.DealsScreen);
-    //         },
-    //       },
-    //     ],
-    //     { cancelable: false },
-    //   );
-    // }
+    if (
+      this.props.orderPlacedSuccessfully !==
+        prevProps.orderPlacedSuccessfully &&
+      this.props.orderPlacedSuccessfully === true &&
+      (this.state.orderPaymentMethod === PaymentMethodsEnum.DibbsCredit ||
+        this.state.orderPaymentMethod === PaymentMethodsEnum.LowDibbsCredit)
+    ) {
+      Alert.alert(
+        'Success',
+        'Order Placed Successfully!',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              this.props.searchDeals('');
+              this.props.clearCartInfo();
+              navigate(this.props.navigation, ScreenNames.DealsScreen);
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+    if (
+      this.props.orderPlaceError !== prevProps.orderPlaceError &&
+      !!this.props.orderPlaceError &&
+      (this.state.orderPaymentMethod === PaymentMethodsEnum.DibbsCredit ||
+        this.state.orderPaymentMethod === PaymentMethodsEnum.LowDibbsCredit)
+    ) {
+      Alert.alert(
+        'Error',
+        this.props.orderPlaceError,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              // this.props.searchDeals('');
+              // this.props.clearCartInfo();
+              // navigate(this.props.navigation, ScreenNames.DealsScreen);
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    }
     // if (
     //   this.props.orderConfirmError !== prevProps.orderConfirmError &&
     //   !!this.props.orderConfirmError
@@ -595,6 +596,7 @@ class PaymentScreen extends Component {
                         fontStyle: 'italic',
                         textAlign: 'center',
                         fontWeight: 'normal',
+                        color: 'black',
                       }}>
                       Credit $ {this.props.dibbsCredits}
                     </Text>
