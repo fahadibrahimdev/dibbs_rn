@@ -671,7 +671,7 @@ const CardPaymentScreen = ({route}) => {
                   placeHolder={'i.e Alex Martin'}
                   outerContainerStyles={{width: '100%', marginBottom: 20}}
                   inputStyles={{
-                    height: h(5),
+                    // height: h(5),
                     fontSize: RFValue(16),
                     marginLeft: 10,
                   }}
@@ -706,7 +706,7 @@ const CardPaymentScreen = ({route}) => {
                   }}
                   style={{
                     width: '100%',
-                    height: 50,
+                    height: h(7),
                     marginVertical: 20,
                   }}
                   onCardChange={cardDetails => {
@@ -733,7 +733,7 @@ const CardPaymentScreen = ({route}) => {
                   placeHolder={'i.e 123456'}
                   outerContainerStyles={{width: '100%', marginBottom: 20}}
                   inputStyles={{
-                    height: h(5),
+                    // height: h(5),
                     fontSize: RFValue(16),
                     marginLeft: 10,
                   }}

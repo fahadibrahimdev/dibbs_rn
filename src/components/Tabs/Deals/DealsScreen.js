@@ -562,7 +562,12 @@ class DealsScreen extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{fontSize: RFValue(22), fontWeight: 'bold'}}>
+                  <Text
+                    style={{
+                      fontSize: RFValue(22),
+                      fontWeight: 'bold',
+                      color: 'black',
+                    }}>
                     No product available right now!
                   </Text>
                 </View>

@@ -535,6 +535,7 @@ class CategoriesDealsScreen extends Component {
                       fontSize: RFValue(22),
                       fontWeight: 'bold',
                       textAlign: 'center',
+                      color: 'black',
                     }}>
                     No product available for{' '}
                     {"'" + this.state.categoryName + "'"} right now!

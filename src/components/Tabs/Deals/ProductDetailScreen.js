@@ -1249,9 +1249,7 @@ class ProductDetailScreen extends Component {
                         }}
                         onPress={() => {
                           const data =
-                            (Platform.OS === 'android'
-                              ? ''
-                              : this.state.productDetails.product_name) +
+                            this.state.productDetails.product_name +
                             '\n\n' +
                             (!!this.state.productDetails.description
                               ? this.state.productDetails.description
@@ -1260,7 +1258,10 @@ class ProductDetailScreen extends Component {
                               APP_URLS.appURLiOSBetaTesting +
                               '\n\nAndroid: ' +
                               APP_URLS.appURLandroid) +
-                            '\n\nWebsite: ';
+                            '\n\nWebsite: ' +
+                            (Platform.OS === 'android'
+                              ? 'https://thedibbsapp.com'
+                              : '');
 
                           this.onShare(
                             this.state.productDetails.product_name,

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Share,
   View,
+  Platform,
 } from 'react-native';
 import {height as h, width as w} from 'react-native-dimension';
 import {AccessToken, LoginButton} from 'react-native-fbsdk';
@@ -240,16 +241,12 @@ class ShareAppScreen extends Component {
               <View style={{marginTop: h(20)}}>
                 <Button
                   light
-                  // onPress={()=>logIn()}
                   onPress={() => {
                     // const title =
                     //   'Download the Dibbs app from the Play Store: ' +
                     //   this.props.appUrl;
 
                     const title = 'Welcome to Dibbs';
-
-                    //App Store URL
-                    //https://apps.apple.com/us/app/dibbs-local-deals-near-you/id1636967857
 
                     const data =
                       title +
@@ -260,13 +257,14 @@ class ShareAppScreen extends Component {
                         APP_URLS.appURLiOSBetaTesting +
                         '\n\nAndroid: ' +
                         APP_URLS.appURLandroid) +
-                      '\n\nWebsite: ';
+                      '\n\nWebsite: ' +
+                      (Platform.OS === 'android'
+                        ? 'https://thedibbsapp.com'
+                        : '');
 
-                    // const url = this.props.appUrl;
                     const url = 'https://thedibbsapp.com';
                     this.onShare(title, data, url);
                   }}
-                  // onPress={()=>this.props.login({this.state.userEmail})}
                   rounded
                   style={styles.btnStyle}
                   // iconLeft
