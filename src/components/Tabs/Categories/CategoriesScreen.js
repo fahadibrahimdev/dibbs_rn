@@ -164,27 +164,6 @@ class CategoriesScreen extends Component {
     );
   }
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   startSearch(searchText) {
     if (searchText === '') {
       this.setState({
@@ -354,11 +333,6 @@ class CategoriesScreen extends Component {
           onIconR1Press={() => {
             navigate(this.props.navigation, ScreenNames.CartScreen);
           }}
-          // iconR2={'md-share'}
-          // iconR2Color={colors.appPurple}
-          // onIconR2Press={() => {
-          //   this.onShare('', 'http://thedibbsapp.com/', '');
-          // }}
         />
 
         {this.props.appCategoriesRedux.payload.length === 0 &&

@@ -275,27 +275,6 @@ class PaymentScreen extends Component {
   };
   // </Alert Functions>
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   render() {
     return (
       <View
@@ -374,11 +353,6 @@ class PaymentScreen extends Component {
             leftImageColor={colors.appPurple}
             headingTitle={strings.payment}
             titleAlignment={'flex-start'}
-            // iconR2={'md-share'}
-            // iconR2Color={colors.appPurple}
-            // onIconR2Press={() => {
-            //   this.onShare('', 'http://thedibbsapp.com/', '');
-            // }}
           />
           <ScrollView
             contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}

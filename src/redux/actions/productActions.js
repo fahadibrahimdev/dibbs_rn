@@ -33,6 +33,7 @@ import {
   GET_CATEGORIES_INFO_WITH_TOKEN_ERROR,
   CLEAR_GET_CATEGORIES_INFO_WITH_TOKEN,
 } from './actionTypes';
+import {APP_URLS} from '../../helpers/enum';
 
 export function searchDeals(keyword) {
   return async (dispatch, getState) => {
@@ -58,9 +59,8 @@ export function searchDeals(keyword) {
       let res = await response.json();
 
       if (res.response.status === 'Y') {
-        let appURLiOSBetaTesting = 'https://testflight.apple.com/join/q0ETxSuk';
-        let appURLandroid =
-          'https://play.google.com/store/apps/details?id=com.thunder.dibbs';
+        let appURLiOSBetaTesting = APP_URLS.appURLiOSBetaTesting;
+        let appURLandroid = APP_URLS.appURLandroid;
         dispatch(
           searchDealsSuccess({
             allCoupons: res.response.data.coupens,

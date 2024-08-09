@@ -38,7 +38,11 @@ import {
   stringToNumber,
 } from '../../../helpers/Util';
 import colors from '../../../helpers/colors';
-import {AlertTypesEnum, CartUpdateActionEnum} from '../../../helpers/enum';
+import {
+  AlertTypesEnum,
+  APP_URLS,
+  CartUpdateActionEnum,
+} from '../../../helpers/enum';
 import {addRemoveProductInCart} from '../../../redux/actions/cartActions';
 import {
   removeProduct,
@@ -508,7 +512,8 @@ class ProductDetailScreen extends Component {
             marginLeft: w(5),
             paddingBottom: h(1),
           }}>
-          <Text style={{fontSize: RFValue(25), fontWeight: 'bold'}}>
+          <Text
+            style={{fontSize: RFValue(25), fontWeight: 'bold', color: 'black'}}>
             {!!this.state.productDetails.store_info &&
             !!this.state.productDetails.store_info.store_name
               ? this.state.productDetails.store_info.store_name
@@ -558,7 +563,12 @@ class ProductDetailScreen extends Component {
                 name="md-time"
                 style={{color: 'gray', fontSize: RFValue(18)}}
               />
-              <Text style={{fontSize: RFValue(15), fontWeight: 'bold'}}>
+              <Text
+                style={{
+                  fontSize: RFValue(15),
+                  fontWeight: 'bold',
+                  color: 'black',
+                }}>
                 Business working hours
               </Text>
             </View>
@@ -572,10 +582,17 @@ class ProductDetailScreen extends Component {
               // const mDuration = mString[1];
               return (
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontWeight: 'bold', fontSize: RFValue(14)}}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: RFValue(14),
+                      color: 'black',
+                    }}>
                     {mDay}
                   </Text>
-                  <Text style={{fontSize: RFValue(14)}}>{mDuration}</Text>
+                  <Text style={{fontSize: RFValue(14), color: 'black'}}>
+                    {mDuration}
+                  </Text>
                 </View>
               );
             })}
@@ -1231,22 +1248,25 @@ class ProductDetailScreen extends Component {
                           marginRight: w(3),
                         }}
                         onPress={() => {
-                          // const data = ProductData.name+"\n"+ProductData.description.replace(/(<([^>]+)>)/gi, "")+"\n"+ProductData.permalink
                           const data =
-                            (Platform.OS === 'android'
-                              ? ''
-                              : this.state.productDetails.product_name) +
-                            '\n' +
+                            this.state.productDetails.product_name +
+                            '\n\n' +
                             (!!this.state.productDetails.description
                               ? this.state.productDetails.description
                               : ' - ') +
-                            '\n' +
-                            (this.props.appUrl + '\n\nhttps://thedibbsapp.com');
+                            ('\n\niOS: ' +
+                              APP_URLS.appURLiOSBetaTesting +
+                              '\n\nAndroid: ' +
+                              APP_URLS.appURLandroid) +
+                            '\n\nWebsite: ' +
+                            (Platform.OS === 'android'
+                              ? 'https://thedibbsapp.com'
+                              : '');
 
                           this.onShare(
                             this.state.productDetails.product_name,
                             data,
-                            this.props.appUrl,
+                            'https://thedibbsapp.com',
                           );
                         }}>
                         <Ionicons
@@ -1467,11 +1487,11 @@ class ProductDetailScreen extends Component {
                         {!!this.state.productDetails.store_info &&
                           !!this.state.productDetails.store_info.phone && (
                             <TouchableOpacity
-                              onPress={() =>
+                              onPress={() => {
                                 Linking.openURL(
                                   `tel:${this.state.productDetails.store_info.phone}`,
-                                )
-                              }
+                                );
+                              }}
                               activeOpacity={1}
                               style={{
                                 marginRight: w(2),
@@ -1772,11 +1792,6 @@ class ProductDetailScreen extends Component {
                     },
                   );
                 }}
-                // iconR2={'md-share'}
-                // iconR2Color={colors.white}
-                // onIconR2Press={() => {
-                //   this.onShare('', 'http://thedibbsapp.com/', '');
-                // }}
               />
             </View>
           </View>
