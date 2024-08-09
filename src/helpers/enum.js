@@ -58,3 +58,9 @@ export const Stripe_LIVE = {
 export const Stripe_TEST = {
   KEY: 'pk_test_51PMveFDMW1AQXKDfWTB3j2majlOJqcFC7dNODBuaIoXc7JCp3oiMPid1Qf8Gk1O5ckvbXzwXDWOjoChJ3Grnd4R700usbiU2Hc',
 };
+
+export const APP_URLS = {
+  appURLiOSBetaTesting: 'https://testflight.apple.com/join/q0ETxSuk',
+  appURLandroid:
+    'https://play.google.com/store/apps/details?id=com.thunder.dibbs',
+};

@@ -1,26 +1,27 @@
-import { Button } from 'native-base';
-import React, { Component } from 'react';
+import {Button} from 'native-base';
+import React, {Component} from 'react';
 import {
   Image,
   Keyboard,
-  ScrollView, Share, StyleSheet,
-  Text, View
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { connect } from 'react-redux';
-import { titles } from '../../../../constants/Localization';
-import { ScreenNames } from '../../../../constants/ScreenNames';
+import {height as h, width as w} from 'react-native-dimension';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+import {titles} from '../../../../constants/Localization';
+import {ScreenNames} from '../../../../constants/ScreenNames';
 import AlertComponent from '../../../../helpers/AlertComponent';
 import colors from '../../../../helpers/colors';
-import { AlertTypesEnum } from '../../../../helpers/enum';
+import {AlertTypesEnum} from '../../../../helpers/enum';
 import FullScreenLoader from '../../../../helpers/FullScreenLoader';
-import { dibbsLogo } from '../../../../helpers/Images';
+import {dibbsLogo} from '../../../../helpers/Images';
 import TextInputWithLabel from '../../../../helpers/TextInputWithLabel';
-import {
-  submitRefferalCode
-} from '../../../../redux/actions/authActions';
+import {submitRefferalCode} from '../../../../redux/actions/authActions';
 
 class RefferalScreen extends Component {
   state = {
@@ -126,27 +127,6 @@ class RefferalScreen extends Component {
     return true;
   };
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   render() {
     const {isSubmittingRefferalCode} = this.props;
 
@@ -205,7 +185,7 @@ class RefferalScreen extends Component {
                   alignSelf: 'center',
                   textAlign: 'center',
                   textTransform: 'uppercase',
-                  color: colors.appTextColor
+                  color: colors.appTextColor,
                 }}>
                 YOUR ACCOUNT WAS CREATED SUCCESSFULLY
               </Text>
@@ -218,7 +198,7 @@ class RefferalScreen extends Component {
                   textAlign: 'center',
                   // textTransform: 'uppercase',
                   marginTop: h(10),
-                  color: colors.appTextColor
+                  color: colors.appTextColor,
                 }}>
                 Did a friend invite you? Give them credit by using their
                 referral code.

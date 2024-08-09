@@ -98,27 +98,6 @@ class ProductAboutScreen extends Component {
   };
   // </Alert Functions>
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   renderCellIntervalModeItem = (item, index) => {
     return (
       <View
@@ -142,7 +121,12 @@ class ProductAboutScreen extends Component {
           />
 
           <View style={{flex: 1, marginLeft: w(2)}}>
-            <Text style={{color: 'black',textTransform: 'capitalize', fontSize: RFValue(17)}}>
+            <Text
+              style={{
+                color: 'black',
+                textTransform: 'capitalize',
+                fontSize: RFValue(17),
+              }}>
               {item.name}
             </Text>
 
@@ -248,11 +232,6 @@ class ProductAboutScreen extends Component {
             onIconR1Press={() => {
               navigate(this.props.navigation, ScreenNames.CartScreen);
             }}
-            // iconR2={'md-share'}
-            // iconR2Color={colors.appPurple}
-            // onIconR2Press={() => {
-            //   this.onShare('', 'http://thedibbsapp.com/', '');
-            // }}
           />
 
           <View

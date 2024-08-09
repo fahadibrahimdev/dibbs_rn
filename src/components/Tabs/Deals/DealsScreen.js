@@ -207,27 +207,6 @@ class DealsScreen extends Component {
   };
   // </Alert Functions>
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   startSearch(searchText) {
     if (searchText === '') {
       this.setState({
@@ -379,32 +358,6 @@ class DealsScreen extends Component {
                 color="#502a7e"
               />
             </TouchableOpacity>
-
-            {/* <TouchableOpacity
-              style={{
-                height: h(5),
-                width: h(5),
-                backgroundColor: 'white',
-                borderRadius: RFValue(20),
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                // const data = ProductData.name+"\n"+ProductData.description.replace(/(<([^>]+)>)/gi, "")+"\n"+ProductData.permalink
-                const data =
-                  (Platform.OS === 'android' ? '' : item.product_name) +
-                  '\n' +
-                  (!!item.description ? item.description : ' - ') +
-                  '\n' +
-                  (Platform.OS === 'android' ? this.props.appUrl : '');
-                this.onShare(
-                  item.product_name,
-                  data,
-                  Platform.OS === 'android' ? '' : this.props.appUrl,
-                );
-              }}>
-              <Ionicons name="arrow-redo" size={h(4)} color="#eda152" />
-            </TouchableOpacity> */}
 
             <View>
               {(moment(item.end_date).diff(moment(), 'days') === 0 ||

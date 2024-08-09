@@ -132,27 +132,6 @@ class CartScreen extends Component {
   };
   // </Alert Functions>
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   renderCellItem = (item, index) => {
     return (
       <TouchableOpacity
@@ -957,16 +936,6 @@ class CartScreen extends Component {
             leftImageColor={colors.appPurple}
             headingTitle={strings.cart}
             titleAlignment={'flex-start'}
-            // iconR1={'md-cart'}
-            // iconR1Color={colors.black}
-            // onIconR1Press={() => {
-            //   alert('TODO!');
-            // }}
-            // iconR2={'md-share'}
-            // iconR2Color={colors.appPurple}
-            // onIconR2Press={() => {
-            //   this.onShare('', 'http://thedibbsapp.com/', '');
-            // }}
           />
           <ScrollView
             contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}

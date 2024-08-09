@@ -358,7 +358,7 @@ class IntroScreen extends Component {
               backgroundColor: colors.commonBackground,
             }}>
             <HeaderCenter
-              titleText={'Intro'}
+              titleText={'How It Works'}
               cardStyle={true}
               leftImageSource={backImage}
               onPressLeftButton={() => {

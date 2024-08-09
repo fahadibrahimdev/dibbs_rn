@@ -20,7 +20,7 @@ import {ScreenNames} from '../../../constants/ScreenNames';
 import HeaderCenter from '../../../CustomComponents/Header/HeaderCenter';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import {LoginTypeEnum} from '../../../helpers/enum';
+import {APP_URLS, LoginTypeEnum} from '../../../helpers/enum';
 import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import {backImage, dibbsLogo} from '../../../helpers/Images';
 import SocialButton from '../../../helpers/SocialButton';
@@ -242,9 +242,11 @@ class ShareAppScreen extends Component {
                   light
                   // onPress={()=>logIn()}
                   onPress={() => {
-                    const title =
-                      'Download the Dibbs app from the Play Store: ' +
-                      this.props.appUrl;
+                    // const title =
+                    //   'Download the Dibbs app from the Play Store: ' +
+                    //   this.props.appUrl;
+
+                    const title = 'Welcome to Dibbs';
 
                     //App Store URL
                     //https://apps.apple.com/us/app/dibbs-local-deals-near-you/id1636967857
@@ -254,9 +256,14 @@ class ShareAppScreen extends Component {
                       '\n\n' +
                       'Use this referral code while sign-up: ' +
                       this.props.referralCode +
-                      '\n\nhttps://thedibbsapp.com';
+                      ('\n\niOS: ' +
+                        APP_URLS.appURLiOSBetaTesting +
+                        '\n\nAndroid: ' +
+                        APP_URLS.appURLandroid) +
+                      '\n\nWebsite: ';
 
-                    const url = this.props.appUrl;
+                    // const url = this.props.appUrl;
+                    const url = 'https://thedibbsapp.com';
                     this.onShare(title, data, url);
                   }}
                   // onPress={()=>this.props.login({this.state.userEmail})}

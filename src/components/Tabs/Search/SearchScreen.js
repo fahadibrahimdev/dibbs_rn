@@ -1,5 +1,5 @@
-import { Button, Header, Icon, Input, Item } from 'native-base';
-import React, { Component } from 'react';
+import {Button, Header, Icon, Input, Item} from 'native-base';
+import React, {Component} from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -10,21 +10,21 @@ import {
   ScrollView,
   TouchableHighlightBase,
 } from 'react-native';
-import { height as h, width as w } from 'react-native-dimension';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { connect } from 'react-redux';
-import { strings, titles } from '../../../constants/Localization';
-import { ScreenNames, TabScreenNames } from '../../../constants/ScreenNames';
+import {height as h, width as w} from 'react-native-dimension';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {connect} from 'react-redux';
+import {strings, titles} from '../../../constants/Localization';
+import {ScreenNames, TabScreenNames} from '../../../constants/ScreenNames';
 import AlertComponent from '../../../helpers/AlertComponent';
 import colors from '../../../helpers/colors';
-import { AlertTypesEnum, AsyncKeysEnum } from '../../../helpers/enum';
+import {AlertTypesEnum, AsyncKeysEnum} from '../../../helpers/enum';
 import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import HeaderCompoenent from '../../../helpers/HeaderCompoenent';
 import {
   AsyncGetViaKey,
   AsyncStoreViaKey,
 } from '../../../helpers/LocalStorage/AsyncStorage';
-import { navigate, navigateWithParams } from '../../../helpers/Util';
+import {navigate, navigateWithParams} from '../../../helpers/Util';
 import {
   clearSearchProductsInfo,
   searchProducts,
@@ -61,7 +61,7 @@ class SearchScreen extends Component {
   componentDidMount() {
     AsyncGetViaKey(AsyncKeysEnum.RECENT_SEAARCH).then(obj => {
       if (!!obj) {
-        this.setState({ recentSearch: obj });
+        this.setState({recentSearch: obj});
       } else {
       }
     });
@@ -77,7 +77,7 @@ class SearchScreen extends Component {
     // This code might be extra (only use fully while debugging)
     if (
       this.props.searchedProducts.length ===
-      prevProps.searchedProducts.length &&
+        prevProps.searchedProducts.length &&
       this.props.allProductsFetched !== prevProps.allProductsFetched
     ) {
       this.startSearch(this.state.searchText);
@@ -142,27 +142,6 @@ class SearchScreen extends Component {
     );
   }
 
-  onShare = async (title, msg, url) => {
-    try {
-      const result = await Share.share({
-        title: title,
-        message: msg,
-        url: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      this.showAlertModal('Error', error.message);
-    }
-  };
-
   startSearch(searchText) {
     if (searchText === '') {
       this.setState({
@@ -209,7 +188,7 @@ class SearchScreen extends Component {
             },
           );
         }}>
-        <View style={{ marginLeft: 20, padding: 10 }}>
+        <View style={{marginLeft: 20, padding: 10}}>
           <Text
             style={{
               fontWeight: '400',
@@ -241,15 +220,15 @@ class SearchScreen extends Component {
         }}
         activeOpacity={0.8}
         onPress={() => {
-          this.setState({ searchText: item.title });
+          this.setState({searchText: item.title});
           this.props.searchProducts(item.title);
         }}
         onLongPress={() => {
-          this.setState({ indexToRemove: index });
+          this.setState({indexToRemove: index});
 
           this.alertToRemoveRecent();
         }}>
-        <View style={{ marginLeft: 20, padding: 10 }}>
+        <View style={{marginLeft: 20, padding: 10}}>
           <Text
             style={{
               fontWeight: '400',
@@ -288,7 +267,7 @@ class SearchScreen extends Component {
 
               currentRecentSearch.splice(this.state.indexToRemove, 1);
 
-              this.setState({ recentSearch: currentRecentSearch });
+              this.setState({recentSearch: currentRecentSearch});
 
               AsyncStoreViaKey(
                 AsyncKeysEnum.RECENT_SEAARCH,
@@ -307,23 +286,18 @@ class SearchScreen extends Component {
           onIconR1Press={() => {
             navigate(this.props.navigation, ScreenNames.CartScreen);
           }}
-        // iconR2={'md-share'}
-        // iconR2Color={colors.appPurple}
-        // onIconR2Press={() => {
-        //   this.onShare('', 'http://thedibbsapp.com/', '');
-        // }}
         />
 
         <View>
           <Header
             searchBar
             rounded
-            style={{ height: h(6), backgroundColor: colors.white }}>
+            style={{height: h(6), backgroundColor: colors.white}}>
             <Item>
-              <Icon name="ios-search" style={{ fontSize: RFValue(15) }} />
+              <Icon name="ios-search" style={{fontSize: RFValue(15)}} />
 
               <Input
-                style={{ fontSize: RFValue(12) }}
+                style={{fontSize: RFValue(12)}}
                 placeholder="Search"
                 value={this.state.searchText}
                 returnKeyType={'done'}
@@ -350,9 +324,9 @@ class SearchScreen extends Component {
                         currentRecentSearch.splice(0, 1);
                       }
 
-                      currentRecentSearch.push({ title: this.state.searchText });
+                      currentRecentSearch.push({title: this.state.searchText});
 
-                      this.setState({ recentSearch: currentRecentSearch });
+                      this.setState({recentSearch: currentRecentSearch});
 
                       AsyncStoreViaKey(
                         AsyncKeysEnum.RECENT_SEAARCH,
@@ -366,10 +340,10 @@ class SearchScreen extends Component {
               />
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({ searchText: '' });
+                  this.setState({searchText: ''});
                   this.props.clearSearchProductsInfo();
                 }}>
-                <Icon name="md-close-circle" style={{ fontSize: RFValue(15) }} />
+                <Icon name="md-close-circle" style={{fontSize: RFValue(15)}} />
               </TouchableOpacity>
             </Item>
             <Button
@@ -383,7 +357,7 @@ class SearchScreen extends Component {
         </View>
 
         <ScrollView keyboardShouldPersistTaps="always">
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             {/* {this.props.productsSearchedSuccessfully &&
               !this.props.isSearchingProducts &&
               this.props.searchedProducts.length === 0 && (
@@ -405,21 +379,21 @@ class SearchScreen extends Component {
                 removeClippedSubviews={false}
                 data={this.state.filteredData}
                 horizontal={false}
-                renderItem={({ item, index }) => this.renderCellItem(item, index)}
+                renderItem={({item, index}) => this.renderCellItem(item, index)}
                 keyExtractor={(item, index) => item}
                 keyboardShouldPersistTaps="always"
-              // refreshControl={
-              //   <RefreshControl
-              //     tintColor={colors.appPurple}
-              //     title={'Refreshing...'}
-              //     titleColor={colors.appPurple}
-              //     refreshing={this.props.isSearchingProducts}
-              //     onRefresh={this.onRefresh}
-              //   />
-              // }
+                // refreshControl={
+                //   <RefreshControl
+                //     tintColor={colors.appPurple}
+                //     title={'Refreshing...'}
+                //     titleColor={colors.appPurple}
+                //     refreshing={this.props.isSearchingProducts}
+                //     onRefresh={this.onRefresh}
+                //   />
+                // }
               />
 
-              <View style={{ backgroundColor: colors.lightGray }}>
+              <View style={{backgroundColor: colors.lightGray}}>
                 <Text
                   style={{
                     fontWeight: '400',
@@ -439,10 +413,10 @@ class SearchScreen extends Component {
                 data={
                   this.state.recentSearch.length > 0
                     ? this.state.recentSearch
-                    : [{ title: 'No Recent Searches' }]
+                    : [{title: 'No Recent Searches'}]
                 }
                 horizontal={false}
-                renderItem={({ item, index }) =>
+                renderItem={({item, index}) =>
                   this.renderCellRecentItem(item, index)
                 }
                 keyExtractor={(item, index) => item}
@@ -457,7 +431,7 @@ class SearchScreen extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { appName, isAuthenticated } = state.authReducer;
+  const {appName, isAuthenticated} = state.authReducer;
   const {
     isSearchingProducts,
     productsSearchedSuccessfully,
