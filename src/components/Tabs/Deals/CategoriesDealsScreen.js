@@ -92,6 +92,10 @@ class CategoriesDealsScreen extends Component {
       this.startSearch(this.state.searchText);
     }
 
+    if(!!this.state.searchText === false && this.props.isSearchingVIACategoryDeals !== prevProps.searchedDealsVIACategory.isSearchingVIACategoryDeals && !!this.props.searchDealsErrorVIACategory === false && this.props.searchedDealsVIACategory.length !== this.state.filteredData.length) {
+      this.startSearch(this.state.searchText);
+    }
+
     if (
       this.props.isAuthenticated !== prevProps.isAuthenticated &&
       this.props.isAuthenticated === true
