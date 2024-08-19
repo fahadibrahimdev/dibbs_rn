@@ -202,23 +202,28 @@ export const updateCartInfoSuccess = res => ({
   payload: res,
 });
 
-export function createOrder(coupon, method, transactionInfo, dibbs_credit) {
+export function createOrder(
+  appliedCoupon,
+  method,
+  transactionInfo,
+  dibbs_credit,
+) {
   return async (dispatch, getState) => {
     const reducerState = getState().cartReducer;
     const productReducer = getState().productReducer;
 
     var dibbsCredits = productReducer.dibbsCredits;
-    var allCoupons = productReducer.allCoupons;
-    var appliedCoupon = null;
+    // var allCoupons = productReducer.allCoupons;
+    // var appliedCoupon = null;
 
     var couponAmount = 0;
     var isCouponApplied = false;
 
-    allCoupons.map(item => {
-      if (item.code === coupon) {
-        appliedCoupon = item;
-      }
-    });
+    // allCoupons.map(item => {
+    //   if (item.code === coupon) {
+    //     appliedCoupon = item;
+    //   }
+    // });
 
     if (!!appliedCoupon) {
       couponAmount = appliedCoupon.discount;
@@ -273,8 +278,8 @@ export function createOrder(coupon, method, transactionInfo, dibbs_credit) {
       total_price: reducerState.totalPrice,
       owner_amount: totalUpFront,
       is_coupon_applied: isCouponApplied,
-      coupon: coupon,
-      coupon_number: coupon,
+      coupon: appliedCoupon,
+      coupon_number: appliedCoupon,
       coupon_percentage: couponAmount,
       paymentMethod: method,
       stripe_token:
@@ -284,6 +289,7 @@ export function createOrder(coupon, method, transactionInfo, dibbs_credit) {
 
     const userToken = getState().authReducer.userInfo.token;
 
+    console.log('Fahad Body: ', body);
     let response = await POST(url, body, userToken);
 
     if (response.status >= 200 && response.status < 300) {
@@ -498,7 +504,12 @@ export const redeemOrderError = err => ({
   payload: err,
 });
 
-export function doStripePayment(amount, currency, paymentMethodId) {
+export function doStripePayment(
+  amount,
+  currency,
+  paymentMethodId,
+  appliedCoupon = null,
+) {
   return async (dispatch, getState) => {
     let url = `${API.STRIPE_PAYMENT_API}`;
     dispatch(doStripePaymentPending());
@@ -506,18 +517,19 @@ export function doStripePayment(amount, currency, paymentMethodId) {
     const reducerState = getState().cartReducer;
     const productReducer = getState().productReducer;
 
-    var allCoupons = productReducer.allCoupons;
-    var appliedCoupon = null;
-    var coupon = reducerState.coupon;
+    // var allCoupons = productReducer.allCoupons;
+
     var couponAmount = 0;
     var isCouponApplied = false;
 
-    allCoupons.map(obj => {
-      console.log('Fahad map obj: ', obj);
-      if (obj.code === coupon) {
-        appliedCoupon = obj;
-      }
-    });
+    // allCoupons.map(obj => {
+    //   console.log('Fahad map obj: ', obj);
+    //   console.log('Fahad map obj coupon: ', couponCode);
+
+    //   if (obj.code === couponCode) {
+    //     appliedCoupon = obj;
+    //   }
+    // });
 
     if (!!appliedCoupon) {
       couponAmount = appliedCoupon.discount;

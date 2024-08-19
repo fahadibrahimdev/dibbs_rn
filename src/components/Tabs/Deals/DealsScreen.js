@@ -121,6 +121,9 @@ class DealsScreen extends Component {
     ) {
       this.startSearch(this.state.searchText);
     }
+    if(!!this.state.searchText === false && this.props.isSearchingDeals !== prevProps.searchDeals.isSearchingDeals && !!this.props.searchDealsError === false && this.props.searchedDeals.length !== this.state.filteredData.length) {
+      this.startSearch(this.state.searchText);
+    }
 
     if (
       this.props.isAuthenticated !== prevProps.isAuthenticated &&

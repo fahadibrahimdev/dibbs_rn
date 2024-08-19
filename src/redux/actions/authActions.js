@@ -76,7 +76,7 @@ export function loginUser(email, password) {
     if (response.status >= 200 && response.status < 300) {
       let res = await response.json();
 
-      console.log("Fahad login api response: ", res.response.data);
+      console.log('Fahad login api response: ', res.response.data);
       if (res.response.status === 'Y') {
         const asyncObject = {
           isAuthenticated: true,
@@ -144,6 +144,7 @@ export function registerUser(first_name, last_name, email, password, gender) {
       password: password,
       gcm_id: deviceToken,
       notification: 'Y',
+      gender: gender,
     };
 
     dispatch(registerUserPending());

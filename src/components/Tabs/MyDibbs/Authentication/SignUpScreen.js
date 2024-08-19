@@ -61,7 +61,7 @@ class SignUpScreen extends Component {
       {label: 'Please make a selection', value: '--'},
       {label: 'Male', value: 'Male'},
       {label: 'Female', value: 'Female'},
-      {label: 'Prefer not to say', value: 'Others'},
+      {label: 'Prefer not to say', value: 'Prefer not to say'},
     ],
   };
 
@@ -374,6 +374,8 @@ class SignUpScreen extends Component {
                 }}
                 activeOpacity={0.5}
                 onPress={() => {
+                  Keyboard.dismiss();
+
                   if (Platform.OS === 'android') {
                     this.openDropdown();
                   } else {
