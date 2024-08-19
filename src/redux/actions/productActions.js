@@ -61,6 +61,9 @@ export function searchDeals(keyword) {
       if (res.response.status === 'Y') {
         let appURLiOSBetaTesting = APP_URLS.appURLiOSBetaTesting;
         let appURLandroid = APP_URLS.appURLandroid;
+
+        console.log('Fahad obj: ', JSON.stringify(res.response));
+
         dispatch(
           searchDealsSuccess({
             allCoupons: res.response.data.coupens,

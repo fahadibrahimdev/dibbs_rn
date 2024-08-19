@@ -251,7 +251,7 @@ class ShareAppScreen extends Component {
                     const data =
                       title +
                       '\n\n' +
-                      'Use this referral code while sign-up: ' +
+                      'Use this referral code during sign up: ' +
                       this.props.referralCode +
                       ('\n\niOS: ' +
                         APP_URLS.appURLiOSBetaTesting +

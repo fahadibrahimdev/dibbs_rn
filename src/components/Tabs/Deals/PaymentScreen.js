@@ -21,11 +21,7 @@ import FullScreenLoader from '../../../helpers/FullScreenLoader';
 import HeaderBackCompoenent from '../../../helpers/HeaderBackCompoenent';
 import {backImage} from '../../../helpers/Images';
 import {navigate, navigateWithParams} from '../../../helpers/Util';
-import {
-  addRemoveProductInCart,
-  clearCartInfo,
-  createOrder,
-} from '../../../redux/actions/cartActions';
+import {clearCartInfo, createOrder} from '../../../redux/actions/cartActions';
 import {
   getMySavedProducts,
   removeProduct,
@@ -225,8 +221,10 @@ class PaymentScreen extends Component {
           : PaymentMethodsEnum.Stripe,
       });
 
+      console.log('Fahad coupon: ', this.state.coupon);
+
       this.props.createOrder(
-        this.state.coupon,
+        this.state.appliedCoupon,
         lowDibbsCreditMode
           ? PaymentMethodsEnum.LowDibbsCredit
           : PaymentMethodsEnum.Stripe,
@@ -317,8 +315,10 @@ class PaymentScreen extends Component {
                     orderPaymentMethod: PaymentMethodsEnum.DibbsCredit,
                   });
 
+                  console.log('Fahad coupon: ', this.state.coupon);
+
                   this.props.createOrder(
-                    this.state.coupon,
+                    this.state.appliedCoupon,
                     PaymentMethodsEnum.DibbsCredit,
                     null,
                   );
@@ -478,7 +478,7 @@ class PaymentScreen extends Component {
                         this.props.navigation,
                         ScreenNames.CardPaymentScreen,
                         {
-                          coupon: this.state.coupon,
+                          coupon: this.state.appliedCoupon,
                           paymentMethod: PaymentMethodsEnum.Stripe,
                           lowDibbsCreditMode: false,
                           orderTotalUpFrontAmount:
@@ -654,20 +654,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getMySavedProducts: () => dispatch(getMySavedProducts()),
     removeProduct: productID => dispatch(removeProduct(productID)),
-    addRemoveProductInCart: (
-      productVariation,
-      productDetails,
-      action,
-      newCouponCode,
-    ) =>
-      dispatch(
-        addRemoveProductInCart(
-          productVariation,
-          productDetails,
-          action,
-          newCouponCode,
-        ),
-      ),
 
     createOrder: (coupon, method, transactionInfo) =>
       dispatch(createOrder(coupon, method, transactionInfo)),

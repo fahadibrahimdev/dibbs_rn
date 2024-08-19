@@ -1488,9 +1488,29 @@ class ProductDetailScreen extends Component {
                           !!this.state.productDetails.store_info.phone && (
                             <TouchableOpacity
                               onPress={() => {
-                                Linking.openURL(
-                                  `tel:${this.state.productDetails.store_info.phone}`,
+                                // Remove all non-digit characters from the input
+                                const digitsOnly =
+                                  this.state.productDetails.store_info.phone.replace(
+                                    /\D/g,
+                                    '',
+                                  );
+
+                                // Regular expression to match the format (555) 555-5555 or 555-5555 or 5308991500
+                                const regex = /^(\d{3})(\d{3})(\d{4})$/;
+
+                                // Replace it with the format 555 555-5555
+                                const formatedPhoneNumber = digitsOnly
+                                  .replace(regex, '$1-$2-$3')
+                                  .trim();
+
+                                console.log(
+                                  'Fahad phone: ',
+                                  formatedPhoneNumber,
                                 );
+                                Linking.openURL(`tel:${formatedPhoneNumber}`);
+                                // Linking.openURL(
+                                //   `tel:${this.state.productDetails.store_info.phone}`,
+                                // );
                               }}
                               activeOpacity={1}
                               style={{

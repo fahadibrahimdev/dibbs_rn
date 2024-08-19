@@ -192,6 +192,7 @@ const CardPaymentScreen = ({route}) => {
 
   const [currentMode, setCurrentMode] = useState('');
   const [cardHolderName, setCardHolderName] = useState('');
+  const [postalCode, setPostalCode] = useState('');
 
   useEffect(() => {
     var mCoupon = !!route.params?.coupon ? route.params.coupon : '';
@@ -474,7 +475,14 @@ const CardPaymentScreen = ({route}) => {
       //   setPaymentSuccess(true);
       //   setPaymentError(null);
       // }
-      dispatch(doStripePayment(5000, 'usd', obj.paymentMethod?.id));
+      dispatch(
+        doStripePayment(
+          5000,
+          'usd',
+          obj.paymentMethod?.id,
+          myComponentProps.coupon,
+        ),
+      );
     } catch (error) {
       console.log('Error while confirming payment:', error);
       setPaymentError(`Payment failed: ${error.message}`);
@@ -579,16 +587,7 @@ const CardPaymentScreen = ({route}) => {
                       color: colors.black,
                       // textDecorationLine: 'underline',
                     }}>
-                    ${' '}
-                    {!!myComponentProps?.coupon
-                      ? (
-                          myComponentProps?.orderTotalUpFrontAmount.toFixed(2) -
-                          (
-                            myComponentProps?.orderTotalUpFrontAmount *
-                            (parseFloat(myComponentProps.coupon.discount) / 100)
-                          ).toFixed(2)
-                        ).toFixed(2)
-                      : myComponentProps?.orderTotalUpFrontAmount.toFixed(2)}
+                    $ {myComponentProps?.orderTotalUpFrontAmount.toFixed(2)}
                   </Text>
                   <View
                     style={{
@@ -723,9 +722,9 @@ const CardPaymentScreen = ({route}) => {
                 </Text>
                 <TextInputWithLabel
                   label={''}
-                  value={cardHolderName}
+                  value={postalCode}
                   onChange={text => {
-                    setCardHolderName(text);
+                    setPostalCode(text);
                   }}
                   inputContainerStyles={{
                     borderRadius: 10,
@@ -737,10 +736,10 @@ const CardPaymentScreen = ({route}) => {
                     fontSize: RFValue(16),
                     marginLeft: 10,
                   }}
-                  keyboardType="default"
+                  keyboardType={'number-pad'}
                   autoCapitalize="words"
                   // ref={this.lastNameRef}
-                  // returnKeyType={'next'}
+                  returnKeyType={'done'}
                   // nextRef={this.emailRef}
                 />
               </View>
