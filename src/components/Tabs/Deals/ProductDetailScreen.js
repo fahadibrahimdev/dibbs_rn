@@ -1258,15 +1258,13 @@ class ProductDetailScreen extends Component {
                               APP_URLS.appURLiOSBetaTesting +
                               '\n\nAndroid: ' +
                               APP_URLS.appURLandroid) +
-                            '\n\nWebsite: ' +
-                            (Platform.OS === 'android'
-                              ? 'https://thedibbsapp.com'
-                              : '');
+                            '\n\nWebsite: https://thedibbsapp.com';
 
+                          const url = 'https://thedibbsapp.com';
                           this.onShare(
                             this.state.productDetails.product_name,
                             data,
-                            'https://thedibbsapp.com',
+                            url,
                           );
                         }}>
                         <Ionicons

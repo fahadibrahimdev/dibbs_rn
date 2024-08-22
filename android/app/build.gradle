@@ -104,9 +104,28 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    // Ensure compatibility with Java 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+//    kotlinOptions {
+//        jvmTarget = "17"
+//    }
+
+    // Ensure the Java toolchain is configured correctly
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(11)
+        }
+    }
 }
 
 dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion" // if using Kotlin
+
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 

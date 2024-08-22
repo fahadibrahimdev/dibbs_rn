@@ -251,9 +251,11 @@ export function createOrder(
           // owner_amount:
           //   (obj.currentCount * (obj.price - obj.discount) * mOwnerShare) / 100,
           owner_amount: isCouponApplied
-            ? (((obj.price - obj.discount) * mOwnerShare) / 100) *
-              ((100 - parseFloat(couponAmount)) / 100)
-            : ((obj.price - obj.discount) * mOwnerShare) / 100,
+            ? (
+                (((obj.price - obj.discount) * mOwnerShare) / 100) *
+                ((100 - parseFloat(couponAmount)) / 100)
+              ).toFixed(2)
+            : (((obj.price - obj.discount) * mOwnerShare) / 100).toFixed(2),
         });
       }
 
@@ -276,10 +278,10 @@ export function createOrder(
     let body = {
       product_list: product_list,
       total_price: reducerState.totalPrice,
-      owner_amount: totalUpFront,
-      is_coupon_applied: isCouponApplied,
-      coupon: appliedCoupon,
-      coupon_number: appliedCoupon,
+      owner_amount: totalUpFront.toFixed(2),
+      is_coupon_applied: !!isCouponApplied ? 'Y' : 'N',
+      coupon: appliedCoupon?.discount,
+      coupon_number: appliedCoupon?.code,
       coupon_percentage: couponAmount,
       paymentMethod: method,
       stripe_token:
@@ -415,6 +417,11 @@ export function getMyOrders() {
       let res = await response.json();
 
       if (res.response.status === 'Y') {
+        console.log(
+          'Fahad res.response.data: ',
+          JSON.stringify(res.response.data),
+        );
+
         dispatch(
           getMyOrdersSuccess({
             myOrders: !!res.response.data.orders

@@ -67,17 +67,12 @@ class PaymentScreen extends Component {
       }
     });
 
-    var orderTotalUpFrontAmountInString = !!appliedCoupon
-      ? (
-          this.props.totalUpFront.toFixed(2) -
-          (
-            this.props.totalUpFront *
-            (parseFloat(appliedCoupon.discount) / 100)
-          ).toFixed(2)
-        ).toFixed(2)
-      : this.props.totalUpFront.toFixed(2);
+    var orderTotalUpFrontAmount = !!appliedCoupon
+      ? this.props.totalUpFront -
+        this.props.totalUpFront * (parseFloat(appliedCoupon.discount) / 100)
+      : this.props.totalUpFront;
 
-    var orderTotalUpFrontAmount = parseFloat(orderTotalUpFrontAmountInString);
+    // var orderTotalUpFrontAmountInString = orderTotalUpFrontAmount.toFixed(2);
 
     this.setState({
       coupon: !!coupon ? coupon : '',
@@ -390,12 +385,10 @@ class PaymentScreen extends Component {
                       ${' '}
                       {!!this.state.appliedCoupon
                         ? (
-                            this.props.totalUpFront.toFixed(2) -
-                            (
-                              this.props.totalUpFront *
+                            this.props.totalUpFront -
+                            this.props.totalUpFront *
                               (parseFloat(this.state.appliedCoupon.discount) /
                                 100)
-                            ).toFixed(2)
                           ).toFixed(2)
                         : this.props.totalUpFront.toFixed(2)}
                     </Text>
