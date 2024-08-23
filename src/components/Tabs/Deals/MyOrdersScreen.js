@@ -212,6 +212,30 @@ class MyOrdersScreen extends Component {
     );
   }
 
+  calculateRemainingAmount(currentItem) {
+    if (!!currentItem) {
+      var totalPaidAmountWithDiscount = 0;
+
+      if (currentItem?.owner_amount && currentItem?.owner_amount !== '') {
+        const ownerAmount = parseFloat(currentItem?.owner_amount);
+
+        totalPaidAmountWithDiscount =
+          (ownerAmount * 100) /
+          (!!currentItem?.coupon ? 100 - parseFloat(currentItem?.coupon) : 100);
+      }
+
+      if (currentItem?.total_price && currentItem?.total_price !== '') {
+        return (
+          parseFloat(currentItem?.total_price) - totalPaidAmountWithDiscount
+        ).toFixed(2);
+      }
+
+      return !!currentItem.remaining_amount
+        ? stringToNumber(currentItem.remaining_amount).toFixed(2)
+        : ' 0 ';
+    }
+  }
+
   renderCellItem = (item, index) => {
     return (
       <TouchableOpacity
@@ -332,10 +356,7 @@ class MyOrdersScreen extends Component {
                 }}>
                 Date:{' '}
                 {!!item.added_on
-                  ? moment
-                      .utc(item.added_on)
-                      .local()
-                      .format('yyyy-DD-MM')
+                  ? moment.utc(item.added_on).local().format('yyyy-DD-MM')
                   : ' - '}
               </Text>
 
@@ -372,7 +393,9 @@ class MyOrdersScreen extends Component {
                   fontSize: RFValue(15),
                 }}>
                 Balance Remaining: $
-                {!!item.remaining_amount
+                {item?.is_coupon_applied === 'Y'
+                  ? this.calculateRemainingAmount(item)
+                  : !!item.remaining_amount
                   ? stringToNumber(item.remaining_amount).toFixed(2)
                   : ' 0 '}
               </Text>
