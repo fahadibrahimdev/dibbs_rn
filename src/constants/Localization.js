@@ -17,6 +17,7 @@ export const strings = {
 export const titles = {
   fullScreenLoaderTitle: 'Verifying...',
   logout: 'Are you sure you want to log out?',
+  deleteAccount: 'Are you sure you want to Delete your account?',
   forgotPassword: 'Check your email to reset your password',
   guestUserMsg:
     'Guest users are not allowed to purchase deals, please login or create an account',

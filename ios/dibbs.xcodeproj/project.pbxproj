@@ -168,7 +168,6 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				8008951B97F9C233610C3E96 /* [CP] Copy Pods Resources */,
-				C9BF8A07EF4AFE2E3698DD6F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -192,7 +191,6 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				228EAC948CD3D943957325DD /* [CP] Copy Pods Resources */,
 				D3D862616DC04CDC5A194E33 /* [CP-User] [RNFB] Core Configuration */,
-				52D380C298F062D7D2820E1B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -294,23 +292,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dibbs/Pods-dibbs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		52D380C298F062D7D2820E1B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-dibbs/Pods-dibbs-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-dibbs/Pods-dibbs-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dibbs/Pods-dibbs-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5379055A2C7742371AECE108 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -370,23 +351,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C9BF8A07EF4AFE2E3698DD6F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-dibbs-dibbsTests/Pods-dibbs-dibbsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-dibbs-dibbsTests/Pods-dibbs-dibbsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dibbs-dibbsTests/Pods-dibbs-dibbsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D3D862616DC04CDC5A194E33 /* [CP-User] [RNFB] Core Configuration */ = {
@@ -512,7 +476,7 @@
 				CODE_SIGN_ENTITLEMENTS = dibbs/dibbs.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R65W9935RT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = dibbs/Info.plist;
@@ -522,7 +486,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -546,7 +510,7 @@
 				CODE_SIGN_ENTITLEMENTS = dibbs/dibbs.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R65W9935RT;
 				INFOPLIST_FILE = dibbs/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
@@ -555,7 +519,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -604,7 +568,7 @@
 				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -688,7 +652,7 @@
 				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (

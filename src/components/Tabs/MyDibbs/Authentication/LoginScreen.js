@@ -30,6 +30,7 @@ import TextInputWithLabel from '../../../../helpers/TextInputWithLabel';
 import {goBack, navigate} from '../../../../helpers/Util';
 import {loginUser, setDeviceToken} from '../../../../redux/actions/authActions';
 import analytics from '@react-native-firebase/analytics';
+import {StackActions} from '@react-navigation/native';
 
 class LoginScreen extends Component {
   state = {
@@ -109,7 +110,9 @@ class LoginScreen extends Component {
       this.onAnalyticsLogin(analyticsTitle + analyticsTitleGender, {
         gender: 'male',
       });
-      goBack(this.props.navigation);
+      // goBack(this.props.navigation);
+      // navigate(this.props.navigation, ScreenNames.MyDibbsScreen);
+      this.props.navigation.dispatch(StackActions.pop(2));
     }
 
     if (

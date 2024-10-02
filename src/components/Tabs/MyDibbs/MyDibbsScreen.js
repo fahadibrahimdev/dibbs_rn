@@ -18,7 +18,7 @@ import colors from '../../../helpers/colors';
 import {AlertTypesEnum} from '../../../helpers/enum';
 import HeaderCompoenent from '../../../helpers/HeaderCompoenent';
 import {navigate, navigateWithParams} from '../../../helpers/Util';
-import {logout} from '../../../redux/actions/authActions';
+import {deleteUser, logout} from '../../../redux/actions/authActions';
 import DeviceInfo from 'react-native-device-info';
 
 class MyDibbsScreen extends Component {
@@ -65,6 +65,12 @@ class MyDibbsScreen extends Component {
         {name: 'Share App', code: 'ShareApp', icon: 'md-share'},
         {name: 'Feature A Deal On Dibbs', code: 'Features', icon: 'cube'},
         {name: 'Frequently asked questions', code: 'FAQs', icon: 'chatbubbles'},
+        {
+          name: 'Delete Account',
+          code: 'DELETE_ACCOUNT',
+          icon: 'trash',
+          color: colors.redDestructive,
+        },
         {
           name: 'Logout',
           code: 'LOGOUT',
@@ -118,11 +124,25 @@ class MyDibbsScreen extends Component {
   btnActionLoginSignup = () => {
     if (this.props.isAuthenticated) {
     } else {
-      navigateWithParams(this.props.navigation, ScreenNames.LoginScreen, {
+      navigateWithParams(this.props.navigation, ScreenNames.SignUpScreen, {
         callBackCustomLogin: this.callBackCustomLogin,
       });
     }
   };
+
+  alertForDelete() {
+    this.showAlertModal(
+      'Alert',
+      titles.deleteAccount,
+      AlertTypesEnum.DeleteAccount,
+      true,
+      'Cancel',
+      false,
+      true,
+      'Delete',
+      true,
+    );
+  }
 
   alertForLogout() {
     this.showAlertModal(
@@ -169,6 +189,8 @@ class MyDibbsScreen extends Component {
       navigate(this.props.navigation, ScreenNames.AboutScreen);
     } else if (item.code === 'ShareApp') {
       navigate(this.props.navigation, ScreenNames.ShareAppScreen);
+    } else if (item.code === 'DELETE_ACCOUNT') {
+      this.alertForDelete();
     } else if (item.code === 'LOGOUT') {
       this.alertForLogout();
     }
@@ -291,6 +313,10 @@ class MyDibbsScreen extends Component {
           onRightBtnClick={() => {
             if (this.state.alertProps.alertType === AlertTypesEnum.Logout) {
               this.props.logout();
+            } else if (
+              this.state.alertProps.alertType === AlertTypesEnum.DeleteAccount
+            ) {
+              this.props.deleteUser('', '');
             }
 
             this.setAlertModalVisible(false);
@@ -467,6 +493,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     logout: () => dispatch(logout()),
+    deleteUser: (email, password) => dispatch(deleteUser(email, password)),
   };
 };
 

@@ -22,6 +22,7 @@ export const AlertTypesEnum = {
   GuestUser: 'GuestUser',
   ForgotPasswordSuccess: 'ForgotPasswordSuccess',
   Logout: 'Logout',
+  DeleteAccount: 'DeleteAccount',
   Redeem: 'Redeem',
   RemoveRecent: 'RemoveRecent',
   Support: 'Support',
