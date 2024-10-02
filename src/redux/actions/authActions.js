@@ -9,6 +9,9 @@ import {
   AsyncStoreViaKey,
 } from '../../helpers/LocalStorage/AsyncStorage';
 import {
+  DELETE_USER_ERROR,
+  DELETE_USER_PENDING,
+  DELETE_USER_SUCCESS,
   FORGOT_PASSWORD_ERROR,
   FORGOT_PASSWORD_PENDING,
   FORGOT_PASSWORD_SUCCESS,
@@ -526,5 +529,61 @@ export const submitRefferalCodeSuccess = res => ({
 
 export const submitRefferalCodeError = err => ({
   type: SUBMIT_REFERRAL_CODE_ERROR,
+  payload: err,
+});
+
+export function deleteUser(email, password) {
+  return async (dispatch, getState) => {
+    let url = `${API.DELETE_ACCOUNT_API}`;
+    const userToken = getState().authReducer.userInfo.token;
+
+    console.log('Fahad user token: ', userToken);
+    let body = {
+      user_name: email,
+      password: password,
+    };
+
+    dispatch(deleteUserPending());
+    dispatch(logout());
+
+    // let response = await POST(url, body, userToken);
+    let response = await POST(url, body);
+
+    if (response.status >= 200 && response.status < 300) {
+      let res = await response.json();
+
+      if (res.response.status === 'Y') {
+        dispatch(deleteUserSuccess(res.response.data));
+        dispatch(logout());
+      } else {
+        dispatch(deleteUserError(res.response.message));
+        dispatch(logout());
+      }
+    } else if (response.status === 422) {
+      let res = await response.json();
+      dispatch(deleteUserError(res.response.message));
+      dispatch(logout());
+    } else {
+      dispatch(
+        deleteUserError(
+          !!response.message ? response.message : strings.networkError,
+        ),
+      );
+      dispatch(logout());
+    }
+  };
+}
+
+export const deleteUserPending = () => ({
+  type: DELETE_USER_PENDING,
+});
+
+export const deleteUserSuccess = res => ({
+  type: DELETE_USER_SUCCESS,
+  payload: res,
+});
+
+export const deleteUserError = err => ({
+  type: DELETE_USER_ERROR,
   payload: err,
 });

@@ -99,4 +99,6 @@ export const API = {
   LOGOUT_API: `${ENV.BASE_URL}/user/logout`,
 
   STRIPE_PAYMENT_API: `${ENV.STRIPE_VERCEL_URL}/stripe`,
+
+  DELETE_ACCOUNT_API: `${ENV.BASE_URL}/delete_user`,
 };

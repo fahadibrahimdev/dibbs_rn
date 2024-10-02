@@ -209,10 +209,10 @@ class SignUpScreen extends Component {
       return false;
     }
 
-    if (!!!selectedGender || selectedGender === '--') {
-      this.showAlertModal('Validation Error', 'Please select your gender!');
-      return false;
-    }
+    // if (!!!selectedGender || selectedGender === '--') {
+    //   this.showAlertModal('Validation Error', 'Please select your gender!');
+    //   return false;
+    // }
 
     return true;
   };
@@ -363,7 +363,7 @@ class SignUpScreen extends Component {
                 returnKeyType={'done'}
               />
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   // backgroundColor: 'green',
                   width: '80%',
@@ -395,7 +395,7 @@ class SignUpScreen extends Component {
                   returnKeyType={'next'}
                   editable={false}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <Text
                 style={{
@@ -467,6 +467,25 @@ class SignUpScreen extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+
+            <TouchableOpacity
+              style={{alignSelf: 'center'}}
+              onPress={() => {
+                navigate(this.props.navigation, ScreenNames.LoginScreen);
+              }}>
+              <Text
+                style={[
+                  styles.loginText,
+                  {
+                    color: colors.appPurple,
+                    fontSize: RFValue(13),
+                    alignSelf: 'flex-end',
+                    marginTop: h(3),
+                  },
+                ]}>
+                Already have an account?
+              </Text>
+            </TouchableOpacity>
 
             <Button
               light
