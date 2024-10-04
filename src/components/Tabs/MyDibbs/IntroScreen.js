@@ -53,46 +53,74 @@ class IntroScreen extends Component {
         : false;
     this.setState({
       fullScreenMode: fullScreenModeProp,
+      // imagesArray: [
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/1.png'),
+      //     color: 'red',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/2.png'),
+      //     color: 'blue',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/3.png'),
+      //     color: 'green',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/4.png'),
+      //     color: 'orange',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/5.png'),
+      //     color: 'orange',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/6.png'),
+      //     color: 'orange',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/7.png'),
+      //     color: 'orange',
+      //   },
+      //   {
+      //     img: require('./../../../assets/images/startup_screen/8.png'),
+      //     color: 'orange',
+      //   },
+      //   // require('./../../../assets/images/startup_screen/2.png'),
+      //   // require('./../../../assets/images/startup_screen/3.png'),
+      //   // require('./../../../assets/images/startup_screen/4.png'),
+      //   // require('./../../../assets/images/startup_screen/5.png'),
+      //   // require('./../../../assets/images/startup_screen/6.png'),
+      //   // require('./../../../assets/images/startup_screen/7.png'),
+      //   // require('./../../../assets/images/startup_screen/8.png'),
+      // ],
+
       imagesArray: [
         {
-          img: require('./../../../assets/images/startup_screen/1.png'),
-          color: 'red',
+          img: require('./../../../assets/images/startup_screen/on1.png'),
+          color: '#FFF',
+          text: 'Swipe to explore our featured deals.',
         },
         {
-          img: require('./../../../assets/images/startup_screen/2.png'),
-          color: 'blue',
+          img: require('./../../../assets/images/startup_screen/on2.png'),
+          color: '#FFF',
+          text: 'Click on any deal to learn more and call dibbs to add it to your cart.',
         },
         {
-          img: require('./../../../assets/images/startup_screen/3.png'),
-          color: 'green',
+          img: require('./../../../assets/images/startup_screen/on3.png'),
+          color: '#FFF',
+          text: 'Pay a small portion of the deal to make it yours.',
         },
         {
-          img: require('./../../../assets/images/startup_screen/4.png'),
-          color: 'orange',
+          img: require('./../../../assets/images/startup_screen/on4.png'),
+          color: '#FFF',
+          text: "Tap 'View my deals' to see purchases, then 'Redeem' when you visit the business.",
         },
         {
-          img: require('./../../../assets/images/startup_screen/5.png'),
-          color: 'orange',
+          img: require('./../../../assets/images/startup_screen/on5.png'),
+          color: '#FFF',
+          text: 'Redeem your deal by paying your balance and allowing the business to enter the redeem code.',
         },
-        {
-          img: require('./../../../assets/images/startup_screen/6.png'),
-          color: 'orange',
-        },
-        {
-          img: require('./../../../assets/images/startup_screen/7.png'),
-          color: 'orange',
-        },
-        {
-          img: require('./../../../assets/images/startup_screen/8.png'),
-          color: 'orange',
-        },
-        // require('./../../../assets/images/startup_screen/2.png'),
-        // require('./../../../assets/images/startup_screen/3.png'),
-        // require('./../../../assets/images/startup_screen/4.png'),
-        // require('./../../../assets/images/startup_screen/5.png'),
-        // require('./../../../assets/images/startup_screen/6.png'),
-        // require('./../../../assets/images/startup_screen/7.png'),
-        // require('./../../../assets/images/startup_screen/8.png'),
       ],
     });
 
@@ -168,7 +196,7 @@ class IntroScreen extends Component {
                       resizeMode: 'cover',
                       // borderBottomLeftRadius: h(7),
                       // borderBottomRightRadius: h(7),
-                      backgroundColor: '#115588',
+                      backgroundColor: '#FFFFFF',
                     },
                   ]}>
                   <Image
@@ -192,9 +220,9 @@ class IntroScreen extends Component {
                       // resizeMode: 'contain',
                       // borderBottomLeftRadius: h(7),
                       // borderBottomRightRadius: h(7),
-                      backgroundColor: '#115588',
+                      backgroundColor: '#FFF',
                     }}
-                    resizeMode="stretch"
+                    resizeMode="contain"
                     // resizeMode="contain"
                   />
                 </View>
@@ -203,10 +231,11 @@ class IntroScreen extends Component {
           }}
           onViewableItemsChanged={this.handleViewableItemsChanged}
         />
+
         <View
           style={{
             position: 'absolute',
-            flexDirection: 'row',
+            flexDirection: 'column',
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingHorizontal: 10,
@@ -214,116 +243,160 @@ class IntroScreen extends Component {
             // alignSelf: 'flex-end',
             // backgroundColor: 'red',
             width: '100%',
+            height: '30%',
             // height: 50,
           }}>
-          <Button
-            light
-            onPress={() => {
-              if (this.state.currentPosition > 0) {
-                this.goToPreviousSlide();
-              }
-            }}
-            rounded
-            disabled={this.state.currentPosition < 1}
-            style={{
-              justifyContent: 'center',
-              backgroundColor: colors.lightGray,
-              // height: h(6.5),
-              width: '25%',
-              alignSelf: 'center',
-            }}>
-            <Text
+          <View>
+            <View
               style={{
-                width: '100%',
-                textAlign: 'center',
-                fontSize: RFValue(10),
-                color: this.state.currentPosition < 1 ? 'gray' : 'black',
-                fontWeight: 'bold',
+                flexDirection: 'row',
+                borderRadius: 20,
+                paddingHorizontal: 10,
+                backgroundColor: '#ffffff99',
               }}>
-              {'Previous'}
-            </Text>
-          </Button>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              borderRadius: 20,
-              paddingHorizontal: 10,
-              backgroundColor: '#ffffff99',
-            }}>
-            {this.state.imagesArray.map((image, index) => {
-              return (
-                <TouchableHighlight
-                  key={'list2:' + index}
-                  underlayColor="#ccc"
-                  onPress={() => {
-                    // move(index)
-                  }}
-                  style={
-                    {
-                      // backgroundColor: '#221982',
-                    }
-                  }>
-                  <View
-                    style={{
-                      width: RFValue(6),
-                      height: RFValue(6),
-                      borderRadius: RFValue(50),
-                      margin: RFValue(5),
-                      backgroundColor:
-                        this.state.currentPosition === index
-                          ? colors.appPurple
-                          : '#55555555',
-                    }}></View>
-                  {/* <Text style={position === index && {}}>
+              {this.state.imagesArray.map((image, index) => {
+                return (
+                  <TouchableHighlight
+                    key={'list2:' + index}
+                    underlayColor="#ccc"
+                    onPress={() => {
+                      // move(index)
+                    }}
+                    style={
+                      {
+                        // backgroundColor: '#221982',
+                      }
+                    }>
+                    <View
+                      style={{
+                        width: RFValue(6),
+                        height: RFValue(6),
+                        borderRadius: RFValue(50),
+                        margin: RFValue(5),
+                        backgroundColor:
+                          this.state.currentPosition === index
+                            ? colors.appPurple
+                            : '#55555555',
+                      }}></View>
+                    {/* <Text style={position === index && {}}>
           {index + 1}
         </Text> */}
-                </TouchableHighlight>
-              );
-            })}
+                  </TouchableHighlight>
+                );
+              })}
+            </View>
           </View>
-          <Button
-            light
-            onPress={() => {
-              if (
-                this.state.currentPosition <
-                this.state.imagesArray.length - 1
-              ) {
-                this.goToNextSlide();
-              } else {
-                if (this.state.fullScreenMode === false) {
-                  this.props.navigation.goBack(null);
-                } else {
-                  this.props.navigation.dispatch(
-                    CommonActions.reset({
-                      index: 0,
-                      routes: [{name: ScreenNames.BottomNavigator}],
-                    }),
-                  );
-                }
-              }
-            }}
-            rounded
+
+          <Text
             style={{
-              justifyContent: 'center',
-              backgroundColor: colors.lightGray,
-              // height: h(6.5),
-              width: '25%',
-              alignSelf: 'center',
+              width: '100%',
+              marginVertical: RFValue(25),
+              textAlign: 'center',
+              fontSize: RFValue(17),
+              color: '#6f44a3',
+              fontWeight: 'bold',
             }}>
-            <Text
+            {!!this.state.imagesArray &&
+            this.state.currentPosition >= 0 &&
+            this.state.imagesArray[this.state.currentPosition]
+              ? this.state.imagesArray[this.state.currentPosition].text
+              : ' -- '}
+          </Text>
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              justifyContent:
+                this.state.currentPosition < this.state.imagesArray.length - 1
+                  ? 'space-between'
+                  : 'center',
+            }}>
+            {this.state.currentPosition < this.state.imagesArray.length - 1 && (
+              <Button
+                light
+                onPress={() => {
+                  // if (this.state.currentPosition > 0) {
+                  //   this.goToPreviousSlide();
+                  // }
+
+                  if (this.state.fullScreenMode === false) {
+                    this.props.navigation.goBack(null);
+                  } else {
+                    this.props.navigation.dispatch(
+                      CommonActions.reset({
+                        index: 0,
+                        routes: [{name: ScreenNames.BottomNavigator}],
+                      }),
+                    );
+                  }
+                }}
+                rounded
+                // disabled={this.state.currentPosition < 1}
+                style={{
+                  justifyContent: 'center',
+                  backgroundColor: '#FFF',
+                  borderColor: '#6f44a3',
+                  borderWidth: 2,
+                  // height: h(6.5),
+                  width: '45%',
+                  alignSelf: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    fontSize: RFValue(10),
+                    color: '#6f44a3',
+                    fontWeight: 'bold',
+                  }}>
+                  {'Skip'}
+                </Text>
+              </Button>
+            )}
+
+            <Button
+              light
+              onPress={() => {
+                if (
+                  this.state.currentPosition <
+                  this.state.imagesArray.length - 1
+                ) {
+                  this.goToNextSlide();
+                } else {
+                  if (this.state.fullScreenMode === false) {
+                    this.props.navigation.goBack(null);
+                  } else {
+                    this.props.navigation.dispatch(
+                      CommonActions.reset({
+                        index: 0,
+                        routes: [{name: ScreenNames.BottomNavigator}],
+                      }),
+                    );
+                  }
+                }
+              }}
+              rounded
               style={{
-                width: '100%',
-                textAlign: 'center',
-                fontSize: RFValue(12),
-                color: 'black',
-                fontWeight: 'bold',
+                justifyContent: 'center',
+                backgroundColor: '#6f44a3',
+                // height: h(6.5),
+                width: '45%',
+                alignSelf: 'center',
               }}>
-              {this.state.currentPosition < this.state.imagesArray.length - 1
-                ? 'Next'
-                : 'Done'}
-            </Text>
-          </Button>
+              <Text
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  fontSize: RFValue(12),
+                  color: '#FFF',
+                  fontWeight: 'bold',
+                }}>
+                {this.state.currentPosition < this.state.imagesArray.length - 1
+                  ? 'Next'
+                  : 'Done'}
+              </Text>
+            </Button>
+          </View>
         </View>
         {/* {this.state.currentPosition === this.state.imagesArray.length - 1 && (
           <View
