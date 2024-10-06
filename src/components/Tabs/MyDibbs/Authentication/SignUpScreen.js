@@ -260,6 +260,7 @@ class SignUpScreen extends Component {
               style={{
                 height: h(20),
                 width: h(30),
+                marginTop: RFValue(16) * -1,
                 alignSelf: 'center',
                 resizeMode: 'contain',
               }}
@@ -274,7 +275,8 @@ class SignUpScreen extends Component {
                 textTransform: 'uppercase',
                 color: colors.appTextColor,
               }}>
-              SIGN UP TO SCORE ONE OF A KIND DEALS!
+              {/* SIGN UP TO SCORE ONE OF A KIND DEALS! */}
+              Get $10 Dibbs Credit When You Sign Up!
             </Text>
 
             <View
