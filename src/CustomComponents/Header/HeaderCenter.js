@@ -1,11 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
+import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../helpers/colors';
-import {
-  backImage
-} from '../../helpers/Images';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {backImage} from '../../helpers/Images';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const HEIGHT = Dimensions.get('screen').height;
 const WIDTH = Dimensions.get('screen').width;
@@ -27,7 +25,6 @@ const HeaderCenter = ({
   textStyle,
   textAlignStyle,
   isRightMenuShown,
-
 }) => (
   <View>
     <View
@@ -36,11 +33,11 @@ const HeaderCenter = ({
           flexDirection: 'row',
           justifyContent: 'center',
           width: WIDTH,
-          height: HEIGHT / 13,
+          height: HEIGHT / 13 - 20,
           backgroundColor: colors.commonBackground,
           bottom: 0,
         },
-        { backgroundColor: colors.commonBackground },
+        {backgroundColor: colors.commonBackground},
       ]}>
       {onPressLeftButton && (
         <TouchableOpacity
@@ -62,7 +59,6 @@ const HeaderCenter = ({
             <Image
               source={leftImageSource ? leftImageSource : backImage}
               resizeMode="contain"
-
               style={[
                 {
                   height: 24,
@@ -70,13 +66,20 @@ const HeaderCenter = ({
                   alignSelf: 'center',
                   marginRight: 15,
                   marginLeft: 16,
-                  tintColor: colors.appPurple
+                  tintColor: colors.appPurple,
                 },
                 leftImageStyle,
               ]}
             />
           ) : (
-            <Text style={{ color: colors.appPurple, alignSelf: 'center', fontFamily: "SFProText-Medium" }}>Back</Text>
+            <Text
+              style={{
+                color: colors.appPurple,
+                alignSelf: 'center',
+                fontFamily: 'SFProText-Medium',
+              }}>
+              Back
+            </Text>
           )}
         </TouchableOpacity>
       )}
@@ -94,7 +97,7 @@ const HeaderCenter = ({
             marginLeft: 10,
             marginRight: 2,
             fontSize: RFValue(22),
-            fontFamily: "SFProText-Medium"
+            fontFamily: 'SFProText-Medium',
           },
 
           textStyle,
@@ -103,9 +106,7 @@ const HeaderCenter = ({
         numberOfLines={1}>
         {titleText}
       </Text>
-
     </View>
-
   </View>
 );
 export default HeaderCenter;
